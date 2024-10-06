@@ -291,7 +291,7 @@ impl<'s> Display for ParseError<'s> {
 }
 
 #[cfg(feature = "std")]
-impl<'s> std::error::Error for ParseError<'s> {}
+impl<'s> core::error::Error for ParseError<'s> {}
 
 /// Represents an entity that can handle lexical and syntactic errors
 #[derive(Debug, Default, Clone)]

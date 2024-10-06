@@ -26,6 +26,8 @@ use std::time::{Duration, Instant};
 use hime_sdk::errors::Error;
 use hime_sdk::Runtime;
 
+use super::get_local_dir;
+
 /// The statistics for test results
 #[derive(Debug, Clone, Copy)]
 pub struct Statistics {
@@ -110,7 +112,8 @@ impl ExecutionResults {
 
     /// Export the results as XML
     pub fn export_xml(&self) -> Result<(), Error> {
-        let mut file = BufWriter::new(File::create("TestResults.xml")?);
+        let local_dir = get_local_dir();
+        let mut file = BufWriter::new(File::create(local_dir.join("TestResults.xml"))?);
         self.write_xml(&mut file)?;
         Ok(())
     }

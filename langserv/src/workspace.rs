@@ -126,7 +126,7 @@ impl Workspace {
     ///
     /// Return an `std::io::Error` when reading files fail
     pub fn scan_workspace(&mut self, root: Url) -> io::Result<()> {
-        let path = PathBuf::from(root.path());
+        let path = root.to_file_path().unwrap_or_default();
         if path.exists() {
             self.scan_workspace_in(&path)?;
         }

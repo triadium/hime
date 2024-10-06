@@ -157,10 +157,10 @@ fn execute_mvn_command(project_folder: &Path, args: &[&str], maven_repository: O
         .args(args)
         .arg("-B")
         .output()?;
-    let stdout = String::from_utf8(output.stdout).unwrap();
-    let stderr = String::from_utf8(output.stderr).unwrap();
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
     if stdout.contains("[ERROR]") {
-        let mut log = stderr;
+        let mut log = stderr.to_string();
         log.push_str(&stdout);
         return Err(Error::Msg(log));
     }

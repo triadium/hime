@@ -189,7 +189,14 @@ impl Fixtures {
             output_path: Some(temp_dir.to_str().unwrap().to_string()),
             output_target_runtime_path: runtime_path.to_str().map(ToString::to_string),
             java_maven_repository: match std::env::var("HOME") {
-                Ok(home) => Some(format!("{home}/.m2/repository")),
+                Ok(home) => Some(
+                    PathBuf::from(home)
+                        .join(r".m2")
+                        .join("repository")
+                        .to_str()
+                        .unwrap()
+                        .to_string(),
+                ),
                 Err(_) => None,
             },
             ..CompilationTask::default()
@@ -383,13 +390,14 @@ impl OutputTest {
 
     /// Execute this test
     pub fn execute(&self) -> Result<TestResult, Error> {
+        let local_dir = get_local_dir();
         {
-            let mut input_file = BufWriter::new(File::create("input.txt")?);
+            let mut input_file = BufWriter::new(File::create(local_dir.join("input.txt"))?);
             write!(input_file, "{}", &self.input[1..self.input.len() - 1])?;
             input_file.flush()?;
         }
         {
-            let mut expected_file = BufWriter::new(File::create("expected.txt")?);
+            let mut expected_file = BufWriter::new(File::create(local_dir.join("input.txt"))?);
             for line in &self.output {
                 writeln!(expected_file, "{}", &line[1..line.len() - 1])?;
             }
@@ -407,6 +415,7 @@ impl OutputTest {
     }
 
     /// Execute this test on the .Net runtime
+    #[cfg(any(target_os = "linux", target_os = "macos"))]
     fn execute_net(&self) -> Result<TestResultOnRuntime, Error> {
         let name = format!(
             "{}.{}Parser",
@@ -414,6 +423,16 @@ impl OutputTest {
             to_upper_camel_case(&self.name)
         );
         execute_command(Runtime::Net, "mono", &["executor-net.exe", &name, "outputs"])
+    }
+
+    #[cfg(target_os = "windows")]
+    fn execute_net(&self) -> Result<TestResultOnRuntime, Error> {
+        let name = format!(
+            "{}.{}Parser",
+            to_upper_camel_case(&self.name),
+            to_upper_camel_case(&self.name)
+        );
+        execute_command(Runtime::Net, "executor-net.exe", &[&name, "outputs"])
     }
 
     /// Execute this test on the Java runtime
@@ -525,13 +544,14 @@ impl ParsingTest {
 
     /// Execute this test
     pub fn execute(&self) -> Result<TestResult, Error> {
+        let local_dir = get_local_dir();
         {
-            let mut input_file = BufWriter::new(File::create("input.txt")?);
+            let mut input_file = BufWriter::new(File::create(local_dir.join("input.txt"))?);
             write!(input_file, "{}", &self.input[1..self.input.len() - 1])?;
             input_file.flush()?;
         }
         if !self.tree.is_empty() {
-            let mut expected_file = BufWriter::new(File::create("expected.txt")?);
+            let mut expected_file = BufWriter::new(File::create(local_dir.join("expected.txt"))?);
             write!(expected_file, "{}", &self.tree)?;
             expected_file.flush()?;
         }
@@ -547,6 +567,7 @@ impl ParsingTest {
     }
 
     /// Execute this test on the .Net runtime
+    #[cfg(any(target_os = "linux", target_os = "macos"))]
     fn execute_net(&self) -> Result<TestResultOnRuntime, Error> {
         let name = format!(
             "{}.{}Parser",
@@ -554,6 +575,16 @@ impl ParsingTest {
             to_upper_camel_case(&self.name)
         );
         execute_command(Runtime::Net, "mono", &["executor-net.exe", &name, self.verb.as_str()])
+    }
+
+    #[cfg(target_os = "windows")]
+    fn execute_net(&self) -> Result<TestResultOnRuntime, Error> {
+        let name = format!(
+            "{}.{}Parser",
+            to_upper_camel_case(&self.name),
+            to_upper_camel_case(&self.name)
+        );
+        execute_command(Runtime::Net, "executor-net.exe", &[&name, self.verb.as_str()])
     }
 
     /// Execute this test on the Java runtime
@@ -585,8 +616,8 @@ fn execute_command(runtime: Runtime, program: &str, args: &[&str]) -> Result<Tes
     command.args(args);
     let start_time = Instant::now();
     let output = command.output()?;
-    let stdout = String::from_utf8(output.stdout).unwrap();
-    let stderr = String::from_utf8(output.stderr).unwrap();
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
     let end_time = Instant::now();
     let spent_time = end_time - start_time;
     let status = match output.status.code() {
@@ -599,8 +630,8 @@ fn execute_command(runtime: Runtime, program: &str, args: &[&str]) -> Result<Tes
         start_time,
         spent_time,
         status,
-        stdout,
-        stderr,
+        stdout: stdout.to_string(),
+        stderr: stderr.to_string(),
     })
 }
 
@@ -650,8 +681,12 @@ fn get_local_dir() -> PathBuf {
 /// Gets the path to the repository's root
 fn get_repo_root() -> PathBuf {
     let mut path = get_local_dir();
-    if path.file_name().map(std::ffi::OsStr::to_str) == Some(Some("tests-results")) {
+    if path.ends_with("tests-results") {
         // we are in tests-results
+        path.pop();
+    } else if path.ends_with("target/debug") {
+        // we are in debug mode
+        path.pop();
         path.pop();
     }
     path
