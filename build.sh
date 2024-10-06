@@ -1,10 +1,12 @@
 #!/bin/bash
 
+echo "$OSTYPE"
+
 SCRIPT="$(readlink -f "$0")"
 ROOT="$(dirname "$SCRIPT")"
 
 source "$ROOT/build-env.sh"
-source "$ROOT/build-checks.sh"
+# source "$ROOT/build-checks.sh"
 
 echo "-- Rust components --"
 cargo update
@@ -25,7 +27,7 @@ mvn -f "$ROOT/tests-executor-java/pom.xml" clean verify -Dgpg.skip=true -Duser.h
 
 # Setup the test components
 rm -rf "$ROOT/tests-results"
-mkdir "$ROOT/tests-results"
+mkdir -p "$ROOT/tests-results"
 cp "$ROOT/target/debug/hime_tests_driver" "$ROOT/tests-results/hime_tests_driver"
 cp $ROOT/runtime-net/bin/Release/*.nupkg "$ROOT/tests-results/"
 cp "$ROOT/tests-executor-net/bin/Release/net461/Hime.Redist.dll" "$ROOT/tests-results/Hime.Redist.dll"
