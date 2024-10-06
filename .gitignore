@@ -10,7 +10,7 @@
 .*\.pyc
 # Rust
 Cargo.lock
-
+target/
 
 # Visual Studio / Mono
 .suo
