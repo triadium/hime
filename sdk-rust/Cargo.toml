@@ -18,7 +18,7 @@ default = []
 print_errors = ["miette"]
 
 [dependencies]
-hime_redist = "4.3.0"
+hime_redist = "4.4.0"
 rand = "0.8"
 miette = { version = "7.2", optional = true}
 

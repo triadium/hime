@@ -6,7 +6,7 @@
     <ProjectGuid>{F0364548-84EC-486D-8032-A52DF9783AD9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Hime.Tests.Executor</RootNamespace>
-    <AssemblyName>executor</AssemblyName>
+    <AssemblyName>executor-net</AssemblyName>
     <TargetFrameworks>net461</TargetFrameworks>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <SignAssembly>True</SignAssembly>
@@ -14,7 +14,7 @@
     <AssemblyOriginatorKeyFile>$(MSBuildProjectDirectory)/../.releng/hime.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <PublicSign>True</PublicSign>
-    <version>4.3.0</version>
+    <version>4.4.0</version>
   </PropertyGroup>
   <PropertyGroup>
     <!-- NuGet properties -->

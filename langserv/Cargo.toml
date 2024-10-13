@@ -18,8 +18,8 @@ clap = "4.0"
 serde_json = "1.0"
 futures = "0.3"
 tokio = { version = "1", features = ["full"] }
-hime_redist = "4.3.0"
-hime_sdk = "4.3.0"
+hime_redist = "4.4.0"
+hime_sdk = "4.4.0"
 tower-lsp = "0.20"
 
 [badges]

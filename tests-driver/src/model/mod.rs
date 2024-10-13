@@ -397,7 +397,7 @@ impl OutputTest {
             input_file.flush()?;
         }
         {
-            let mut expected_file = BufWriter::new(File::create(local_dir.join("input.txt"))?);
+            let mut expected_file = BufWriter::new(File::create(local_dir.join("expected.txt"))?);
             for line in &self.output {
                 writeln!(expected_file, "{}", &line[1..line.len() - 1])?;
             }
@@ -422,7 +422,8 @@ impl OutputTest {
             to_upper_camel_case(&self.name),
             to_upper_camel_case(&self.name)
         );
-        execute_command(Runtime::Net, "mono", &["executor-net.exe", &name, "outputs"])
+        let executor = get_net_executor_path();
+        execute_command(Runtime::Net, "mono", &[executor.to_str().unwrap(), &name, "outputs"])
     }
 
     #[cfg(target_os = "windows")]
@@ -432,23 +433,20 @@ impl OutputTest {
             to_upper_camel_case(&self.name),
             to_upper_camel_case(&self.name)
         );
-        execute_command(Runtime::Net, "executor-net.exe", &[&name, "outputs"])
+        let executor = get_net_executor_path();
+        execute_command(Runtime::Net, executor.to_str().unwrap(), &[&name, "outputs"])
     }
 
     /// Execute this test on the Java runtime
     fn execute_java(&self) -> Result<TestResultOnRuntime, Error> {
         let name = format!("{}.{}Parser", to_snake_case(&self.name), to_upper_camel_case(&self.name));
-        execute_command(Runtime::Java, "java", &["-jar", "executor-java.jar", &name, "outputs"])
+        let executor = get_java_executor_path();
+        execute_command(Runtime::Java, "java", &["-jar", executor.to_str().unwrap(), &name, "outputs"])
     }
 
     /// Execute this test on the Rust runtime
     fn execute_rust(&self) -> Result<TestResultOnRuntime, Error> {
-        let mut program = get_local_dir();
-        program.push("executor-rust");
-        let ext = get_system_ext_exe();
-        if !ext.is_empty() {
-            program.set_extension(ext);
-        }
+        let program = get_rust_executor_path();
         let name = to_snake_case(&self.name);
         execute_command(Runtime::Rust, program.to_str().unwrap(), &[&name, "outputs"])
     }
@@ -574,7 +572,8 @@ impl ParsingTest {
             to_upper_camel_case(&self.name),
             to_upper_camel_case(&self.name)
         );
-        execute_command(Runtime::Net, "mono", &["executor-net.exe", &name, self.verb.as_str()])
+        let executor = get_net_executor_path();
+        execute_command(Runtime::Net, "mono", &[executor.to_str().unwrap(), &name, self.verb.as_str()])
     }
 
     #[cfg(target_os = "windows")]
@@ -584,27 +583,24 @@ impl ParsingTest {
             to_upper_camel_case(&self.name),
             to_upper_camel_case(&self.name)
         );
-        execute_command(Runtime::Net, "executor-net.exe", &[&name, self.verb.as_str()])
+        let executor = get_net_executor_path();
+        execute_command(Runtime::Net, executor.to_str().unwrap(), &[&name, self.verb.as_str()])
     }
 
     /// Execute this test on the Java runtime
     fn execute_java(&self) -> Result<TestResultOnRuntime, Error> {
         let name = format!("{}.{}Parser", to_snake_case(&self.name), to_upper_camel_case(&self.name));
+        let executor = get_java_executor_path();
         execute_command(
             Runtime::Java,
             "java",
-            &["-jar", "executor-java.jar", &name, self.verb.as_str()],
+            &["-jar", executor.to_str().unwrap(), &name, self.verb.as_str()],
         )
     }
 
     /// Execute this test on the Rust runtime
     fn execute_rust(&self) -> Result<TestResultOnRuntime, Error> {
-        let mut program = get_local_dir();
-        program.push("executor-rust");
-        let ext = get_system_ext_exe();
-        if !ext.is_empty() {
-            program.set_extension(ext);
-        }
+        let program = get_rust_executor_path();
         let name = to_snake_case(&self.name);
         execute_command(Runtime::Rust, program.to_str().unwrap(), &[&name, self.verb.as_str()])
     }
@@ -614,6 +610,7 @@ impl ParsingTest {
 fn execute_command(runtime: Runtime, program: &str, args: &[&str]) -> Result<TestResultOnRuntime, Error> {
     let mut command = Command::new(program);
     command.args(args);
+    println!("{:?}", command);
     let start_time = Instant::now();
     let output = command.output()?;
     let stdout = String::from_utf8_lossy(&output.stdout);
@@ -690,4 +687,49 @@ fn get_repo_root() -> PathBuf {
         path.pop();
     }
     path
+}
+
+fn get_rust_executor_path() -> PathBuf {
+    let mut program = get_local_dir();
+
+    if program.ends_with("tests-results") {
+        // we are in tests-results
+        program.push("executor-rust");
+    } else if program.ends_with("target/debug") {
+        // we are in debug mode
+        program.push("hime_tests_executor_rust");
+    }
+
+    let ext = get_system_ext_exe();
+    if !ext.is_empty() {
+        program.set_extension(ext);
+    }
+
+    program
+}
+
+fn get_net_executor_path() -> PathBuf {
+    let program = get_local_dir();
+
+    if program.ends_with("tests-results") {
+        // we are in tests-results
+        return PathBuf::from("executor-net.exe");
+    } else if program.ends_with("target/debug") {
+        // we are in debug mode
+        return PathBuf::from("executor.exe");
+    }
+    PathBuf::from("")
+}
+
+fn get_java_executor_path() -> PathBuf {
+    let program = get_local_dir();
+
+    if program.ends_with("tests-results") {
+        // we are in tests-results
+        return PathBuf::from("executor-java.jar");
+    } else if program.ends_with("target/debug") {
+        // we are in debug mode
+        return PathBuf::from("hime-test-executor-4.4.0-SNAPSHOT.jar");
+    }
+    PathBuf::from("")
 }
