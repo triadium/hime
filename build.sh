@@ -22,6 +22,7 @@ dotnet restore "$ROOT/tests-executor-net"
 (export FrameworkPathOverride="$MONO461"; dotnet build "$ROOT/tests-executor-net" -c Release -f net461)
 
 echo "-- Java components --"
+mvn -f "$ROOT/jar-loader/pom.xml" clean install -Dgpg.skip=true -Duser.home="$HOME"
 mvn -f "$ROOT/runtime-java/pom.xml" clean install -Dgpg.skip=true -Duser.home="$HOME"
 mvn -f "$ROOT/tests-executor-java/pom.xml" clean verify -Dgpg.skip=true -Duser.home="$HOME"
 

@@ -356,10 +356,7 @@ public class Program {
         if (!f.exists())
             return false;
         try {
-            URL url = f.toURI().toURL();
-            Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
-            addURL.setAccessible(true);
-            addURL.invoke(ClassLoader.getSystemClassLoader(), url);
+            ca.cgjennings.jvm.JarLoader.addToClassPath(f);
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
