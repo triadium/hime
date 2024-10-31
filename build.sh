@@ -35,6 +35,7 @@ cp "$ROOT/tests-executor-net/bin/Release/net461/Hime.Redist.dll" "$ROOT/tests-re
 cp "$ROOT/tests-executor-net/bin/Release/net461/executor-net.exe" "$ROOT/tests-results/executor-net.exe"
 cp $ROOT/tests-executor-java/target/hime-test-executor-*.jar "$ROOT/tests-results/executor-java.jar"
 cp $ROOT/tests-executor-java/target/dependency/*.jar "$ROOT/tests-results/"
+mv $ROOT/tests-results/jar-loader-*.jar "$ROOT/tests-results/jar-loader.jar"
 cp "$ROOT/target/debug/hime_tests_executor_rust" "$ROOT/tests-results/executor-rust"
 
 # Execute the tests

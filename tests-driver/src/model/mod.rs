@@ -441,7 +441,17 @@ impl OutputTest {
     fn execute_java(&self) -> Result<TestResultOnRuntime, Error> {
         let name = format!("{}.{}Parser", to_snake_case(&self.name), to_upper_camel_case(&self.name));
         let executor = get_java_executor_path();
-        execute_command(Runtime::Java, "java", &["-jar", executor.to_str().unwrap(), &name, "outputs"])
+        execute_command(
+            Runtime::Java,
+            "java",
+            &[
+                "-javaagent:jar-loader.jar",
+                "-jar",
+                executor.to_str().unwrap(),
+                &name,
+                "outputs",
+            ],
+        )
     }
 
     /// Execute this test on the Rust runtime
@@ -594,7 +604,13 @@ impl ParsingTest {
         execute_command(
             Runtime::Java,
             "java",
-            &["-jar", executor.to_str().unwrap(), &name, self.verb.as_str()],
+            &[
+                "-javaagent:jar-loader.jar",
+                "-jar",
+                executor.to_str().unwrap(),
+                &name,
+                self.verb.as_str(),
+            ],
         )
     }
 
