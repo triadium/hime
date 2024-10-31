@@ -22,9 +22,10 @@ The generated parsers require a runtime, available for the following platforms:
 * [JVM](https://central.sonatype.com/artifact/fr.cenotelie.hime/hime-redist)
 * [Rust](https://crates.io/crates/hime_redist)
 
-## Parser generator
+## Parser generator ##
 
 The parser generator (himecc) has native builds for Windows, MacOS and Linux.
+
 * [Windows](https://cenotelie.s3.fr-par.scw.cloud/hime/stable/windows/himecc.exe)
 * [Linux](https://cenotelie.s3.fr-par.scw.cloud/hime/stable/linux-musl/himecc)
 * [MacOS](https://cenotelie.s3.fr-par.scw.cloud/hime/stable/macos/himecc)
@@ -42,45 +43,42 @@ See all download options in [the download page of the doc](https://cenotelie.fr/
 * [Complete user documentation](https://cenotelie.fr/projects/hime)
 * [Grammar library](https://github.com/cenotelie/hime-grams)
 
-
-## License
+## License ##
 
 All software is available under the terms of the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 ## Repository structure ##
 
 * Runtime implementations
-	* `runtime-net`: .Net implementation of the runtime.
-	* `runtime-java`: Java implementation of the runtime.
-	* `runtime-rust`: Rust implementation of the runtime.
+  * `runtime-net`: .Net implementation of the runtime.
+  * `runtime-java`: Java implementation of the runtime.
+  * `runtime-rust`: Rust implementation of the runtime.
 * SDK
-	* `sdk-rust`: Rust implementation of the SDK for parser generation.
-	* `sdk-debugger`: CLI tool to inspect and debug generated binary automata.
-	* `sdk-unicode-gen`: CLI tool to generate the code to be put in `sdk-rust` related to unicode blocks and categories.
+  * `sdk-rust`: Rust implementation of the SDK for parser generation.
+  * `sdk-debugger`: CLI tool to inspect and debug generated binary automata.
+  * `sdk-unicode-gen`: CLI tool to generate the code to be put in `sdk-rust` related to unicode blocks and categories.
 * Final tools
-	* `himecc`: Rust implementation of the parser generator CLI.
-	* `parseit`: Rust implementation of the tool for parsing bits of texts using a previously generated parser assembly.
-	* `langserv`: Language server for the Hime grammar language.
+  * `himecc`: Rust implementation of the parser generator CLI.
+  * `parseit`: Rust implementation of the tool for parsing bits of texts using a previously generated parser assembly.
+  * `langserv`: Language server for the Hime grammar language.
 * Tests
-	* `tests-driver`: Sources of the tests driver for all runtime tests.
-	* `tests-executor-net`: Sources of the test executor for the .Net runtime implementation.
-	* `tests-executor-java`: Sources of the test executor for the Java runtime implementation.
-	* `tests-executor-rust`: Sources of the test executor for the Rust runtime implementation.
+  * `tests-driver`: Sources of the tests driver for all runtime tests.
+  * `tests-executor-net`: Sources of the test executor for the .Net runtime implementation.
+  * `tests-executor-java`: Sources of the test executor for the Java runtime implementation.
+  * `tests-executor-rust`: Sources of the test executor for the Rust runtime implementation.
 * Others
-	* `.assets`: Contains some extra products, e.g. standard grammars.
-	* `.releng`: Contains the release engineering artifacts.
-
+  * `.assets`: Contains some extra products, e.g. standard grammars.
+  * `.releng`: Contains the release engineering artifacts.
 
 ## How to build ##
 
 To build the code and execute all tests, run
 
-```
-$ sh build.sh
+```bash
+sh build.sh
 ```
 
 Note that the development environment is fully dockerized and executing this command requires docker and will pull the required docker image if not locally available.
-
 
 ## How can I contribute? ##
 
