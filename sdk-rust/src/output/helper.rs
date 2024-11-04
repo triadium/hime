@@ -247,6 +247,11 @@ pub fn get_namespace_net(input: &str) -> String {
     }
 }
 
+#[must_use]
+pub fn get_namespace_u3d(input: &str) -> String {
+    get_namespace_net(input)
+}
+
 /// Gets the Java compatible name for the specified namespace
 pub fn get_namespace_java(input: &str) -> String {
     if input.contains("::") {

@@ -65,6 +65,7 @@ pub fn main() -> miette::Result<()> {
                 .required(false)
                 .value_parser([
                     "net",
+                    "u3d",
                     "java",
                     "rust"
                 ])
@@ -187,6 +188,7 @@ pub fn main() -> miette::Result<()> {
     }
     match matches.get_one::<String>("output_target").map(String::as_str) {
         Some("net") => task.output_target = Some(Runtime::Net),
+        Some("u3d") => task.output_target = Some(Runtime::Unity3d),
         Some("java") => task.output_target = Some(Runtime::Java),
         Some("rust") => task.output_target = Some(Runtime::Rust),
         _ => {}

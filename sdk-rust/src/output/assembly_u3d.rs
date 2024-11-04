@@ -26,7 +26,7 @@ use crate::grammars::Grammar;
 use crate::output::helper;
 use crate::{output, CompilationTask};
 
-const MANIFEST: &[u8] = include_bytes!("assembly_net.csproj");
+const MANIFEST: &[u8] = include_bytes!("assembly_u3d.csproj");
 
 /// Build the .Net assembly for the specified units
 pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), Error> {
@@ -37,15 +37,15 @@ pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), 
 
     let assembly_name;
     if units.len() == 1 {
-        assembly_name = format!("{}", helper::to_upper_camel_case(&units[0].1.name));
+        assembly_name = format!("Unity.{}", helper::to_upper_camel_case(&units[0].1.name));
     } else {
-        assembly_name = String::from("Parsers");
+        assembly_name = String::from("Unity.Parsers");
     }
 
     execute_dotnet_command(
         &project_folder,
         "build",
-        &["-c", "Release", format!("-p:DotNetAssemblyName={}", assembly_name).as_str()],
+        &["-c", "Release", format!("-p:UnityAssemblyName={}", assembly_name).as_str()],
         task.output_target_runtime_path.as_deref(),
     )?;
     // copy the output

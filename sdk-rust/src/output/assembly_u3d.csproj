@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Build properties -->
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Hime.Generated</RootNamespace>
+    <AssemblyName Condition=" '$(UnityAssemblyName)' == '' ">Hime.Generated</AssemblyName>
+    <AssemblyName Condition=" '$(UnityAssemblyName)' != '' ">$(UnityAssemblyName)</AssemblyName>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectCapability Include="Unity" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hime.Redist" Version="4.4.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.19f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.19f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <RestoreSources>https://api.nuget.org/v3/index.json;$(HimeLocalNuget)</RestoreSources>
+  </PropertyGroup>
+</Project>

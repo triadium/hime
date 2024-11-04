@@ -392,6 +392,8 @@ impl Mode {
 pub enum Runtime {
     /// The .Net platform
     Net,
+    /// The Unity 3D .Net platform
+    Unity3d,
     /// The Java platform
     Java,
     /// The Rust language
@@ -481,12 +483,18 @@ impl<'a> CompilationTask<'a> {
             None => match grammar.get_option(OPTION_RUNTIME) {
                 Some(option) => match option.value.as_ref() {
                     "net" => Ok(Runtime::Net),
+                    "u3d" => Ok(Runtime::Unity3d),
                     "java" => Ok(Runtime::Java),
                     "rust" => Ok(Runtime::Rust),
                     _ => Err(Error::InvalidOption(
                         grammar_index,
                         OPTION_RUNTIME.to_string(),
-                        vec![String::from("net"), String::from("java"), String::from("rust")],
+                        vec![
+                            String::from("net"),
+                            String::from("u3d"),
+                            String::from("java"),
+                            String::from("rust"),
+                        ],
                     )),
                 },
                 None => Ok(Runtime::Net),
@@ -596,6 +604,7 @@ impl<'a> CompilationTask<'a> {
         let mut errors = Vec::new();
         // output assemblies
         self.execute_output_assembly(&data.grammars, Runtime::Net, &mut errors);
+        self.execute_output_assembly(&data.grammars, Runtime::Unity3d, &mut errors);
         self.execute_output_assembly(&data.grammars, Runtime::Java, &mut errors);
         self.execute_output_assembly(&data.grammars, Runtime::Rust, &mut errors);
         if errors.is_empty() {

@@ -20,15 +20,18 @@
 mod assembly_java;
 mod assembly_net;
 mod assembly_rust;
+mod assembly_u3d;
 pub mod helper;
 mod lexer_data;
 mod lexer_java;
 mod lexer_net;
 mod lexer_rust;
+mod lexer_u3d;
 mod parser_data;
 mod parser_java;
 mod parser_net;
 mod parser_rust;
+mod parser_u3d;
 
 use std::env;
 use std::fs::File;
@@ -74,6 +77,7 @@ pub fn output_grammar_artifacts(
     };
     let nmspace = match runtime {
         Runtime::Net => helper::get_namespace_net(&nmspace),
+        Runtime::Unity3d => helper::get_namespace_u3d(&nmspace),
         Runtime::Java => helper::get_namespace_java(&nmspace),
         Runtime::Rust => helper::get_namespace_rust(&nmspace),
     };
@@ -128,6 +132,30 @@ pub fn output_grammar_artifacts(
             if let Err(error) = parser_net::write(
                 output_path.as_ref(),
                 format!("{}Parser.cs", helper::to_upper_camel_case(&grammar.name)),
+                grammar,
+                &data.expected,
+                data.method,
+                &nmspace,
+                modifier,
+            ) {
+                return Err(vec![error]);
+            }
+        }
+        Runtime::Unity3d => {
+            if let Err(error) = lexer_u3d::write(
+                output_path.as_ref(),
+                format!("Unity.{}Lexer.cs", helper::to_upper_camel_case(&grammar.name)),
+                grammar,
+                &data.expected,
+                data.separator,
+                &nmspace,
+                modifier,
+            ) {
+                return Err(vec![error]);
+            }
+            if let Err(error) = parser_u3d::write(
+                output_path.as_ref(),
+                format!("Unity.{}Parser.cs", helper::to_upper_camel_case(&grammar.name)),
                 grammar,
                 &data.expected,
                 data.method,
@@ -283,6 +311,18 @@ pub fn get_sources(task: &CompilationTask, grammar: &Grammar, grammar_index: usi
             build_file(output_path.as_ref(), get_lexer_bin_name_net(grammar)),
             build_file(output_path.as_ref(), get_parser_bin_name_net(grammar)),
         ],
+        Runtime::Unity3d => vec![
+            build_file(
+                output_path.as_ref(),
+                format!("Unity.{}Lexer.cs", helper::to_upper_camel_case(&grammar.name)),
+            ),
+            build_file(
+                output_path.as_ref(),
+                format!("Unity.{}Parser.cs", helper::to_upper_camel_case(&grammar.name)),
+            ),
+            build_file(output_path.as_ref(), get_lexer_bin_name_u3d(grammar)),
+            build_file(output_path.as_ref(), get_parser_bin_name_u3d(grammar)),
+        ],
         Runtime::Java => vec![
             build_file(
                 output_path.as_ref(),
@@ -322,6 +362,7 @@ fn build_file(path: Option<&String>, file_name: String) -> PathBuf {
 pub fn build_assembly(task: &CompilationTask, units: &[(usize, &Grammar)], runtime: Runtime) -> Result<(), Error> {
     match runtime {
         Runtime::Net => assembly_net::build(task, units),
+        Runtime::Unity3d => assembly_u3d::build(task, units),
         Runtime::Java => assembly_java::build(task, units),
         Runtime::Rust => assembly_rust::build(task, units),
     }
@@ -331,6 +372,7 @@ pub fn build_assembly(task: &CompilationTask, units: &[(usize, &Grammar)], runti
 fn get_lexer_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
     match runtime {
         Runtime::Net => get_lexer_bin_name_net(grammar),
+        Runtime::Unity3d => get_lexer_bin_name_u3d(grammar),
         Runtime::Java => get_lexer_bin_name_java(grammar),
         Runtime::Rust => get_lexer_bin_name_rust(grammar),
     }
@@ -339,6 +381,16 @@ fn get_lexer_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
 /// Gets the name of the file for the lexer automaton in .Net
 fn get_lexer_bin_name_net(grammar: &Grammar) -> String {
     format!("{}Lexer.bin", helper::to_upper_camel_case(&grammar.name))
+}
+
+/// Gets the name of the file for the lexer automaton in Unity 3D .Net
+fn get_lexer_bin_name_u3d(grammar: &Grammar) -> String {
+    format!("{}Lexer.bytes", helper::to_upper_camel_case(&grammar.name))
+}
+
+/// Gets the name of the file for the lexer automaton in Unity 3D .Net without extension
+fn get_lexer_bin_name_woe_u3d(grammar: &Grammar) -> String {
+    format!("{}Lexer", helper::to_upper_camel_case(&grammar.name))
 }
 
 /// Gets the name of the file for the lexer automaton in Java
@@ -355,6 +407,7 @@ fn get_lexer_bin_name_rust(grammar: &Grammar) -> String {
 fn get_parser_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
     match runtime {
         Runtime::Net => get_parser_bin_name_net(grammar),
+        Runtime::Unity3d => get_parser_bin_name_u3d(grammar),
         Runtime::Java => get_parser_bin_name_java(grammar),
         Runtime::Rust => get_parser_bin_name_rust(grammar),
     }
@@ -363,6 +416,16 @@ fn get_parser_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
 /// Gets the name of the file for the parser automaton in .Net
 fn get_parser_bin_name_net(grammar: &Grammar) -> String {
     format!("{}Parser.bin", helper::to_upper_camel_case(&grammar.name))
+}
+
+/// Gets the name of the file for the parser automaton in Unity 3D .Net
+fn get_parser_bin_name_u3d(grammar: &Grammar) -> String {
+    format!("{}Parser.bytes", helper::to_upper_camel_case(&grammar.name))
+}
+
+/// Gets the name of the file for the parser automaton in Unity 3D .Net without extension
+fn get_parser_bin_name_woe_u3d(grammar: &Grammar) -> String {
+    format!("{}Parser", helper::to_upper_camel_case(&grammar.name))
 }
 
 /// Gets the name of the file for the parser automaton in Java
