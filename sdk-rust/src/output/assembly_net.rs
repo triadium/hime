@@ -35,17 +35,16 @@ pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), 
     // compile
     execute_dotnet_command(&project_folder, "restore", &[], task.output_target_runtime_path.as_deref())?;
 
-    let assembly_name;
-    if units.len() == 1 {
-        assembly_name = format!("{}", helper::to_upper_camel_case(&units[0].1.name));
+    let assembly_name = if units.len() == 1 {
+        helper::to_upper_camel_case(&units[0].1.name).to_string()
     } else {
-        assembly_name = String::from("Parsers");
-    }
+        String::from("Parsers")
+    };
 
     execute_dotnet_command(
         &project_folder,
         "build",
-        &["-c", "Release", format!("-p:DotNetAssemblyName={}", assembly_name).as_str()],
+        &["-c", "Release", format!("-p:DotNetAssemblyName={assembly_name}").as_str()],
         task.output_target_runtime_path.as_deref(),
     )?;
     // copy the output
@@ -53,7 +52,7 @@ pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), 
     output_file.push("bin");
     output_file.push("Release");
     output_file.push("netstandard2.0");
-    output_file.push(format!("{}.dll", assembly_name));
+    output_file.push(format!("{assembly_name}.dll"));
     if units.len() == 1 {
         // only one grammar => output for the grammar
         let path = task.get_output_path_for(units[0].1);
@@ -61,7 +60,7 @@ pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), 
         if let Some(path) = path {
             final_path.push(path);
         }
-        final_path.push(format!("{}.dll", assembly_name));
+        final_path.push(format!("{assembly_name}.dll"));
         fs::copy(output_file, final_path)?;
     } else {
         // output the package
@@ -69,7 +68,7 @@ pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), 
         if let Some(path) = task.output_path.as_ref() {
             final_path.push(path);
         }
-        final_path.push(format!("{}.dll", assembly_name));
+        final_path.push(format!("{assembly_name}.dll"));
         fs::copy(output_file, final_path)?;
     }
     // cleanup the temp folder
