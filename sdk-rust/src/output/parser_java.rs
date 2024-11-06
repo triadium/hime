@@ -70,7 +70,6 @@ pub fn write(
     writeln!(writer, "import fr.cenotelie.hime.redist.SemanticAction;")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.SemanticBody;")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.Symbol;")?;
-    writeln!(writer, "import fr.cenotelie.hime.redist.parsers.InitializationException;")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.parsers.{automaton_type};")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.parsers.{parser_type};")?;
     writeln!(writer)?;
@@ -195,11 +194,22 @@ fn write_code_actions(writer: &mut dyn Write, grammar: &Grammar) -> Result<(), E
     writeln!(writer, "    /**")?;
     writeln!(writer, "     * Represents a set of semantic actions in this parser")?;
     writeln!(writer, "     */")?;
-    writeln!(writer, "    public static class Actions {{")?;
+    writeln!(writer, "    public static interface IActions {{")?;
     for action in &grammar.actions {
         writeln!(writer, "        /**")?;
         writeln!(writer, "         * The {} semantic action", &action.name)?;
         writeln!(writer, "         */")?;
+        writeln!(
+            writer,
+            "        public void {}(Symbol head, SemanticBody body);",
+            to_lower_camel_case(&action.name)
+        )?;
+    }
+    writeln!(writer)?;
+    writeln!(writer, "    }}")?;
+
+    writeln!(writer, "    private static class NoActions implements IActions {{")?;
+    for action in &grammar.actions {
         writeln!(
             writer,
             "        public void {}(Symbol head, SemanticBody body) {{}}",
@@ -212,7 +222,7 @@ fn write_code_actions(writer: &mut dyn Write, grammar: &Grammar) -> Result<(), E
     writeln!(writer, "    /**")?;
     writeln!(writer, "     * Represents a set of empty semantic actions (do nothing)")?;
     writeln!(writer, "     */")?;
-    writeln!(writer, "    private static final Actions noActions = new Actions();")?;
+    writeln!(writer, "    private static final NoActions noActions = new NoActions();")?;
 
     writeln!(writer, "    /**")?;
     writeln!(
@@ -225,7 +235,7 @@ fn write_code_actions(writer: &mut dyn Write, grammar: &Grammar) -> Result<(), E
     writeln!(writer, "     */")?;
     writeln!(
         writer,
-        "    private static SemanticAction[] getUserActions(final Actions input) {{"
+        "    private static SemanticAction[] getUserActions(final IActions input) {{"
     )?;
     writeln!(
         writer,
@@ -296,7 +306,7 @@ fn write_code_constructors(writer: &mut dyn Write, grammar: &Grammar, method: Pa
         writeln!(writer, "     */")?;
         writeln!(
             writer,
-            "    public {}Parser({}Lexer lexer, Actions actions) {}{{",
+            "    public {}Parser({}Lexer lexer, IActions actions) {}{{",
             &name, &name, exception
         )?;
         writeln!(
@@ -332,7 +342,7 @@ fn write_code_visitor(writer: &mut dyn Write, grammar: &Grammar, expected: &Term
     writeln!(writer, "    /*")?;
     writeln!(writer, "     * Visitor interface")?;
     writeln!(writer, "     */")?;
-    writeln!(writer, "    public static class Visitor {{")?;
+    writeln!(writer, "    public static interface IVisitor {{")?;
     for terminal_ref in &expected.content {
         let Some(terminal) = grammar.get_terminal(terminal_ref.sid()) else {
             continue;
@@ -342,7 +352,7 @@ fn write_code_visitor(writer: &mut dyn Write, grammar: &Grammar, expected: &Term
         }
         writeln!(
             writer,
-            "        public void onTerminal{}(ASTNode node) {{}}",
+            "        public void onTerminal{}(ASTNode node);",
             to_upper_camel_case(&terminal.name)
         )?;
     }
@@ -352,14 +362,14 @@ fn write_code_visitor(writer: &mut dyn Write, grammar: &Grammar, expected: &Term
         }
         writeln!(
             writer,
-            "        public void onVariable{}(ASTNode node) {{}}",
+            "        public void onVariable{}(ASTNode node);",
             to_upper_camel_case(&variable.name)
         )?;
     }
     for symbol in &grammar.virtuals {
         writeln!(
             writer,
-            "        public void onVirtual{}(ASTNode node) {{}}",
+            "        public void onVirtual{}(ASTNode node);",
             to_upper_camel_case(&symbol.name)
         )?;
     }
@@ -371,7 +381,10 @@ fn write_code_visitor(writer: &mut dyn Write, grammar: &Grammar, expected: &Term
     writeln!(writer, "     * @param result  The parse result")?;
     writeln!(writer, "     * @param visitor The visitor to use")?;
     writeln!(writer, "     */")?;
-    writeln!(writer, "    public static void visit(ParseResult result, Visitor visitor) {{")?;
+    writeln!(
+        writer,
+        "    public static void visit(ParseResult result, IVisitor visitor) {{"
+    )?;
     writeln!(writer, "        visitASTNode(result.getRoot(), visitor);")?;
     writeln!(writer, "    }}")?;
     writeln!(writer)?;
@@ -383,7 +396,7 @@ fn write_code_visitor(writer: &mut dyn Write, grammar: &Grammar, expected: &Term
     writeln!(writer, "     */")?;
     writeln!(
         writer,
-        "    public static void visitASTNode(ASTNode node, Visitor visitor) {{"
+        "    public static void visitASTNode(ASTNode node, IVisitor visitor) {{"
     )?;
     writeln!(writer, "        for (ASTNode child : node.getChildren())")?;
     writeln!(writer, "            visitASTNode(child, visitor);")?;
