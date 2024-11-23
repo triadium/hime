@@ -18,6 +18,7 @@
 namespace Hime.Redist {
 	export type uint = number
 	export type int = number
+	export const SystemSymbol = globalThis.Symbol
 
 	export class UInt {
 		static from(x: number): uint { return x >>> 0 }
