@@ -1,0 +1,36 @@
+/*******************************************************************************
+ * Copyright (c) 2024 Triadium (triadium.ru)
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General
+ * Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
+namespace Hime.Redist {
+	/// <summary>
+	/// The possible types of symbol
+	/// </summary>
+	export enum SymbolType {
+		/// <summary>
+		/// A terminal symbol, defined in the original grammar
+		/// </summary>
+		Terminal = 1,
+		/// <summary>
+		/// A variable symbol, defined in the original grammar
+		/// </summary>
+		Variable = 2,
+		/// <summary>
+		/// A virtual symbol, defined in the original grammar
+		/// </summary>
+		Virtual = 3
+	}
+}
