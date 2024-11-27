@@ -16,8 +16,15 @@
  ******************************************************************************/
 
 namespace Hime.Redist {
+	export type ubyte = number
+	export type byte = number
+	export type ushort = number
+	export type short = number
 	export type uint = number
 	export type int = number
+	export type ulong = bigint
+	export type long = bigint
+
 	export const SystemSymbol = globalThis.Symbol
 
 	export class UInt {
@@ -26,5 +33,13 @@ namespace Hime.Redist {
 
 	export class Int {
 		static from(x: number): int { return x >> 0 }
+	}
+
+	export class UShort {
+		static from(x: number): ushort { return (x >> 0) & 0xFFFF }
+	}
+
+	export class Short {
+		static from(x: number): short { return x << 16 >> 16 }
 	}
 }
