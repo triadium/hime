@@ -47,7 +47,7 @@ namespace Hime.Redist {
 		/// </summary>
 		/// <param name="span">A span in this text</param>
 		/// <returns>The substring</returns>
-		abstract GetValue(span: TextSpan): string
+		abstract GetValueOfSpan(span: TextSpan): string
 
 		/// <summary>
 		/// Gets the starting index of the i-th line
@@ -93,13 +93,13 @@ namespace Hime.Redist {
 		/// <param name="position">The position in this text</param>
 		/// <param name="length">The length of the element to contextualize</param>
 		/// <returns>The context description</returns>
-		abstract GetContext(position: TextPosition, length: int): TextContext
+		abstract GetContextOfElement(position: TextPosition, length: int): TextContext
 
 		/// <summary>
 		/// Gets the context description for the current text at the specified span
 		/// </summary>
 		/// <param name="span">The span of text to contextualize</param>
 		/// <returns>The context description</returns>
-		abstract GetContext(span: TextSpan): TextContext
+		abstract GetContextOfSpan(span: TextSpan): TextContext
 	}
 }

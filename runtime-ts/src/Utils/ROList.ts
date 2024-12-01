@@ -48,6 +48,7 @@ namespace Hime.Redist.Utils {
 		/// <param name="original">The original items</param>
 		constructor(original: Array<T>) {
 			const self = this
+
 			this.inner = original
 			return new Proxy(this, {
 				get(target, prop) {

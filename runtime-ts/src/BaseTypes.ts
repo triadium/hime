@@ -25,6 +25,8 @@ namespace Hime.Redist {
 	export type ulong = bigint
 	export type long = bigint
 
+	export type char = ushort
+
 	export const SystemSymbol = globalThis.Symbol
 
 	export class UInt {
