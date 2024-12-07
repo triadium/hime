@@ -29,18 +29,12 @@ namespace Hime.Redist.Utils {
 		/// <summary>
 		/// The index signature
 		/// </summary>		
-		readonly [n: number]: T;
+		readonly [n: number]: T
 
 		/// <summary>
 		/// Gets the number of elements in this list
 		/// </summary>
 		get Count(): int { return this.inner.length }
-
-		/// <summary>
-		/// Gets the element at the specified index
-		/// </summary>
-		/// <param name="index">An index in this list</param>
-		// public T this[int index] { get { return inner[index]; } }
 
 		/// <summary>
 		/// Initializes this list
@@ -51,11 +45,16 @@ namespace Hime.Redist.Utils {
 
 			this.inner = original
 			return new Proxy(this, {
+				/// <summary>
+				/// Gets the element at the specified index
+				/// </summary>
+				/// <param name="index">An index in this list</param>
 				get(target, prop) {
 					if (typeof prop === 'string' && !isNaN(parseInt(prop, 10))) {
-						return self.inner[prop as unknown as number];
+						// FIXME: self.inner.at(index)
+						return self.inner[prop as unknown as number]
 					}
-					return (target as unknown as any)[prop];
+					return (target as unknown as any)[prop]
 				}
 			})
 		}

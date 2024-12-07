@@ -45,8 +45,8 @@ namespace Hime.Redist {
 		/// <param name="index">The span's index</param>
 		/// <param name="length">The span's length</param>
 		constructor(index: number, length: number) {
-			this.index = Int.from(index);
-			this.length = Int.from(length);
+			this.index = Int.from(index)
+			this.length = Int.from(length)
 		}
 
 		/// <summary>

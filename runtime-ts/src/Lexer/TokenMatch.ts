@@ -17,36 +17,39 @@
 
 namespace Hime.Redist.Lexer {
 	/// <summary>
-	/// Represents the information of a terminal matched at the state of a lexer's automaton
+	/// Represents a match in the input
 	/// </summary>
-	export class MatchedTerminal {
+	export class TokenMatch {
 		/// <summary>
-		/// The context
+		/// The matching DFA state
 		/// </summary>
-		private readonly context: ushort
+		readonly state: int
 		/// <summary>
-		/// The terminal's index
+		/// Length of the matched input
 		/// </summary>
-		private readonly index: ushort
+		readonly length: int
 
 		/// <summary>
-		/// Gets the context required for the terminal to be matched
+		/// Gets whether this is match indicates a success
 		/// </summary>
-		get Context(): int { return this.context }
+		get IsSuccess(): boolean { return this.state != Automaton.DEAD_STATE }
 
 		/// <summary>
-		/// Gets the index of the matched terminal in the terminal table of the associated lexer
+		/// Initializes a match
 		/// </summary>
-		get Index(): int { return this.index }
+		/// <param name='state'>The matching DFA state</param>
+		/// <param name='length'>Length of the matched input</param>
+		constructor(state: int, length: int) {
+			this.state = state
+			this.length = length
+		}
 
 		/// <summary>
-		/// Initializes this matched terminal data
+		/// Initializes a failing match
 		/// </summary>
-		/// <param name="context">The context</param>
-		/// <param name="index">The terminal's index</param>
-		constructor(context: ushort, index: ushort) {
-			this.context = context
-			this.index = index
+		/// <param name='length'>The number of characters to advance in the input</param>
+		static FailingMatch(length: int): TokenMatch {
+			return new TokenMatch(Automaton.DEAD_STATE, length)
 		}
 	}
 }

@@ -53,8 +53,8 @@ namespace Hime.Redist {
 		/// <param name="content">The text being begin represented</param>
 		/// <param name="pointer">The pointer textual representation</param>
 		constructor(content: string, pointer: string) {
-			this.content = content;
-			this.pointer = pointer;
+			this.content = content
+			this.pointer = pointer
 		}
 	}
 }

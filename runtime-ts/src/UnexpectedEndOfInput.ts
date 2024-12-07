@@ -15,38 +15,32 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-namespace Hime.Redist.Lexer {
+namespace Hime.Redist {
 	/// <summary>
-	/// Represents the information of a terminal matched at the state of a lexer's automaton
+	/// Represents the unexpected of the input text while more characters were expected
 	/// </summary>
-	export class MatchedTerminal {
+	export class UnexpectedEndOfInput extends ParseError {
 		/// <summary>
-		/// The context
+		/// Gets the error's type
 		/// </summary>
-		private readonly context: ushort
-		/// <summary>
-		/// The terminal's index
-		/// </summary>
-		private readonly index: ushort
+		get Type(): ParseErrorType { return ParseErrorType.UnexpectedEndOfInput }
 
 		/// <summary>
-		/// Gets the context required for the terminal to be matched
+		/// Gets the error's length in the input (in number of characters)
 		/// </summary>
-		get Context(): int { return this.context }
+		get Length(): int { return 0 }
 
 		/// <summary>
-		/// Gets the index of the matched terminal in the terminal table of the associated lexer
+		/// Gets the error's message
 		/// </summary>
-		get Index(): int { return this.index }
+		get Message(): string { return "Unexpected end of input" }
 
 		/// <summary>
-		/// Initializes this matched terminal data
+		/// Initializes this error
 		/// </summary>
-		/// <param name="context">The context</param>
-		/// <param name="index">The terminal's index</param>
-		constructor(context: ushort, index: ushort) {
-			this.context = context
-			this.index = index
+		/// <param name="position">Error's position in the input</param>
+		constructor(position: TextPosition) {
+			super(position)
 		}
 	}
 }

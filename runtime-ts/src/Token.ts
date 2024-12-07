@@ -65,8 +65,8 @@ namespace Hime.Redist {
 		/// <param name="repository">The repository containing the token</param>
 		/// <param name="index">The token's index</param>
 		constructor(repository: TokenRepository, index: int) {
-			this.repository = repository;
-			this.index = index;
+			this.repository = repository
+			this.index = index
 		}
 
 		/// <summary>

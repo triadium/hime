@@ -62,7 +62,7 @@ namespace Hime.Redist.Lexer {
 		/// <param name="state">A state's index</param>
 		/// <returns>The data of the specified state</returns>
 		GetState(state: int): AutomatonState {
-			return new AutomatonState(this.states, this.table[state]!);
+			return new AutomatonState(this.states, this.table[state]!)
 		}
 
 		/// <summary>

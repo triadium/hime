@@ -17,35 +17,35 @@
 
 namespace Hime.Redist.Lexer {
 	/// <summary>
-	/// Represents the information of a terminal matched at the state of a lexer's automaton
+	/// Represents the kernel of a token, i.e. the identifying information of a token
 	/// </summary>
-	export class MatchedTerminal {
+	export class TokenKernel {
 		/// <summary>
-		/// The context
+		/// The identifier of the matched terminal
 		/// </summary>
-		private readonly context: ushort
+		private readonly terminalID: int
 		/// <summary>
-		/// The terminal's index
+		/// The token's index in its repository
 		/// </summary>
-		private readonly index: ushort
+		private readonly index: int
 
 		/// <summary>
-		/// Gets the context required for the terminal to be matched
+		/// Gets the identifier of the matched terminal
 		/// </summary>
-		get Context(): int { return this.context }
+		get TerminalID(): int { return this.terminalID }
 
 		/// <summary>
-		/// Gets the index of the matched terminal in the terminal table of the associated lexer
+		/// Gets the token's index in its repository
 		/// </summary>
 		get Index(): int { return this.index }
 
 		/// <summary>
-		/// Initializes this matched terminal data
+		/// Initializes this kernel
 		/// </summary>
-		/// <param name="context">The context</param>
-		/// <param name="index">The terminal's index</param>
-		constructor(context: ushort, index: ushort) {
-			this.context = context
+		/// <param name="id">The identifier of the matched terminal</param>
+		/// <param name="index">The token's index in its repository</param>
+		constructor(id: int, index: int) {
+			this.terminalID = id
 			this.index = index
 		}
 	}

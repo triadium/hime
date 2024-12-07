@@ -29,19 +29,19 @@ namespace Hime.Redist.Utils {
 		/// <summary>
 		/// The number of bits allocated to the lowest part of the index (within a chunk)
 		/// </summary>
-		private static UPPER_SHIFT: int = 8;
+		private static UPPER_SHIFT: int = 8
 		/// <summary>
 		/// The size of the chunks
 		/// </summary>
-		private static CHUNKS_SIZE: int = 1 << this.UPPER_SHIFT;
+		private static CHUNKS_SIZE: int = 1 << this.UPPER_SHIFT
 		/// <summary>
 		/// Bit mask for the lowest part of the index (within a chunk)
 		/// </summary>
-		private static LOWER_MASK: int = this.CHUNKS_SIZE - 1;
+		private static LOWER_MASK: int = this.CHUNKS_SIZE - 1
 		/// <summary>
 		/// Initial size of the higer array (pointers to the chunks)
 		/// </summary>
-		private static INIT_CHUNK_COUNT: int = this.CHUNKS_SIZE;
+		private static INIT_CHUNK_COUNT: int = this.CHUNKS_SIZE
 
 		/// <summary>
 		/// The data
@@ -61,7 +61,7 @@ namespace Hime.Redist.Utils {
 		/// </summary>
 		/// <param name="index">Index of an item</param>
 		/// <returns>The value of the item at the given index</returns>
-		readonly [n: number]: T;
+		readonly [n: number]: T
 
 		/// <summary>
 		/// Initializes this list
@@ -72,7 +72,7 @@ namespace Hime.Redist.Utils {
 			this.chunks = new Array<T[]>(BigList.INIT_CHUNK_COUNT)
 			this.chunks[0] = new Array<T>(BigList.CHUNKS_SIZE)
 			this.chunkIndex = 0
-			this.cellIndex = 0;
+			this.cellIndex = 0
 
 			return new Proxy(this, {
 				get(target, prop) {
@@ -80,7 +80,7 @@ namespace Hime.Redist.Utils {
 					if (typeof index === 'number' && !isNaN(index)) {
 						return self.chunks[index >> BigList.UPPER_SHIFT]![index & BigList.LOWER_MASK]
 					}
-					return (target as unknown as any)[prop];
+					return (target as unknown as any)[prop]
 				},
 				set(target, prop, value) {
 					const index = typeof prop === 'string' ? parseInt(prop, 10) : Number.NaN
@@ -102,12 +102,6 @@ namespace Hime.Redist.Utils {
 			return (this.chunkIndex * BigList.CHUNKS_SIZE) + this.cellIndex
 		}
 
-		private ArrayCopy(srcArray: T[], srcIndex: int, dstArray: T[], dstIndex: int, length: int) {
-			for (let i = 0; i < length; ++i, ++srcIndex, ++dstIndex) {
-				dstArray[dstIndex] = srcArray[srcIndex]!
-			}
-		}
-
 		/// <summary>
 		/// Copies the specified range of items to the given buffer
 		/// </summary>
@@ -120,15 +114,15 @@ namespace Hime.Redist.Utils {
 			let indexLower = index & BigList.LOWER_MASK
 			while (indexLower + count >= BigList.CHUNKS_SIZE) {
 				// while we can copy chunks
-				const length = BigList.CHUNKS_SIZE - indexLower;
-				this.ArrayCopy(this.chunks[indexUpper]!, indexLower, buffer, start, length)
+				const length = BigList.CHUNKS_SIZE - indexLower
+				ArrayCopy(this.chunks[indexUpper]!, indexLower, buffer, start, length)
 				count -= length
 				start += length
 				indexUpper++
 				indexLower = 0
 			}
 			if (count > 0) {
-				this.ArrayCopy(this.chunks[indexUpper]!, indexLower, buffer, start, count)
+				ArrayCopy(this.chunks[indexUpper]!, indexLower, buffer, start, count)
 			}
 		}
 
@@ -140,7 +134,7 @@ namespace Hime.Redist.Utils {
 		Add(value: T): int {
 			if (this.cellIndex === BigList.CHUNKS_SIZE) { this.AddChunk() }
 
-			this.chunks[this.chunkIndex]![this.cellIndex] = value;
+			this.chunks[this.chunkIndex]![this.cellIndex] = value
 			const index = (this.chunkIndex << BigList.UPPER_SHIFT | this.cellIndex)
 			this.cellIndex++
 			return index
@@ -154,10 +148,11 @@ namespace Hime.Redist.Utils {
 		/// <param name="length">The number of values to store</param>
 		/// <returns>The index within this list at which the values have been added</returns>
 		Push(values: T[], index: int, length: int): int {
-			const start = this.Size;
-			if (length > 0)
-				this.DoCopy(values, index, length);
-			return start;
+			const start = this.Size
+			if (length > 0) {
+				this.DoCopy(values, index, length)
+			}
+			return start
 		}
 
 		/// <summary>
@@ -167,7 +162,7 @@ namespace Hime.Redist.Utils {
 		/// <param name="count">The number of items to copy</param>
 		/// <returns>The index within this list at which the values have been copied to</returns>
 		Duplicate(from: int, count: int): int {
-			const start = this.Size;
+			const start = this.Size
 			if (count <= 0) { return start }
 
 			let chunk = from >> BigList.UPPER_SHIFT     // The current chunk to copy from
@@ -181,7 +176,7 @@ namespace Hime.Redist.Utils {
 			}
 			this.DoCopy(this.chunks[chunk]!, cell, count)
 
-			return start;
+			return start
 		}
 
 		/// <summary>
@@ -206,13 +201,13 @@ namespace Hime.Redist.Utils {
 					this.AddChunk()
 					continue
 				}
-				this.ArrayCopy(values, index, this.chunks[this.chunkIndex]!, this.cellIndex, count)
+				ArrayCopy(values, index, this.chunks[this.chunkIndex]!, this.cellIndex, count)
 				index += count
 				length -= count
 				this.AddChunk()
 			}
-			this.ArrayCopy(values, index, this.chunks[this.chunkIndex]!, this.cellIndex, length);
-			this.cellIndex += length;
+			ArrayCopy(values, index, this.chunks[this.chunkIndex]!, this.cellIndex, length)
+			this.cellIndex += length
 		}
 
 		/// <summary>
@@ -222,13 +217,13 @@ namespace Hime.Redist.Utils {
 			if (this.chunkIndex == this.chunks.length - 1) {
 				this.chunks.length = this.chunks.length + BigList.INIT_CHUNK_COUNT
 			}
-			this.chunkIndex++;
-			let chunk = this.chunks[this.chunkIndex];
+			this.chunkIndex++
+			let chunk = this.chunks[this.chunkIndex]
 			if (chunk == null) {
 				chunk = new Array<T>(BigList.CHUNKS_SIZE)
-				this.chunks[this.chunkIndex] = chunk;
+				this.chunks[this.chunkIndex] = chunk
 			}
-			this.cellIndex = 0;
+			this.cellIndex = 0
 		}
 	}
 }

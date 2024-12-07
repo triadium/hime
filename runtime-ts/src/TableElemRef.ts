@@ -41,7 +41,7 @@ namespace Hime.Redist {
 		/// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.
 		/// </returns>
 		GetHashCode(): int {
-			return Int.from(this.data);
+			return Int.from(this.data)
 		}
 
 		/// <summary>

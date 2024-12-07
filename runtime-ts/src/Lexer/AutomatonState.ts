@@ -51,8 +51,8 @@ namespace Hime.Redist.Lexer {
 		/// <param name="table">The automaton table</param>
 		/// <param name="offset">The offset of this state within the table</param>
 		constructor(table: ushort[], offset: int) {
-			this.table = table;
-			this.offset = offset;
+			this.table = table
+			this.offset = offset
 		}
 
 		/// <summary>
@@ -94,10 +94,10 @@ namespace Hime.Redist.Lexer {
 				if (value >= this.table[current]! && value <= this.table[current + 1]!) {
 					return this.table[current + 2]!
 				}
-				current += 3;
+				current += 3
 			}
 
-			return Automaton.DEAD_STATE;
+			return Automaton.DEAD_STATE
 		}
 
 		/// <summary>

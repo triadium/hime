@@ -48,7 +48,7 @@ namespace Hime.Redist {
 		/// </summary>
 		/// <param name="index">An index in this repository</param>
 		/// <returns>The token at the specified index</returns>
-		readonly [n: number]: Token;
+		readonly [n: number]: Token
 
 		/// <summary>
 		/// Initializes this text
@@ -58,9 +58,9 @@ namespace Hime.Redist {
 		constructor(terminals: Utils.ROList<Symbol>, text: Text) {
 			const self = this
 
-			this.terminals = terminals;
-			this.text = text;
-			this.cells = new Utils.BigList<TokenRepositoryNested.Cell>();
+			this.terminals = terminals
+			this.text = text
+			this.cells = new Utils.BigList<TokenRepositoryNested.Cell>()
 
 			return new Proxy(this, {
 				get(target, prop) {
@@ -68,7 +68,7 @@ namespace Hime.Redist {
 					if (typeof index === 'number' && !isNaN(index)) {
 						return new Token(self, index)
 					}
-					return (target as unknown as any)[prop];
+					return (target as unknown as any)[prop]
 				}
 			})
 		}
@@ -82,7 +82,7 @@ namespace Hime.Redist {
 		/// <param name="index">A token's index</param>
 		/// <returns>The position in the text</returns>
 		GetPosition(index: int): TextPosition {
-			return this.text.GetPositionAt(this.cells[index]!.span.Index);
+			return this.text.GetPositionAt(this.cells[index]!.span.Index)
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@ namespace Hime.Redist {
 		/// <param name="token">A token's index</param>
 		/// <returns>The span in the text</returns>
 		GetSpan(token: int): TextSpan {
-			return this.cells[token]!.span;
+			return this.cells[token]!.span
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace Hime.Redist {
 		/// <param name="index">A token's index</param>
 		/// <returns>The context</returns>
 		GetContext(index: int): TextContext {
-			return this.text.GetContextOfSpan(this.cells[index]!.span);
+			return this.text.GetContextOfSpan(this.cells[index]!.span)
 		}
 
 		/// <summary>
@@ -109,7 +109,7 @@ namespace Hime.Redist {
 		/// <param name="index">A token's index</param>
 		/// <returns>The associated symbol</returns>
 		GetSymbol(index: int): Symbol {
-			return this.terminals[this.cells[index]!.terminal]!;
+			return this.terminals[this.cells[index]!.terminal]!
 		}
 
 		/// <summary>
@@ -118,7 +118,7 @@ namespace Hime.Redist {
 		/// <param name="index">A token's index</param>
 		/// <returns>The associated value</returns>
 		GetValue(index: int): string {
-			return this.text.GetValueOfSpan(this.cells[index]!.span);
+			return this.text.GetValueOfSpan(this.cells[index]!.span)
 		}
 
 		/// <summary>
@@ -127,27 +127,27 @@ namespace Hime.Redist {
 		/// <param name="index">An index within the input text</param>
 		/// <returns>The token, if any</returns>
 		FindTokenAt(index: int): Token | null {
-			const count = this.cells.Size;
+			const count = this.cells.Size
 			if (count == 0) { return null }
-			let l = 0;
-			let r = count - 1;
+			let l = 0
+			let r = count - 1
 			while (l <= r) {
-				const m = (l + r) / 2;
+				const m = (l + r) / 2
 				const cell = this.cells[m]!
 				if (index < cell.span.Index) {
 					// look on the left
-					r = m - 1;
+					r = m - 1
 				}
 				else if (index < cell.span.Index + cell.span.Length) {
 					// within the token
-					return new Token(this, m);
+					return new Token(this, m)
 				}
 				else {
 					// look on the right
-					l = m + 1;
+					l = m + 1
 				}
 			}
-			return null;
+			return null
 		}
 
 		/// <summary>
@@ -182,8 +182,8 @@ namespace Hime.Redist {
 			/// <param name="terminal">The terminal's index</param>
 			/// <param name="span">The token's span in the input</param>
 			constructor(terminal: int, span: TextSpan) {
-				this.terminal = terminal;
-				this.span = span;
+				this.terminal = terminal
+				this.span = span
 			}
 		}
 
@@ -201,7 +201,7 @@ namespace Hime.Redist {
 			/// </summary>
 			/// <param name="repository">The repository</param>
 			constructor(repository: TokenRepository) {
-				this.repository = repository;
+				this.repository = repository
 			}
 			*[SystemSymbol.iterator]() {
 				for (let i = 0; i < this.repository.Size; ++i) {

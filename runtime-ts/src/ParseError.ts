@@ -50,7 +50,7 @@ namespace Hime.Redist {
 		/// </summary>
 		/// <param name="position">Error's position in the input</param>
 		protected constructor(position: TextPosition) {
-			this.position = position;
+			this.position = position
 		}
 
 		/// <summary>

@@ -61,7 +61,7 @@ namespace Hime.Redist {
 		/// <param name="name">The symbol's name</param>
 		constructor(id: number, name: string) {
 			this.id = Int.from(id)
-			this.name = name;
+			this.name = name
 		}
 
 		/// <summary>
@@ -69,7 +69,7 @@ namespace Hime.Redist {
 		/// </summary>
 		/// <returns>The value of this symbol</returns>
 		toString(): string {
-			return this.name;
+			return this.name
 		}
 	}
 }

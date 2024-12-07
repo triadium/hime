@@ -66,16 +66,16 @@ namespace Hime.Redist.Lexer {
 		/// </remarks>
 		protected IsLineEnding(c1: char, c2: char): boolean {
 			// other characters
-			if (c2 === '\u000B'.codePointAt(0) ||
-				c2 === '\u000C'.codePointAt(0) ||
-				c2 === '\u0085'.codePointAt(0) ||
-				c2 === '\u2028'.codePointAt(0) ||
-				c2 === '\u2029'.codePointAt(0)) { return true; }
+			if (c2 === '\u000B'.charCodeAt(0) ||
+				c2 === '\u000C'.charCodeAt(0) ||
+				c2 === '\u0085'.charCodeAt(0) ||
+				c2 === '\u2028'.charCodeAt(0) ||
+				c2 === '\u2029'.charCodeAt(0)) { return true }
 
 			// matches [\r, \n] [\r, ??] and  [??, \n]
-			if (c1 === '\u000D'.codePointAt(0) || c2 === '\u000A'.codePointAt(0)) { return true; }
+			if (c1 === '\u000D'.charCodeAt(0) || c2 === '\u000A'.charCodeAt(0)) { return true }
 
-			return false;
+			return false
 		}
 
 		/// <summary>
@@ -83,8 +83,8 @@ namespace Hime.Redist.Lexer {
 		/// </summary>
 		/// <param name="index">An index in the content</param>
 		protected AddLine(index: int): void {
-			this.lines[this.line] = index;
-			this.line++;
+			this.lines[this.line] = index
+			this.line++
 		}
 
 		/// <summary>
@@ -97,16 +97,17 @@ namespace Hime.Redist.Lexer {
 			for (let i = 1; i < this.line; ++i) {
 				if (index < this.lines[i]!) { return i - 1 }
 			}
-			return this.line - 1;
+			return this.line - 1
 		}
 
 		/// <summary>
 		/// Gets the number of lines
 		/// </summary>
 		get LineCount(): int {
-			if (this.lines == null)
-				this.FindLines();
-			return this.line;
+			if (this.lines == null) {
+				this.FindLines()
+			}
+			return this.line
 		}
 
 		/// <summary>
@@ -122,7 +123,7 @@ namespace Hime.Redist.Lexer {
 		/// <param name="span">A span in this text</param>
 		/// <returns>The substring</returns>
 		GetValueOfSpan(span: TextSpan): string {
-			return this.GetValue(span.Index, span.Length);
+			return this.GetValue(span.Index, span.Length)
 		}
 
 		/// <summary>
@@ -132,8 +133,10 @@ namespace Hime.Redist.Lexer {
 		/// <returns>The starting index of the line</returns>
 		/// <remarks>The line numbering is 1-based</remarks>
 		GetLineIndex(line: int): int {
-			if (this.lines == null) { this.FindLines(); }
-			return this.lines[line - 1]!;
+			if (this.lines == null) {
+				this.FindLines()
+			}
+			return this.lines[line - 1]!
 		}
 
 		/// <summary>
@@ -143,7 +146,7 @@ namespace Hime.Redist.Lexer {
 		/// <returns>The string content of the line</returns>
 		/// <remarks>The line numbering is 1-based</remarks>
 		GetLineContent(line: int): string {
-			return this.GetValue(this.GetLineIndex(line), this.GetLineLength(line));
+			return this.GetValue(this.GetLineIndex(line), this.GetLineLength(line))
 		}
 
 		/// <summary>
@@ -152,8 +155,8 @@ namespace Hime.Redist.Lexer {
 		/// <param name="index">Index from the start</param>
 		/// <returns>The position (line and column) at the index</returns>
 		GetPositionAt(index: int): TextPosition {
-			const l = this.FindLineAt(index);
-			return new TextPosition(l + 1, index - this.lines[l]! + 1);
+			const l = this.FindLineAt(index)
+			return new TextPosition(l + 1, index - this.lines[l]! + 1)
 		}
 
 		/// <summary>
@@ -193,7 +196,7 @@ namespace Hime.Redist.Lexer {
 			if (position.Column - 1 < start) { start = 0 }
 			if (position.Column - 1 > end) { end = content.length - 1 }
 
-			const builder = new Array();
+			const builder = new Array()
 			for (let i = start; i < position.Column - 1; ++i) { builder.push(content[i] === '\t' ? '\t' : ' ') }
 			builder.push("^")
 			for (let i = 1; i < length; ++i) { builder.push("^") }
