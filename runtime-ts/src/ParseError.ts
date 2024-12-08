@@ -14,51 +14,53 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
+import { int } from "./BaseTypes"
+import { ParseErrorType } from "./ParseErrorType"
+import { TextPosition } from "./TextPosition"
 
-namespace Hime.Redist {
+
+/// <summary>
+/// Represents an error in a parser
+/// </summary>
+export abstract class ParseError {
 	/// <summary>
-	/// Represents an error in a parser
+	/// The error's position in the input text
 	/// </summary>
-	export abstract class ParseError {
-		/// <summary>
-		/// The error's position in the input text
-		/// </summary>
-		private readonly position: TextPosition
+	private readonly position: TextPosition
 
-		/// <summary>
-		/// Gets the error's type
-		/// </summary>
-		abstract Type: ParseErrorType
+	/// <summary>
+	/// Gets the error's type
+	/// </summary>
+	abstract Type: ParseErrorType
 
-		/// <summary>
-		/// Gets the error's position in the input
-		/// </summary>
-		get Position(): TextPosition { return this.position }
+	/// <summary>
+	/// Gets the error's position in the input
+	/// </summary>
+	get Position(): TextPosition { return this.position }
 
-		/// <summary>
-		/// Gets the error's length in the input (in number of characters)
-		/// </summary>
-		abstract Length: int
+	/// <summary>
+	/// Gets the error's length in the input (in number of characters)
+	/// </summary>
+	abstract Length: int
 
-		/// <summary>
-		/// Gets the error's message
-		/// </summary>
-		abstract Message: string
+	/// <summary>
+	/// Gets the error's message
+	/// </summary>
+	abstract Message: string
 
-		/// <summary>
-		/// Initializes this error
-		/// </summary>
-		/// <param name="position">Error's position in the input</param>
-		protected constructor(position: TextPosition) {
-			this.position = position
-		}
+	/// <summary>
+	/// Initializes this error
+	/// </summary>
+	/// <param name="position">Error's position in the input</param>
+	protected constructor(position: TextPosition) {
+		this.position = position
+	}
 
-		/// <summary>
-		/// Returns the string representation of this error
-		/// </summary>
-		/// <returns>The string representation of this error</returns>
-		toString(): string {
-			return `@${this.position} ${this.Message}`
-		}
+	/// <summary>
+	/// Returns the string representation of this error
+	/// </summary>
+	/// <returns>The string representation of this error</returns>
+	toString(): string {
+		return `@${this.position} ${this.Message}`
 	}
 }

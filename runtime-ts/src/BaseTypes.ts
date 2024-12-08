@@ -15,31 +15,29 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-namespace Hime.Redist {
-	export type ubyte = number
-	export type byte = number
-	export type ushort = number
-	export type short = number
-	export type uint = number
-	export type int = number
-	export type ulong = bigint
-	export type long = bigint
+export type ubyte = number
+export type byte = number
+export type ushort = number
+export type short = number
+export type uint = number
+export type int = number
+export type ulong = bigint
+export type long = bigint
 
-	export type char = ushort
+export type char = ushort
 
-	export class UInt {
-		static from(x: number): uint { return x >>> 0 }
-	}
+export class UInt {
+	static from(x: number): uint { return x >>> 0 }
+}
 
-	export class Int {
-		static from(x: number): int { return x >> 0 }
-	}
+export class Int {
+	static from(x: number): int { return x >> 0 }
+}
 
-	export class UShort {
-		static from(x: number): ushort { return (x >> 0) & 0xFFFF }
-	}
+export class UShort {
+	static from(x: number): ushort { return (x >> 0) & 0xFFFF }
+}
 
-	export class Short {
-		static from(x: number): short { return x << 16 >> 16 }
-	}
+export class Short {
+	static from(x: number): short { return x << 16 >> 16 }
 }

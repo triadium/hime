@@ -14,62 +14,61 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
+import { Int, int } from "./BaseTypes"
 
-namespace Hime.Redist {
+/// <summary>
+/// Represents a grammar symbol (terminal, variable or virtual)
+/// </summary>
+export class GSymbol {
 	/// <summary>
-	/// Represents a grammar symbol (terminal, variable or virtual)
+	/// Symbol ID for inexistant symbol
 	/// </summary>
-	export class GSymbol {
-		/// <summary>
-		/// Symbol ID for inexistant symbol
-		/// </summary>
-		static readonly SID_NOTHING: int = Int.from(0)
+	static readonly SID_NOTHING: int = Int.from(0)
 
-		/// <summary>
-		/// Symbol ID of the Epsilon terminal
-		/// </summary>
-		static readonly SID_EPSILON: int = Int.from(1)
+	/// <summary>
+	/// Symbol ID of the Epsilon terminal
+	/// </summary>
+	static readonly SID_EPSILON: int = Int.from(1)
 
-		/// <summary>
-		/// Symbol ID of the Dollar terminal
-		/// </summary>
-		static readonly SID_DOLLAR: int = Int.from(2)
+	/// <summary>
+	/// Symbol ID of the Dollar terminal
+	/// </summary>
+	static readonly SID_DOLLAR: int = Int.from(2)
 
-		/// <summary>
-		/// The symbol's unique identifier
-		/// </summary>
-		private readonly id: int
-		/// <summary>
-		/// The symbol's name
-		/// </summary>
-		private readonly name: string
+	/// <summary>
+	/// The symbol's unique identifier
+	/// </summary>
+	private readonly id: int
+	/// <summary>
+	/// The symbol's name
+	/// </summary>
+	private readonly name: string
 
-		/// <summary>
-		/// Gets the symbol's unique identifier
-		/// </summary>
-		get ID(): int { return this.id }
+	/// <summary>
+	/// Gets the symbol's unique identifier
+	/// </summary>
+	get ID(): int { return this.id }
 
-		/// <summary>
-		/// Gets the symbol's name
-		/// </summary>
-		get Name(): string { return this.name }
+	/// <summary>
+	/// Gets the symbol's name
+	/// </summary>
+	get Name(): string { return this.name }
 
-		/// <summary>
-		/// Initializes this symbol
-		/// </summary>
-		/// <param name="id">The id</param>
-		/// <param name="name">The symbol's name</param>
-		constructor(id: number, name: string) {
-			this.id = Int.from(id)
-			this.name = name
-		}
+	/// <summary>
+	/// Initializes this symbol
+	/// </summary>
+	/// <param name="id">The id</param>
+	/// <param name="name">The symbol's name</param>
+	constructor(id: number, name: string) {
+		this.id = Int.from(id)
+		this.name = name
+	}
 
-		/// <summary>
-		/// Gets a string representation of this symbol
-		/// </summary>
-		/// <returns>The value of this symbol</returns>
-		toString(): string {
-			return this.name
-		}
+	/// <summary>
+	/// Gets a string representation of this symbol
+	/// </summary>
+	/// <returns>The value of this symbol</returns>
+	toString(): string {
+		return this.name
 	}
 }

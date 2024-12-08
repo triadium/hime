@@ -14,42 +14,43 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
+import { int } from "../BaseTypes"
+import { Automaton } from "./Automaton"
 
-namespace Hime.Redist.Lexer {
+
+/// <summary>
+/// Represents a match in the input
+/// </summary>
+export class TokenMatch {
 	/// <summary>
-	/// Represents a match in the input
+	/// The matching DFA state
 	/// </summary>
-	export class TokenMatch {
-		/// <summary>
-		/// The matching DFA state
-		/// </summary>
-		readonly state: int
-		/// <summary>
-		/// Length of the matched input
-		/// </summary>
-		readonly length: int
+	readonly state: int
+	/// <summary>
+	/// Length of the matched input
+	/// </summary>
+	readonly length: int
 
-		/// <summary>
-		/// Gets whether this is match indicates a success
-		/// </summary>
-		get IsSuccess(): boolean { return this.state != Automaton.DEAD_STATE }
+	/// <summary>
+	/// Gets whether this is match indicates a success
+	/// </summary>
+	get IsSuccess(): boolean { return this.state !== Automaton.DEAD_STATE }
 
-		/// <summary>
-		/// Initializes a match
-		/// </summary>
-		/// <param name='state'>The matching DFA state</param>
-		/// <param name='length'>Length of the matched input</param>
-		constructor(state: int, length: int) {
-			this.state = state
-			this.length = length
-		}
+	/// <summary>
+	/// Initializes a match
+	/// </summary>
+	/// <param name='state'>The matching DFA state</param>
+	/// <param name='length'>Length of the matched input</param>
+	constructor(state: int, length: int) {
+		this.state = state
+		this.length = length
+	}
 
-		/// <summary>
-		/// Initializes a failing match
-		/// </summary>
-		/// <param name='length'>The number of characters to advance in the input</param>
-		static FailingMatch(length: int): TokenMatch {
-			return new TokenMatch(Automaton.DEAD_STATE, length)
-		}
+	/// <summary>
+	/// Initializes a failing match
+	/// </summary>
+	/// <param name='length'>The number of characters to advance in the input</param>
+	static FailingMatch(length: int): TokenMatch {
+		return new TokenMatch(Automaton.DEAD_STATE, length)
 	}
 }

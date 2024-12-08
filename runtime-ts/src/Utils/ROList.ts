@@ -14,75 +14,75 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
+import { int } from "../BaseTypes"
 
-namespace Hime.Redist.Utils {
+
+/// <summary>
+/// Represents a lightweight interface for a readonly list of T elements
+/// </summary>
+/// <typeparam name="T">The type of elements in this list</typeparam>
+export class ROList<T> {
 	/// <summary>
-	/// Represents a lightweight interface for a readonly list of T elements
+	/// The inner data set
 	/// </summary>
-	/// <typeparam name="T">The type of elements in this list</typeparam>
-	export class ROList<T> {
-		/// <summary>
-		/// The inner data set
-		/// </summary>
-		private readonly inner: ReadonlyArray<T>
+	private readonly inner: ReadonlyArray<T>
 
-		/// <summary>
-		/// The index signature
-		/// </summary>		
-		readonly [n: number]: T
+	/// <summary>
+	/// The index signature
+	/// </summary>		
+	readonly [n: number]: T
 
-		/// <summary>
-		/// Gets the number of elements in this list
-		/// </summary>
-		get Count(): int { return this.inner.length }
+	/// <summary>
+	/// Gets the number of elements in this list
+	/// </summary>
+	get Count(): int { return this.inner.length }
 
-		/// <summary>
-		/// Initializes this list
-		/// </summary>
-		/// <param name="original">The original items</param>
-		constructor(original: Array<T>) {
-			const self = this
+	/// <summary>
+	/// Initializes this list
+	/// </summary>
+	/// <param name="original">The original items</param>
+	constructor(original: Array<T>) {
+		const self = this
 
-			this.inner = original
-			return new Proxy(this, {
-				/// <summary>
-				/// Gets the element at the specified index
-				/// </summary>
-				/// <param name="index">An index in this list</param>
-				get(target, prop) {
-					if (typeof prop === 'string' && !isNaN(parseInt(prop, 10))) {
-						// FIXME: self.inner.at(index)
-						return self.inner[prop as unknown as number]
-					}
-					return (target as unknown as any)[prop]
+		this.inner = original
+		return new Proxy(this, {
+			/// <summary>
+			/// Gets the element at the specified index
+			/// </summary>
+			/// <param name="index">An index in this list</param>
+			get(target, prop) {
+				if (typeof prop === 'string' && !isNaN(parseInt(prop, 10))) {
+					// FIXME: self.inner.at(index)
+					return self.inner[prop as unknown as number]
 				}
-			})
-		}
+				return (target as unknown as any)[prop]
+			}
+		})
+	}
 
-		/// <summary>
-		/// Determines whether this list contains the specified item
-		/// </summary>
-		/// <param name="item">The item to look for</param>
-		/// <returns><c>true</c> if the item is in this list</returns>
-		Contains(item: T): boolean {
-			return this.inner.includes(item)
-		}
+	/// <summary>
+	/// Determines whether this list contains the specified item
+	/// </summary>
+	/// <param name="item">The item to look for</param>
+	/// <returns><c>true</c> if the item is in this list</returns>
+	Contains(item: T): boolean {
+		return this.inner.includes(item)
+	}
 
-		/// <summary>
-		/// Determines the index of the specified item in this list
-		/// </summary>
-		/// <param name="item">The item to look for</param>
-		/// <returns>The index of the specified item, or -1</returns>
-		IndexOf(item: T): int {
-			return this.inner.indexOf(item)
-		}
+	/// <summary>
+	/// Determines the index of the specified item in this list
+	/// </summary>
+	/// <param name="item">The item to look for</param>
+	/// <returns>The index of the specified item, or -1</returns>
+	IndexOf(item: T): int {
+		return this.inner.indexOf(item)
+	}
 
-		/// <summary>
-		/// Gets the iterator
-		/// </summary>
-		/// <returns>The iterator</returns>
-		[Symbol.iterator](): ArrayIterator<T> {
-			return this.inner[Symbol.iterator]()
-		}
+	/// <summary>
+	/// Gets the iterator
+	/// </summary>
+	/// <returns>The iterator</returns>
+	[Symbol.iterator](): ArrayIterator<T> {
+		return this.inner[Symbol.iterator]()
 	}
 }

@@ -15,14 +15,12 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-namespace Hime.Redist {
 
-    export class ArgumentException extends Error {
-        readonly argumentName: PropertyKey
-        // string message, string paramName, Exception innerException
-        public constructor(message: string, argumentName: PropertyKey) {
-            super(`${message} Argument: ${argumentName.toString()}`)
-            this.argumentName = argumentName
-        }
+export class ArgumentException extends Error {
+    readonly argumentName: PropertyKey
+    // string message, string paramName, Exception innerException
+    public constructor(message: string, argumentName: PropertyKey) {
+        super(`${message} Argument: ${argumentName.toString()}`)
+        this.argumentName = argumentName
     }
 }

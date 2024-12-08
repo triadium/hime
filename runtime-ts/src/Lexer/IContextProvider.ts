@@ -14,20 +14,21 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
+import { int } from "../BaseTypes";
 
-namespace Hime.Redist.Lexer {
+
+/// <summary>
+/// Represents an entity providing information about the current contexts
+/// </summary>
+export interface IContextProvider {
 	/// <summary>
-	/// Represents an entity providing information about the current contexts
+	/// Gets the priority of the specified context required by the specified terminal
+	/// The priority is a positive integer. The lesser the value the higher the priority.
+	/// A negative value represents the unavailability of the required context.
 	/// </summary>
-	export interface IContextProvider {
-		/// <summary>
-		/// Gets the priority of the specified context required by the specified terminal
-		/// The priority is a positive integer. The lesser the value the higher the priority.
-		/// A negative value represents the unavailability of the required context.
-		/// </summary>
-		/// <param name="context">A context</param>
-		/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
-		/// <returns>The context priority, or a negative value if the context is unavailable</returns>
-		GetContextPriority(context: int, onTerminalID: int): int
-	}
+	/// <param name="context">A context</param>
+	/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
+	/// <returns>The context priority, or a negative value if the context is unavailable</returns>
+	GetContextPriority(context: int, onTerminalID: int): int
 }
+
