@@ -23,7 +23,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// The terminal symbols matched in this content
 		/// </summary>
-		private readonly terminals: Utils.ROList<Symbol>
+		private readonly terminals: Utils.ROList<GSymbol>
 		/// <summary>
 		/// The base text
 		/// </summary>
@@ -41,7 +41,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// Gets the terminal symbols matched in this content
 		/// </summary>
-		get Terminals(): Utils.ROList<Symbol> { return this.terminals }
+		get Terminals(): Utils.ROList<GSymbol> { return this.terminals }
 
 		/// <summary>
 		/// Gets the token at the specified index
@@ -55,7 +55,7 @@ namespace Hime.Redist {
 		/// </summary>
 		/// <param name="terminals">The terminal symbols</param>
 		/// <param name="text">The base text</param>
-		constructor(terminals: Utils.ROList<Symbol>, text: Text) {
+		constructor(terminals: Utils.ROList<GSymbol>, text: Text) {
 			const self = this
 
 			this.terminals = terminals
@@ -72,8 +72,8 @@ namespace Hime.Redist {
 				}
 			})
 		}
-		[SystemSymbol.iterator]() {
-			return new TokenRepositoryNested.LinearEnumerator(this)[SystemSymbol.iterator]()
+		[Symbol.iterator]() {
+			return new TokenRepositoryNested.LinearEnumerator(this)[Symbol.iterator]()
 		}
 
 		/// <summary>
@@ -108,7 +108,7 @@ namespace Hime.Redist {
 		/// </summary>
 		/// <param name="index">A token's index</param>
 		/// <returns>The associated symbol</returns>
-		GetSymbol(index: int): Symbol {
+		GetSymbol(index: int): GSymbol {
 			return this.terminals[this.cells[index]!.terminal]!
 		}
 
@@ -203,7 +203,7 @@ namespace Hime.Redist {
 			constructor(repository: TokenRepository) {
 				this.repository = repository
 			}
-			*[SystemSymbol.iterator]() {
+			*[Symbol.iterator]() {
 				for (let i = 0; i < this.repository.Size; ++i) {
 					yield this.repository[i]!
 				}

@@ -32,7 +32,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// Gets the type of symbol this element represents
 		/// </summary>
-		get SymbolType(): SymbolType { return SymbolType.Terminal }
+		get SymbolType(): GSymbolType { return GSymbolType.Terminal }
 
 		/// <summary>
 		/// Gets the position in the input text of this token
@@ -52,7 +52,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// Gets the terminal associated to this token
 		/// </summary>
-		get Symbol(): Symbol { return this.repository.GetSymbol(this.index) }
+		get Symbol(): GSymbol { return this.repository.GetSymbol(this.index) }
 
 		/// <summary>
 		/// Gets the value of this token

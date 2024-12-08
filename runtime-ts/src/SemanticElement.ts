@@ -23,7 +23,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// Gets the type of symbol this element represents
 		/// </summary>
-		readonly SymbolType: SymbolType
+		readonly SymbolType: GSymbolType
 
 		/// <summary>
 		/// Gets the position in the input text of this element
@@ -43,7 +43,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// Gets the grammar symbol associated to this element
 		/// </summary>
-		readonly Symbol: Symbol
+		readonly Symbol: GSymbol
 
 		/// <summary>
 		/// Gets the value of this element, if any

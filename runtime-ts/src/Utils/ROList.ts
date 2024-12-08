@@ -81,8 +81,8 @@ namespace Hime.Redist.Utils {
 		/// Gets the iterator
 		/// </summary>
 		/// <returns>The iterator</returns>
-		[SystemSymbol.iterator](): ArrayIterator<T> {
-			return this.inner[SystemSymbol.iterator]()
+		[Symbol.iterator](): ArrayIterator<T> {
+			return this.inner[Symbol.iterator]()
 		}
 	}
 }

@@ -29,7 +29,7 @@ namespace Hime.Redist.Lexer {
 		/// The default context provider
 		/// </summary>
 		export class DefaultContextProvider implements IContextProvider {
-			GetContextPriority(context: int, onTerminalID: int): int {
+			GetContextPriority(context: int, _: int): int {
 				return context == Automaton.DEFAULT_CONTEXT ? Number.MAX_SAFE_INTEGER : 0
 			}
 		}
@@ -56,7 +56,7 @@ namespace Hime.Redist.Lexer {
 		/// <summary>
 		/// The terminals matched by this lexer
 		/// </summary>
-		protected readonly symTerminals: Utils.ROList<Symbol>
+		protected readonly symTerminals: Utils.ROList<GSymbol>
 		/// <summary>
 		/// Symbol ID of the SEPARATOR terminal
 		/// </summary>
@@ -73,7 +73,7 @@ namespace Hime.Redist.Lexer {
 		/// <summary>
 		/// Gets the terminals matched by this lexer
 		/// </summary>
-		get Terminals(): Utils.ROList<Symbol> { return this.symTerminals }
+		get Terminals(): Utils.ROList<GSymbol> { return this.symTerminals }
 
 		/// <summary>
 		/// Gets the lexer's input text
@@ -95,7 +95,7 @@ namespace Hime.Redist.Lexer {
 		/// Events for lexical errors
 		/// </summary>
 		// AddLexicalError
-		OnError(error: ParseError): void { }
+		OnError(error: ParseError): void { console.log(error) }
 
 		/// <summary>
 		/// Initializes a new instance of the Lexer class with the given input
@@ -104,9 +104,9 @@ namespace Hime.Redist.Lexer {
 		/// <param name="terminals">Terminals recognized by this lexer</param>
 		/// <param name="separator">SID of the separator token</param>
 		/// <param name="input">Input to this lexer</param>
-		protected constructor(automaton: Automaton, terminals: Symbol[], separator: int, input: string) {
+		protected constructor(automaton: Automaton, terminals: GSymbol[], separator: int, input: string) {
 			this.automaton = automaton
-			this.symTerminals = new Utils.ROList<Symbol>(Array.from(terminals))
+			this.symTerminals = new Utils.ROList<GSymbol>(Array.from(terminals))
 			this.separatorID = separator
 			this.text = new PrefetchedText(input)
 			this.tokens = new TokenRepository(this.symTerminals, this.text)

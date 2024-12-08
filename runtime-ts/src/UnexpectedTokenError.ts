@@ -28,7 +28,7 @@ namespace Hime.Redist {
 		/// <summary>
 		/// The expected terminals
 		/// </summary>
-		private readonly expected: Utils.ROList<Symbol>
+		private readonly expected: Utils.ROList<GSymbol>
 
 		/// <summary>
 		/// Gets the error's type
@@ -53,14 +53,14 @@ namespace Hime.Redist {
 		/// <summary>
 		/// Gets the expected terminals
 		/// </summary>
-		get ExpectedTerminals(): Utils.ROList<Symbol> { return this.expected }
+		get ExpectedTerminals(): Utils.ROList<GSymbol> { return this.expected }
 
 		/// <summary>
 		/// Initializes this error
 		/// </summary>
 		/// <param name="token">The unexpected token</param>
 		/// <param name="expected">The expected terminals</param>
-		constructor(token: Token, expected: Utils.ROList<Symbol>) {
+		constructor(token: Token, expected: Utils.ROList<GSymbol>) {
 			super(token.Position)
 			this.unexpected = token
 			this.expected = expected

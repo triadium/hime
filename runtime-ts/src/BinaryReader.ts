@@ -32,7 +32,7 @@ namespace Hime.Redist {
         private buffer: Buffer
         private index: number
 
-        constructor(buffer: string | Buffer, encoding: 'ascii' | 'utf8' | 'utf16le' | 'latin1' | 'base64' | 'hex') {
+        constructor(buffer: string | Buffer, encoding: BufferEncoding) {
             this.index = 0
             this.buffer = Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer, encoding)
         }
@@ -85,7 +85,7 @@ namespace Hime.Redist {
         private buffer: Buffer
         private index: number
 
-        constructor(buffer: string | Buffer, encoding: 'ascii' | 'utf8' | 'utf16le' | 'latin1' | 'base64' | 'hex') {
+        constructor(buffer: string | Buffer, encoding: BufferEncoding) {
             this.buffer = Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer, encoding)
             this.index = buffer.length > 0 ? 0 : Number.MAX_SAFE_INTEGER
         }
@@ -135,7 +135,7 @@ namespace Hime.Redist {
     }
 
     export class BinaryReader {
-        static Create(buffer: string | Buffer, encoding: 'ascii' | 'utf8' | 'utf16le' | 'latin1' | 'base64' | 'hex', endianness: 'little' | 'big' = 'little'): IBinaryReader {
+        static Create(buffer: string | Buffer, encoding: BufferEncoding, endianness: 'little' | 'big' = 'little'): IBinaryReader {
             switch (endianness) {
                 case 'little': return new LittleBinaryReader(buffer, encoding)
                 case 'big': return new BigBinaryReader(buffer, encoding)

@@ -19,7 +19,7 @@ namespace Hime.Redist {
 	/// <summary>
 	/// Represents a grammar symbol (terminal, variable or virtual)
 	/// </summary>
-	export class Symbol {
+	export class GSymbol {
 		/// <summary>
 		/// Symbol ID for inexistant symbol
 		/// </summary>

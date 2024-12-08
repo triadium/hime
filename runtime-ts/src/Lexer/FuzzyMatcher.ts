@@ -38,7 +38,7 @@ namespace Hime.Redist.Lexer {
 		/// <summary>
 		/// Delegate for raising errors
 		/// </summary>
-		private readonly errors: AddLexicalError = (error: ParseError): void => { }
+		private readonly errors: AddLexicalError = (error: ParseError): void => { console.log(error) }
 		/// <summary>
 		/// The maximum Levenshtein distance between the input and the DFA
 		/// </summary>

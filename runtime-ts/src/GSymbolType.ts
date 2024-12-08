@@ -19,7 +19,7 @@ namespace Hime.Redist {
 	/// <summary>
 	/// The possible types of symbol
 	/// </summary>
-	export enum SymbolType {
+	export enum GSymbolType {
 		/// <summary>
 		/// A terminal symbol, defined in the original grammar
 		/// </summary>

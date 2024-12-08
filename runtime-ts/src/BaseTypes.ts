@@ -27,8 +27,6 @@ namespace Hime.Redist {
 
 	export type char = ushort
 
-	export const SystemSymbol = globalThis.Symbol
-
 	export class UInt {
 		static from(x: number): uint { return x >>> 0 }
 	}
