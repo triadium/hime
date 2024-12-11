@@ -34,11 +34,11 @@ export class Automaton {
 	/// <summary>
 	/// Identifier of inexistant state in an automaton
 	/// </summary>
-	static DEAD_STATE: int = 0xFFFF
+	static readonly DEAD_STATE: int = 0xFFFF
 	/// <summary>
 	/// Identifier of the default context
 	/// </summary>
-	static DEFAULT_CONTEXT: int = 0
+	static readonly DEFAULT_CONTEXT: int = 0
 
 	/// <summary>
 	/// Table of indices in the states table

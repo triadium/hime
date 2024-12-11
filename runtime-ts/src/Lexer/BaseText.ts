@@ -31,7 +31,7 @@ export abstract class BaseText extends Text {
 	/// <summary>
 	/// The initial size of the cache of line start indices
 	/// </summary>
-	protected static INIT_LINE_COUNT_CACHE_SIZE: int = 10000
+	protected static readonly INIT_LINE_COUNT_CACHE_SIZE: int = 10000
 
 	/// <summary>
 	/// Cache of the starting indices of each line within the text
