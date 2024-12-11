@@ -21,8 +21,8 @@ import { TextContext } from "./TextContext"
 import { TextPosition } from "./TextPosition"
 import { TextSpan } from "./TextSpan"
 import { Token } from "./Token"
-import { BigList } from "./Utils/BigList"
-import { ROList } from "./Utils/ROList"
+import { BigList } from "./Utils"
+import { ROList } from "./Utils"
 
 /// <summary>
 /// Represents the metadata of a token
