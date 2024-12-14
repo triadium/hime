@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -14,21 +14,32 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
 
 
 /// <summary>
-/// Represents an entity providing information about the current contexts
+/// Base values of LR op-code instructions
 /// </summary>
-export interface IContextProvider {
+export enum LROpCodeBase {
 	/// <summary>
-	/// Gets the priority of the specified context required by the specified terminal
-	/// The priority is a positive integer. The lesser the value the higher the priority.
-	/// A negative value represents the unavailability of the required context.
+	/// Pop an AST from the stack
 	/// </summary>
-	/// <param name="context">A context</param>
-	/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
-	/// <returns>The context priority, or a negative value if the context is unavailable</returns>
-	GetContextPriority(context: int, onTerminalID: int): int
-}
+	PopStack = 0,
 
+	/// <summary>
+	/// Add a virtual symbol
+	/// </summary>
+	AddVirtual = 4,
+
+	/// <summary>
+	/// Execute a semantic action
+	/// </summary>
+	SemanticAction = 8,
+
+	/// <summary>
+	/// Add a null variable
+	/// </summary>
+	/// <remarks>
+	/// This can be found only in RNGLR productions
+	/// </remarks>
+	AddNullVariable = 16,
+}

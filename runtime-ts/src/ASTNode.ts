@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 Association Cénotélie (cenotelie.fr)
+ * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3
@@ -14,15 +14,15 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { AST } from "./AST";
-import { ASTFamily } from "./ASTFamily";
-import { int } from "./BaseTypes";
-import { GSymbol } from "./GSymbol";
-import { GSymbolType } from "./GSymbolType";
-import { SemanticElement } from "./SemanticElement";
-import { TextContext } from "./TextContext";
-import { TextPosition } from "./TextPosition";
-import { TextSpan } from "./TextSpan";
+import { AST } from "./AST"
+import { ASTFamily } from "./ASTFamily"
+import { int } from "./BaseTypes"
+import { GSymbol } from "./GSymbol"
+import { GSymbolType } from "./GSymbolType"
+import { SemanticElement } from "./SemanticElement"
+import { TextContext } from "./TextContext"
+import { TextPosition } from "./TextPosition"
+import { TextSpan } from "./TextSpan"
 
 
 /// <summary>
@@ -46,7 +46,7 @@ export class ASTNode implements SemanticElement {
 	/// <summary>
 	/// Gets the type of symbol this element represents
 	/// </summary>
-	get SymbolType(): GSymbolType { return this.tree.GetSymbolType(this.index) }
+	get SymbolType(): GSymbolType { return this.tree.GetSymbolType(this.index)! }
 
 	/// <summary>
 	/// Gets the children of this node
@@ -83,9 +83,9 @@ export class ASTNode implements SemanticElement {
 	/// </summary>
 	/// <param name="tree">The parent parse tree</param>
 	/// <param name="index">The index of this node in the parse tree</param>
-	constructor(tree: AST, index: int) {
-		this.tree = tree
-		this.index = index
+	constructor(tree?: AST, index?: int) {
+		this.tree = tree!
+		this.index = index!
 	}
 
 	/// <summary>

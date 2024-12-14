@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -15,20 +15,34 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 import { int } from "../BaseTypes"
+import { Factory } from "../Utils/Factory"
+import { Pool } from "../Utils/Pool"
+import { SubTree } from "./SubTree"
 
 
 /// <summary>
-/// Represents an entity providing information about the current contexts
+/// Represents of factory of sub-trees that have a specified capacity
 /// </summary>
-export interface IContextProvider {
+export class SubTreeFactory implements Factory<SubTree> {
 	/// <summary>
-	/// Gets the priority of the specified context required by the specified terminal
-	/// The priority is a positive integer. The lesser the value the higher the priority.
-	/// A negative value represents the unavailability of the required context.
+	/// The capacity of the SubTrees produced by this factory
 	/// </summary>
-	/// <param name="context">A context</param>
-	/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
-	/// <returns>The context priority, or a negative value if the context is unavailable</returns>
-	GetContextPriority(context: int, onTerminalID: int): int
-}
+	private readonly capacity: int
 
+	/// <summary>
+	/// Initializes this SubTree factory
+	/// </summary>
+	/// <param name="capacity">The capacity of the produced SubTrees</param>
+	constructor(capacity: int) {
+		this.capacity = capacity
+	}
+
+	/// <summary>
+	///  Creates a new object
+	/// </summary>
+	/// <param name="pool">The enclosing pool</param>
+	/// <returns>The created object</returns>
+	public CreateNew(pool: Pool<SubTree>): SubTree {
+		return new SubTree(pool, this.capacity)
+	}
+}

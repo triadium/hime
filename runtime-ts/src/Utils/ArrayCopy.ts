@@ -14,7 +14,7 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes";
+import { int } from "../BaseTypes"
 
 export function ArrayCopy<T>(srcArray: T[], srcIndex: int, dstArray: T[], dstIndex: int, length: int) {
     for (let i = 0; i < length; ++i, ++srcIndex, ++dstIndex) {

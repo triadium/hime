@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -14,21 +14,19 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
+import { Pool } from "./Pool"
 
 
 /// <summary>
-/// Represents an entity providing information about the current contexts
+/// Represents a factory of objects for a pool
 /// </summary>
-export interface IContextProvider {
+/// <typeparam name="T">The type of the pooled objects</typeparam>
+export interface Factory<T> {
 	/// <summary>
-	/// Gets the priority of the specified context required by the specified terminal
-	/// The priority is a positive integer. The lesser the value the higher the priority.
-	/// A negative value represents the unavailability of the required context.
+	/// Creates a new object
 	/// </summary>
-	/// <param name="context">A context</param>
-	/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
-	/// <returns>The context priority, or a negative value if the context is unavailable</returns>
-	GetContextPriority(context: int, onTerminalID: int): int
+	/// <param name="pool">The enclosing pool</param>
+	/// <returns>The created object</returns>
+	CreateNew(pool: Pool<T>): T
 }
 

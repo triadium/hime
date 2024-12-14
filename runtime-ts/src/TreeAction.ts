@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -14,21 +14,31 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
 
 
 /// <summary>
-/// Represents an entity providing information about the current contexts
+/// Represents a tree action for an AST node
 /// </summary>
-export interface IContextProvider {
+export enum TreeAction // byte
+{
 	/// <summary>
-	/// Gets the priority of the specified context required by the specified terminal
-	/// The priority is a positive integer. The lesser the value the higher the priority.
-	/// A negative value represents the unavailability of the required context.
+	/// Keep the node as is
 	/// </summary>
-	/// <param name="context">A context</param>
-	/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
-	/// <returns>The context priority, or a negative value if the context is unavailable</returns>
-	GetContextPriority(context: int, onTerminalID: int): int
+	None = 0,
+	/// <summary>
+	/// Replace the node by its children
+	/// </summary>
+	ReplaceByChildren = 1,
+	/// <summary>
+	/// Drop the node and all its descendants
+	/// </summary>
+	Drop = 2,
+	/// <summary>
+	/// Promote the node, i.e. replace its parent with it and insert its children where it was
+	/// </summary>
+	Promote = 3,
+	/// <summary>
+	/// Replace the node by epsilon
+	/// </summary>
+	ReplaceByEpsilon = 4
 }
-

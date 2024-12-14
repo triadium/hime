@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -14,21 +14,25 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-
 
 /// <summary>
-/// Represents an entity providing information about the current contexts
+/// Represents an action in a LR parser
 /// </summary>
-export interface IContextProvider {
+export enum LRActionCode {
 	/// <summary>
-	/// Gets the priority of the specified context required by the specified terminal
-	/// The priority is a positive integer. The lesser the value the higher the priority.
-	/// A negative value represents the unavailability of the required context.
+	/// No possible action => Error
 	/// </summary>
-	/// <param name="context">A context</param>
-	/// <param name="onTerminalID">The identifier of the terminal requiring the context</param>
-	/// <returns>The context priority, or a negative value if the context is unavailable</returns>
-	GetContextPriority(context: int, onTerminalID: int): int
+	None = 0,
+	/// <summary>
+	/// Apply a reduction
+	/// </summary>
+	Reduce = 1,
+	/// <summary>
+	/// Shift to another state
+	/// </summary>
+	Shift = 2,
+	/// <summary>
+	/// Accept the input
+	/// </summary>
+	Accept = 3
 }
-

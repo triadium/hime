@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Copyright (c) 2017 Association Cénotélie (cenotelie.fr)
+ * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3
@@ -14,20 +14,20 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { ASTLabel } from "./ASTLabel";
-import { ASTNode } from "./ASTNode";
-import { int } from "./BaseTypes";
-import { GSymbol } from "./GSymbol";
-import { GSymbolType } from "./GSymbolType";
-import { SemanticElement } from "./SemanticElement";
-import { TableElemRef } from "./TableElemRef";
-import { TableType } from "./TableType";
-import { TextContext } from "./TextContext";
-import { TextPosition } from "./TextPosition";
-import { TextSpan } from "./TextSpan";
-import { Token } from "./Token";
-import { TokenRepository } from "./TokenRepository";
-import { BigList, ROList } from "./Utils";
+import { ASTLabel } from "./ASTLabel"
+import { ASTNode } from "./ASTNode"
+import { int } from "./BaseTypes"
+import { GSymbol } from "./GSymbol"
+import { GSymbolType } from "./GSymbolType"
+import { SemanticElement } from "./SemanticElement"
+import { TableElemRef } from "./TableElemRef"
+import { TableType } from "./TableType"
+import { TextContext } from "./TextContext"
+import { TextPosition } from "./TextPosition"
+import { TextSpan } from "./TextSpan"
+import { Token } from "./Token"
+import { TokenRepository } from "./TokenRepository"
+import { BigList, ROList } from "./Utils"
 
 /// <summary>
 /// Represents a simple AST with a tree structure
