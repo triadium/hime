@@ -433,7 +433,7 @@ namespace Hime.Redist.Parsers
 		{
 			// build the list of expected terminals
 			List<Symbol> expected = new List<Symbol>();
-			GSSGeneration genData = gss.GetCurrentGeneration();
+			GSSGeneration genData = gss.GetGeneration();
 			for (int i = 0; i != genData.Count; i++)
 			{
 				LRExpected expectedOnHead = parserAutomaton.GetExpected(gss.GetRepresentedState(i + genData.Start), lexer.Terminals);
