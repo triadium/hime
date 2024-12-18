@@ -18,8 +18,7 @@ import { AST } from "../AST"
 import { int } from "../BaseTypes"
 import { TableElemRef } from "../TableElemRef"
 import { TreeAction } from "../TreeAction"
-import { ArrayCopy } from "../Utils"
-import { Pool } from "../Utils/Pool"
+import { ArrayCopy, Pool } from "../Utils"
 
 
 /// <summary>

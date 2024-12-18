@@ -75,7 +75,7 @@ export class AutomatonState {
 	/// <summary>
 	/// Gets whether this state is a dead end (no more transition)
 	/// </summary>
-	get IsDeadEnd(): boolean { return (this.table[this.offset + 1] == 0) }
+	get IsDeadEnd(): boolean { return (this.table[this.offset + 1] === 0) }
 
 	/// <summary>
 	/// Gets the number of non-cached transitions in this state

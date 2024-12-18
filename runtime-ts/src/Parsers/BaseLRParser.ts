@@ -16,7 +16,7 @@
  ******************************************************************************/
 import { int } from "../BaseTypes"
 import { GSymbol } from "../GSymbol"
-import { BaseLexer } from "../Lexer/BaseLexer"
+import { BaseLexer } from "../Lexer"
 import { ParseError } from "../ParseError"
 import { ParseResult } from "../ParseResult"
 import { SemanticAction } from "../SemanticAction"

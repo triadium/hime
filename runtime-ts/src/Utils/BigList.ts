@@ -62,7 +62,7 @@ export class BigList<T> {
 	/// </summary>
 	/// <param name="index">Index of an item</param>
 	/// <returns>The value of the item at the given index</returns>
-	readonly [n: number]: T
+	[n: number]: T
 
 	/// <summary>
 	/// Initializes this list

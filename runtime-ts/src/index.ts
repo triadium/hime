@@ -1,6 +1,7 @@
 export { BinaryReader } from "./BinaryReader"
 export { byte, int, long, short, ubyte, uint, ulong, ushort } from "./BaseTypes"
 export { GSymbol } from "./GSymbol"
+export { SemanticAction } from "./SemanticAction"
 export { UnexpectedCharError } from "./UnexpectedCharError"
 export { UnexpectedEndOfInput } from "./UnexpectedEndOfInput"
 export { UnexpectedTokenError } from "./UnexpectedTokenError"

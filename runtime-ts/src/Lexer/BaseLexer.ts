@@ -41,7 +41,7 @@ export interface AddLexicalError {
 
 class DefaultContextProvider implements IContextProvider {
 	GetContextPriority(context: int, _: int): int {
-		return context == Automaton.DEFAULT_CONTEXT ? Number.MAX_SAFE_INTEGER : 0
+		return context === Automaton.DEFAULT_CONTEXT ? Number.MAX_SAFE_INTEGER : 0
 	}
 }
 
@@ -196,7 +196,7 @@ export abstract class BaseLexer {
 			let index = -1
 			// index of the separator terminal, if any
 			for (let i = 0; i < this.symTerminals.Count; ++i) {
-				if (this.symTerminals[i]!.ID == this.separatorID) {
+				if (this.symTerminals[i]!.ID === this.separatorID) {
 					index = i
 					break
 				}

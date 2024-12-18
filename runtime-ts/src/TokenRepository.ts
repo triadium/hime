@@ -183,7 +183,7 @@ export class TokenRepository implements Iterable<Token> {
 	/// <returns>The token, if any</returns>
 	FindTokenAt(index: int): Token | null {
 		const count = this.cells.Size
-		if (count == 0) { return null }
+		if (count === 0) { return null }
 		let l = 0
 		let r = count - 1
 		while (l <= r) {

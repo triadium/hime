@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -15,34 +15,39 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 import { int } from "../BaseTypes"
-import { Pool } from "../Utils"
-import { Factory } from "../Utils/Factory"
-import { SubTree } from "./SubTree"
+import { TableElemRef } from "../TableElemRef"
 
 
 /// <summary>
-/// Represents of factory of sub-trees that have a specified capacity
+/// Represents a node in a Shared-Packed Parse Forest
 /// </summary>
-export class SubTreeFactory implements Factory<SubTree> {
+export abstract class SPPFNode {
 	/// <summary>
-	/// The capacity of the SubTrees produced by this factory
+	/// The identifier of this node
 	/// </summary>
-	private readonly capacity: int
+	protected readonly identifier: int
 
 	/// <summary>
-	/// Initializes this SubTree factory
+	/// Gets the identifier of this node
 	/// </summary>
-	/// <param name="capacity">The capacity of the produced SubTrees</param>
-	constructor(capacity: int) {
-		this.capacity = capacity
-	}
+	get Identifier(): int { return this.identifier }
+
 
 	/// <summary>
-	///  Creates a new object
+	/// Gets whether this node must be replaced by its children
 	/// </summary>
-	/// <param name="pool">The enclosing pool</param>
-	/// <returns>The created object</returns>
-	public CreateNew(pool: Pool<SubTree>): SubTree {
-		return new SubTree(pool, this.capacity)
+	abstract IsReplaceable: boolean
+
+	/// <summary>
+	/// Gets the original symbol for this node
+	/// </summary>
+	abstract OriginalSymbol: TableElemRef
+
+	/// <summary>
+	/// Initializes this node
+	/// </summary>
+	/// <param name="identifier">The identifier of this node</param>
+	constructor(identifier: int) {
+		this.identifier = identifier
 	}
 }

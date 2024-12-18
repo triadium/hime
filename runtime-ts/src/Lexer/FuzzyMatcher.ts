@@ -254,11 +254,11 @@ export class FuzzyMatcher {
 	/// <param name="distance">The distance to reach</param>
 	private PushHeadWithDistance(previous: FuzzyMatcherNested.Head, state: int, offset: int, distance: int): void {
 		for (let i = this.heads.length - 1; i > -1; --i) {
-			if (this.heads[i]!.State == state && this.heads[i]!.Distance <= distance) {
+			if (this.heads[i]!.State === state && this.heads[i]!.Distance <= distance) {
 				return
 			}
 		}
-		if (offset == -1) {
+		if (offset === -1) {
 			this.heads.push(FuzzyMatcherNested.Head.FromPrevious(previous, state))
 		}
 		else {
@@ -356,9 +356,9 @@ export class FuzzyMatcher {
 			}
 		}
 		if (!found) {
-			// if (this.insertionsCount == this.insertions.length) {
-			// 	Array.Resize(ref insertions, insertions.Length * 2)
-			// }
+			if (this.insertionsCount === this.insertions.length) {
+				this.insertions.length = this.insertions.length * 2
+			}
 			this.insertions[this.insertionsCount++] = target
 		}
 	}

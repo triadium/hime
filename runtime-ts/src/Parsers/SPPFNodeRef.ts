@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -15,34 +15,38 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 import { int } from "../BaseTypes"
-import { Pool } from "../Utils"
-import { Factory } from "../Utils/Factory"
-import { SubTree } from "./SubTree"
 
 
 /// <summary>
-/// Represents of factory of sub-trees that have a specified capacity
+/// Represents a reference to a Shared-Packed Parse Forest node in a specific version
 /// </summary>
-export class SubTreeFactory implements Factory<SubTree> {
+export class SPPFNodeRef {
 	/// <summary>
-	/// The capacity of the SubTrees produced by this factory
+	/// The identifier of the node
 	/// </summary>
-	private readonly capacity: int
+	private readonly nodeId: int
+	/// <summary>
+	/// The version to refer to
+	/// </summary>
+	private readonly version: int
 
 	/// <summary>
-	/// Initializes this SubTree factory
+	/// Gets the identifier of the node referred to
 	/// </summary>
-	/// <param name="capacity">The capacity of the produced SubTrees</param>
-	constructor(capacity: int) {
-		this.capacity = capacity
-	}
+	get NodeId(): int { return this.nodeId }
 
 	/// <summary>
-	///  Creates a new object
+	/// Gets the version of the node referred to
 	/// </summary>
-	/// <param name="pool">The enclosing pool</param>
-	/// <returns>The created object</returns>
-	public CreateNew(pool: Pool<SubTree>): SubTree {
-		return new SubTree(pool, this.capacity)
+	get Version(): int { return this.version }
+
+	/// <summary>
+	/// Initializes this reference
+	/// </summary>
+	/// <param name="nodeId">The identifier of the node to refer to</param>
+	/// <param name="version">The version of the node to refer to</param>
+	constructor(nodeId: int, version: int) {
+		this.nodeId = nodeId
+		this.version = version
 	}
 }

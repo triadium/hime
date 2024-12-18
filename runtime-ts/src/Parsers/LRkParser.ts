@@ -15,8 +15,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 import { ArrayCopy, ROList } from "../Utils"
-import { Automaton, IContextProvider } from "../Lexer"
-import { BaseLexer } from "../Lexer/BaseLexer"
+import { Automaton, BaseLexer, IContextProvider, TokenKernel } from "../Lexer"
 import { BaseLRParser } from "./BaseLRParser"
 import { GSymbol } from "../GSymbol"
 import { int } from "../BaseTypes"
@@ -28,7 +27,6 @@ import { LRProduction } from "./LRProduction"
 import { ParseError } from "../ParseError"
 import { ParseResult } from "../ParseResult"
 import { SemanticAction } from "../SemanticAction"
-import { TokenKernel } from "../Lexer/TokenKernel"
 import { UnexpectedTokenError } from "../UnexpectedTokenError"
 
 

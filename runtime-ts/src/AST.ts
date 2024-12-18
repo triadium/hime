@@ -243,7 +243,7 @@ export class AST {
 	/// <param name="node">A node</param>
 	/// <returns>The parent node, if any</returns>
 	FindParentOf(node: int): ASTNode | null {
-		if (node == this.root) {
+		if (node === this.root) {
 			return null
 		}
 
