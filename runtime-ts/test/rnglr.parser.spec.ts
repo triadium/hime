@@ -175,14 +175,12 @@ export class RNGLRTestParser extends RNGLRParser {
     const lexer = await CSTestLexer.fromString(input)
     const buffer = await readFile('./test/data/MathExpParser.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
-    // Represents a set of empty semantic actions (do nothing)    
     return new RNGLRTestParser(automaton, this.GetUserActions(actions), lexer)
   }
   static async fromStringWithActionMap(input: string, actions: Record<string, SemanticAction>) {
     const lexer = await CSTestLexer.fromString(input)
     const buffer = await readFile('./test/data/MathExpParser.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
-    // Represents a set of empty semantic actions (do nothing)    
     return new RNGLRTestParser(automaton, this.GetUserActionsFromMap(actions), lexer)
   }
 
