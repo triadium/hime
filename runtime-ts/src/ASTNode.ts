@@ -101,4 +101,3 @@ export class ASTNode implements SemanticElement {
 		return name
 	}
 }
-

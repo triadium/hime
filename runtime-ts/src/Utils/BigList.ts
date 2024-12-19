@@ -34,15 +34,15 @@ export class BigList<T> {
 	/// <summary>
 	/// The size of the chunks
 	/// </summary>
-	private static readonly CHUNKS_SIZE: int = 1 << this.UPPER_SHIFT
+	private static readonly CHUNKS_SIZE: int = 1 << BigList.UPPER_SHIFT
 	/// <summary>
 	/// Bit mask for the lowest part of the index (within a chunk)
 	/// </summary>
-	private static readonly LOWER_MASK: int = this.CHUNKS_SIZE - 1
+	private static readonly LOWER_MASK: int = BigList.CHUNKS_SIZE - 1
 	/// <summary>
 	/// Initial size of the higer array (pointers to the chunks)
 	/// </summary>
-	private static readonly INIT_CHUNK_COUNT: int = this.CHUNKS_SIZE
+	private static readonly INIT_CHUNK_COUNT: int = BigList.CHUNKS_SIZE
 
 	/// <summary>
 	/// The data

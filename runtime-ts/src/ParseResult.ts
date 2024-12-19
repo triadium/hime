@@ -47,7 +47,7 @@ export class ParseResult {
 	/// <summary>
 	/// Gets whether the parser was successful
 	/// </summary>
-	get IsSuccess(): boolean { return (this.ast !== null) }
+	get IsSuccess(): boolean { return (this.ast != null) }
 
 	/// <summary>
 	/// Gets a list of the parsing errors

@@ -105,7 +105,7 @@ export abstract class BaseLRParser {
 
 		this.allErrors = new Array<ParseError>()
 		this.lexer = lexer
-		this.lexer.OnError = this.OnLexicalError
+		this.lexer.OnError = (error: ParseError) => this.OnLexicalError(error)
 	}
 
 	/// <summary>

@@ -144,7 +144,7 @@ export class FuzzyMatcher {
 		let lastErrorIndex = -1
 		for (let i = 0; i < this.matchHead.Distance; ++i) {
 			const errorIndex = this.originIndex + this.matchHead.GetError(i)
-			if (errorIndex != lastErrorIndex) {
+			if (errorIndex !== lastErrorIndex) {
 				this.OnError(errorIndex)
 			}
 			lastErrorIndex = errorIndex

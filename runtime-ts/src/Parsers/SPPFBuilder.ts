@@ -169,7 +169,7 @@ export class SPPFBuilder implements SemanticBody {
 	/// Clears the current history
 	/// </summary>
 	ClearHistory(): void {
-		for (let i = 0; i != this.nextHP; i++) {
+		for (let i = 0; i < this.nextHP; ++i) {
 			this.poolHPs.Return(this.history[i]!)
 		}
 		this.nextHP = 0

@@ -163,10 +163,10 @@ export abstract class BaseLexer {
 		let state = 0
 		let i = index
 
-		while (state != Automaton.DEAD_STATE) {
+		while (state !== Automaton.DEAD_STATE) {
 			const stateData = this.automaton.GetState(state)
 			// Is this state a matching state ?
-			if (stateData.TerminalsCount != 0) { result = new TokenMatch(state, i - index) }
+			if (stateData.TerminalsCount !== 0) { result = new TokenMatch(state, i - index) }
 
 			// No further transition => exit
 			if (stateData.IsDeadEnd) { break }

@@ -1,20 +1,13 @@
 import { readFile } from 'fs/promises'
-import { Automaton, BaseLexer, ContextFreeLexer, IContextProvider } from '../src/Lexer'
-import { BinaryReader, GSymbol, int, SemanticAction } from '../src'
-// import { UnexpectedCharError } from '../src'
+import { Automaton, BaseLexer, ContextSensitiveLexer, IContextProvider } from '../src/Lexer'
+import { BinaryReader, GSymbol, int, SemanticAction, UnexpectedCharError, UnexpectedTokenError } from '../src'
 import { RNGLRAutomaton, RNGLRParser } from '../src/Parsers'
 import { SemanticBody } from '../src/SemanticBody'
 import { ASTNode } from '../src/ASTNode'
 import { ParseResult } from '../src/ParseResult'
 import { ArrayCopy } from '../src/Utils'
 
-// class DefaultContextProvider implements IContextProvider {
-//   GetContextPriority(context: int, _: int): int {
-//     return context == Automaton.DEFAULT_CONTEXT ? Number.MAX_SAFE_INTEGER : 0
-//   }
-// }
-
-export class FCTestLexer extends ContextFreeLexer {
+export class CSTestLexer extends ContextSensitiveLexer {
 
   private static readonly terminals = [
     new GSymbol(0x0001, "ε"),
@@ -45,11 +38,11 @@ export class FCTestLexer extends ContextFreeLexer {
   static async fromString(input: string) {
     const buffer = await readFile('./test/data/MathExpLexer.bin')
     const automaton = new Automaton(BinaryReader.Create(buffer))
-    return new FCTestLexer(automaton, this.terminals, 0x0004, input)
+    return new CSTestLexer(automaton, this.terminals, 0x0004, input)
   }
 }
 
-export namespace FCTestLexer {
+export namespace CSTestLexer {
   export enum ID {
     /// <summary>
     /// The unique identifier for terminal SEPARATOR
@@ -67,6 +60,19 @@ export namespace FCTestLexer {
     /// The unique identifier for terminal GET
     /// </summary>
     TerminalGet = 0x0009,
+  }
+  /// <summary>
+  /// Contains the constant IDs for the contexts for this lexer
+  /// </summary>  
+  export enum Context {
+    /// <summary>
+    /// The unique identifier for the default context
+    /// </summary>
+    Default = 0,
+    /// <summary>
+    /// The unique identifier for context accessors
+    /// </summary>
+    Accessors = 0x0001,
   }
 }
 
@@ -87,7 +93,6 @@ export class RNGLRTestParser extends RNGLRParser {
     new GSymbol(0x000F, "__V15"),
     new GSymbol(0x001A, "__VAxiom")
   ]
-
   /// <summary>
   /// The collection of virtuals matched by this parser
   /// </summary>
@@ -160,21 +165,21 @@ export class RNGLRTestParser extends RNGLRParser {
   }
 
   static async fromString(input: string) {
-    const lexer = await FCTestLexer.fromString(input)
+    const lexer = await CSTestLexer.fromString(input)
     const buffer = await readFile('./test/data/MathExpParser.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
     // Represents a set of empty semantic actions (do nothing)    
     return new RNGLRTestParser(automaton, this.GetUserActions(new RNGLRTestParser.Actions()), lexer)
   }
   static async fromStringWithActions(input: string, actions: RNGLRTestParser.Actions) {
-    const lexer = await FCTestLexer.fromString(input)
+    const lexer = await CSTestLexer.fromString(input)
     const buffer = await readFile('./test/data/MathExpParser.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
     // Represents a set of empty semantic actions (do nothing)    
     return new RNGLRTestParser(automaton, this.GetUserActions(actions), lexer)
   }
   static async fromStringWithActionMap(input: string, actions: Record<string, SemanticAction>) {
-    const lexer = await FCTestLexer.fromString(input)
+    const lexer = await CSTestLexer.fromString(input)
     const buffer = await readFile('./test/data/MathExpParser.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
     // Represents a set of empty semantic actions (do nothing)    
@@ -194,7 +199,7 @@ export class RNGLRTestParser extends RNGLRParser {
     }
   }
 
-  private static PrintNode(node: ASTNode, crossings: boolean[], output: string[]): void {
+  static PrintNode(node: ASTNode, crossings: boolean[], output: string[]): void {
     const line: string[] = []
     for (let i = 0; i < crossings.length - 1; ++i) {
       line.push(crossings[i] ? "|   " : "    ")
@@ -266,7 +271,6 @@ export namespace RNGLRTestParser {
   /// <summary>
   /// Visitor interface
   /// </summary>
-
   export class Visitor {
     OnTerminalSeparator(_: ASTNode): void { }
     OnTerminalNumber(_: ASTNode): void { }
@@ -280,14 +284,40 @@ export namespace RNGLRTestParser {
 }
 
 describe('RNGLR Parser', () => {
-  test('Correct sequence', async () => {
-    const parser = await RNGLRTestParser.fromString('4 * (1 + 1) / 2')
-    RNGLRTestParser.Print(parser.Parse())
-    // expect(lexer.collectTerminals(new DefaultContextProvider())).toEqual([0x0010, 0x0007, 0x0016, 0x0007, 0x0011, GSymbol.SID_DOLLAR])
+  test('Correct tree', async () => {
+    const parser = await RNGLRTestParser.fromString('get + 4 * (1 + 1) / 2')
+    const result = parser.Parse()
+
+    expect(result.IsSuccess).toBeTruthy()
+
+    const output: string[] = []
+    RNGLRTestParser.PrintNode(result.Root, new Array<boolean>(), output)
+
+    expect(output).toEqual([
+      '+ = +\n',
+      '+-> GET = get\n',
+      '+-> / = /\n',
+      '    +-> * = *\n',
+      '    |   +-> NUMBER = 4\n',
+      '    |   +-> + = +\n',
+      '    |       +-> NUMBER = 1\n',
+      '    |       +-> NUMBER = 1\n',
+      '    +-> NUMBER = 2\n',
+    ])
   })
 
-  // test('Unexpected char error', async () => {
-  //   const lexer = await FCTestLexer.fromString('(1🐛1)')
-  //   expect(() => lexer.collectTerminals(new DefaultContextProvider())).toThrow(UnexpectedCharError)
-  // })
+  test('Unexpected char and token error', async () => {
+    const parser = await RNGLRTestParser.fromString('🐛 + 4 * (1 + 1) / 2')
+    const result = parser.Parse()
+
+    expect(result.IsSuccess).toBeFalsy()
+
+    const errors = [...result.Errors]
+
+    // Double contexts
+    expect(errors[0]).toBeInstanceOf(UnexpectedCharError)
+    expect(errors[1]).toBeInstanceOf(UnexpectedCharError)
+    expect(errors[2]).toBeInstanceOf(UnexpectedCharError)
+    expect(errors[3]).toBeInstanceOf(UnexpectedTokenError)
+  })
 })

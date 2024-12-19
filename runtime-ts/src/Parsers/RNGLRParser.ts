@@ -380,7 +380,7 @@ export class RNGLRParser extends BaseLRParser implements IContextProvider {
 		if (this.ModeDebug) {
 			console.log("==== RNGLR parsing error:")
 			const context = this.lexer.Input.GetContext(error.Position)
-			console.log(`\t${error}\t${context.Content}\t${context.Pointer}`)
+			console.log(`\t${error}\n\t${context.Content}\n\t${context.Pointer}`)
 			this.gss.Print()
 		}
 
