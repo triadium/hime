@@ -14,69 +14,71 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { GSymbol } from "../GSymbol"
-
+import { GSymbol } from '../GSymbol'
 
 /// <summary>
 /// Container for the expected terminals for a LR state
 /// </summary>
 export class LRExpected {
-	/// <summary>
-	/// The terminals expected for shift actions
-	/// </summary>
-	private readonly shifts: Array<GSymbol>
-	/// <summary>
-	/// The terminals expected for reduction actions
-	/// </summary>
-	private readonly reductions: Array<GSymbol>
+  /// <summary>
+  /// The terminals expected for shift actions
+  /// </summary>
+  private readonly shifts: Array<GSymbol>
+  /// <summary>
+  /// The terminals expected for reduction actions
+  /// </summary>
+  private readonly reductions: Array<GSymbol>
 
-	/// <summary>
-	/// Gets the terminals expected for shift actions
-	/// </summary>
-	get Shifts(): Array<GSymbol> { return this.shifts }
+  /// <summary>
+  /// Gets the terminals expected for shift actions
+  /// </summary>
+  get Shifts(): Array<GSymbol> {
+    return this.shifts
+  }
 
-	/// <summary>
-	/// Gets the terminals expected for a reduction actions
-	/// </summary>
-	get Reductions(): Array<GSymbol> { return this.reductions }
+  /// <summary>
+  /// Gets the terminals expected for a reduction actions
+  /// </summary>
+  get Reductions(): Array<GSymbol> {
+    return this.reductions
+  }
 
-	/// <summary>
-	/// Initializes this container
-	/// </summary>
-	constructor() {
-		this.shifts = new Array<GSymbol>()
-		this.reductions = new Array<GSymbol>()
-	}
+  /// <summary>
+  /// Initializes this container
+  /// </summary>
+  constructor() {
+    this.shifts = new Array<GSymbol>()
+    this.reductions = new Array<GSymbol>()
+  }
 
-	/// <summary>
-	/// Adds the specified terminal as expected on a shift action
-	/// </summary>
-	/// <param name="terminal">The terminal</param>
-	/// <remarks>
-	/// If the terminal is already added to the reduction collection it is removed from it.
-	/// </remarks>
-	AddUniqueShift(terminal: GSymbol): void {
-		const itod = this.reductions.indexOf(terminal)
-		if (itod > -1) {
-			this.reductions.splice(itod, 1)
-		}
+  /// <summary>
+  /// Adds the specified terminal as expected on a shift action
+  /// </summary>
+  /// <param name="terminal">The terminal</param>
+  /// <remarks>
+  /// If the terminal is already added to the reduction collection it is removed from it.
+  /// </remarks>
+  AddUniqueShift(terminal: GSymbol): void {
+    const itod = this.reductions.indexOf(terminal)
+    if (itod > -1) {
+      this.reductions.splice(itod, 1)
+    }
 
-		if (!this.shifts.includes(terminal)) {
-			this.shifts.push(terminal)
-		}
-	}
+    if (!this.shifts.includes(terminal)) {
+      this.shifts.push(terminal)
+    }
+  }
 
-	/// <summary>
-	/// Adds the specified terminal as expected on a reduction action
-	/// </summary>
-	/// <param name="terminal">The terminal</param>
-	/// <remarks>
-	/// If the terminal is in the shift collection, nothing happens.
-	/// </remarks>
-	AddUniqueReduction(terminal: GSymbol): void {
-		if (!this.shifts.includes(terminal) && !this.reductions.includes(terminal)) {
-			this.reductions.push(terminal)
-		}
-	}
+  /// <summary>
+  /// Adds the specified terminal as expected on a reduction action
+  /// </summary>
+  /// <param name="terminal">The terminal</param>
+  /// <remarks>
+  /// If the terminal is in the shift collection, nothing happens.
+  /// </remarks>
+  AddUniqueReduction(terminal: GSymbol): void {
+    if (!this.shifts.includes(terminal) && !this.reductions.includes(terminal)) {
+      this.reductions.push(terminal)
+    }
+  }
 }
-

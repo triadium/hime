@@ -14,47 +14,50 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { Int, int } from "./BaseTypes"
+import { Int, int } from './BaseTypes'
 
 /// <summary>
 /// Represents a position in term of line and column in a text input
 /// </summary>
 export class TextPosition {
-	/// <summary>
-	/// The line number
-	/// </summary>
-	private readonly line: int
-	/// <summary>
-	/// The column number
-	/// </summary>
-	private readonly column: int
+  /// <summary>
+  /// The line number
+  /// </summary>
+  private readonly line: int
+  /// <summary>
+  /// The column number
+  /// </summary>
+  private readonly column: int
 
-	/// <summary>
-	/// Gets the line number
-	/// </summary>
-	get Line(): int { return this.line }
+  /// <summary>
+  /// Gets the line number
+  /// </summary>
+  get Line(): int {
+    return this.line
+  }
 
-	/// <summary>
-	/// Gets the column number
-	/// </summary>
-	get Column(): int { return this.column }
+  /// <summary>
+  /// Gets the column number
+  /// </summary>
+  get Column(): int {
+    return this.column
+  }
 
-	/// <summary>
-	/// Initializes this position with the given line and column numbers
-	/// </summary>
-	/// <param name="line">The line number</param>
-	/// <param name="column">The column number</param>
-	constructor(line: number, column: number) {
-		this.line = Int.from(line)
-		this.column = Int.from(column)
-	}
+  /// <summary>
+  /// Initializes this position with the given line and column numbers
+  /// </summary>
+  /// <param name="line">The line number</param>
+  /// <param name="column">The column number</param>
+  constructor(line: number, column: number) {
+    this.line = Int.from(line)
+    this.column = Int.from(column)
+  }
 
-	/// <summary>
-	/// Gets a string representation of this position
-	/// </summary>
-	/// <returns></returns>
-	toString(): string {
-		return `(${this.line}, ${this.column})`
-	}
+  /// <summary>
+  /// Gets a string representation of this position
+  /// </summary>
+  /// <returns></returns>
+  toString(): string {
+    return `(${this.line}, ${this.column})`
+  }
 }
-

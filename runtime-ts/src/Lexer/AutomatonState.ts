@@ -14,10 +14,11 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int, ushort } from "../BaseTypes"
-import { Automaton } from "./Automaton"
-import { AutomatonTransition } from "./AutomatonTransition"
-import { MatchedTerminal } from "./MatchedTerminal"
+import { int, ushort } from '../BaseTypes'
+
+import { Automaton } from './Automaton'
+import { AutomatonTransition } from './AutomatonTransition'
+import { MatchedTerminal } from './MatchedTerminal'
 
 /// <summary>
 /// Represents a state in the automaton of a lexer
@@ -39,86 +40,91 @@ import { MatchedTerminal } from "./MatchedTerminal"
 /// uint16: next state's index
 /// </remarks>
 export class AutomatonState {
-	/// <summary>
-	/// The automaton table
-	/// </summary>
-	private readonly table: ushort[]
-	/// <summary>
-	/// The offset of this state within the table
-	/// </summary>
-	private readonly offset: int
+  /// <summary>
+  /// The automaton table
+  /// </summary>
+  private readonly table: ushort[]
+  /// <summary>
+  /// The offset of this state within the table
+  /// </summary>
+  private readonly offset: int
 
-	/// <summary>
-	/// Initializes this state
-	/// </summary>
-	/// <param name="table">The automaton table</param>
-	/// <param name="offset">The offset of this state within the table</param>
-	constructor(table: ushort[], offset: int) {
-		this.table = table
-		this.offset = offset
-	}
+  /// <summary>
+  /// Initializes this state
+  /// </summary>
+  /// <param name="table">The automaton table</param>
+  /// <param name="offset">The offset of this state within the table</param>
+  constructor(table: ushort[], offset: int) {
+    this.table = table
+    this.offset = offset
+  }
 
-	/// <summary>
-	/// Gets the number of matched terminals in this state
-	/// </summary>
-	get TerminalsCount(): int { return this.table[this.offset]! }
+  /// <summary>
+  /// Gets the number of matched terminals in this state
+  /// </summary>
+  get TerminalsCount(): int {
+    return this.table[this.offset]!
+  }
 
-	/// <summary>
-	/// Gets the i-th matched terminal in this state
-	/// </summary>
-	/// <param name="index">The index of the matched terminal</param>
-	/// <returns>The matched terminal data</returns>
-	GetTerminal(index: int): MatchedTerminal {
-		return new MatchedTerminal(this.table[this.offset + index * 2 + 3]!, this.table[this.offset + index * 2 + 4]!)
-	}
+  /// <summary>
+  /// Gets the i-th matched terminal in this state
+  /// </summary>
+  /// <param name="index">The index of the matched terminal</param>
+  /// <returns>The matched terminal data</returns>
+  GetTerminal(index: int): MatchedTerminal {
+    return new MatchedTerminal(this.table[this.offset + index * 2 + 3]!, this.table[this.offset + index * 2 + 4]!)
+  }
 
-	/// <summary>
-	/// Gets whether this state is a dead end (no more transition)
-	/// </summary>
-	get IsDeadEnd(): boolean { return (this.table[this.offset + 1] === 0) }
+  /// <summary>
+  /// Gets whether this state is a dead end (no more transition)
+  /// </summary>
+  get IsDeadEnd(): boolean {
+    return this.table[this.offset + 1] === 0
+  }
 
-	/// <summary>
-	/// Gets the number of non-cached transitions in this state
-	/// </summary>
-	get BulkTransitionsCount(): int { return this.table[this.offset + 2]! }
+  /// <summary>
+  /// Gets the number of non-cached transitions in this state
+  /// </summary>
+  get BulkTransitionsCount(): int {
+    return this.table[this.offset + 2]!
+  }
 
-	/// <summary>
-	/// Gets the target of a transition from this state on the specified value
-	/// </summary>
-	/// <param name="value">An input value</param>
-	/// <returns>The target of the transition</returns>
-	GetTargetBy(value: int): int {
-		if (value <= 255) {
-			return this.GetCachedTransition(value)
-		}
+  /// <summary>
+  /// Gets the target of a transition from this state on the specified value
+  /// </summary>
+  /// <param name="value">An input value</param>
+  /// <returns>The target of the transition</returns>
+  GetTargetBy(value: int): int {
+    if (value <= 255) {
+      return this.GetCachedTransition(value)
+    }
 
-		let current = this.offset + 3 + this.TerminalsCount * 2 + 256
-		for (let i = 0; i < this.BulkTransitionsCount; ++i) {
-			if (value >= this.table[current]! && value <= this.table[current + 1]!) {
-				return this.table[current + 2]!
-			}
-			current += 3
-		}
+    let current = this.offset + 3 + this.TerminalsCount * 2 + 256
+    for (let i = 0; i < this.BulkTransitionsCount; ++i) {
+      if (value >= this.table[current]! && value <= this.table[current + 1]!) {
+        return this.table[current + 2]!
+      }
+      current += 3
+    }
 
-		return Automaton.DEAD_STATE
-	}
+    return Automaton.DEAD_STATE
+  }
 
-	/// <summary>
-	/// Gets the target of the cached transition for the specified value
-	/// </summary>
-	/// <param name="value">An input value</param>
-	/// <returns>The target of the cached transition</returns>
-	public GetCachedTransition(value: int): int {
-		return this.table[this.offset + this.TerminalsCount * 2 + 3 + value]!
-	}
+  /// <summary>
+  /// Gets the target of the cached transition for the specified value
+  /// </summary>
+  /// <param name="value">An input value</param>
+  /// <returns>The target of the cached transition</returns>
+  public GetCachedTransition(value: int): int {
+    return this.table[this.offset + this.TerminalsCount * 2 + 3 + value]!
+  }
 
-	/// <summary>
-	/// Gets the i-th non-cached transition in this state
-	/// </summary>
-	/// <param name="index">The non-cached transition index</param>
-	/// <returns>The transition</returns>
-	public GetBulkTransition(index: int): AutomatonTransition {
-		return new AutomatonTransition(this.table, this.offset + 3 + this.TerminalsCount * 2 + 256 + index * 3)
-	}
+  /// <summary>
+  /// Gets the i-th non-cached transition in this state
+  /// </summary>
+  /// <param name="index">The non-cached transition index</param>
+  /// <returns>The transition</returns>
+  public GetBulkTransition(index: int): AutomatonTransition {
+    return new AutomatonTransition(this.table, this.offset + 3 + this.TerminalsCount * 2 + 256 + index * 3)
+  }
 }
-

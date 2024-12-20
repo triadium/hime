@@ -15,31 +15,30 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-
 /// <summary>
 /// Base values of LR op-code instructions
 /// </summary>
 export enum LROpCodeBase {
-	/// <summary>
-	/// Pop an AST from the stack
-	/// </summary>
-	PopStack = 0,
+  /// <summary>
+  /// Pop an AST from the stack
+  /// </summary>
+  PopStack = 0,
 
-	/// <summary>
-	/// Add a virtual symbol
-	/// </summary>
-	AddVirtual = 4,
+  /// <summary>
+  /// Add a virtual symbol
+  /// </summary>
+  AddVirtual = 4,
 
-	/// <summary>
-	/// Execute a semantic action
-	/// </summary>
-	SemanticAction = 8,
+  /// <summary>
+  /// Execute a semantic action
+  /// </summary>
+  SemanticAction = 8,
 
-	/// <summary>
-	/// Add a null variable
-	/// </summary>
-	/// <remarks>
-	/// This can be found only in RNGLR productions
-	/// </remarks>
-	AddNullVariable = 16,
+  /// <summary>
+  /// Add a null variable
+  /// </summary>
+  /// <remarks>
+  /// This can be found only in RNGLR productions
+  /// </remarks>
+  AddNullVariable = 16,
 }

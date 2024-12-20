@@ -15,22 +15,20 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-
 /// <summary>
 /// The possible types of symbol
 /// </summary>
 export enum GSymbolType {
-	/// <summary>
-	/// A terminal symbol, defined in the original grammar
-	/// </summary>
-	Terminal = 1,
-	/// <summary>
-	/// A variable symbol, defined in the original grammar
-	/// </summary>
-	Variable = 2,
-	/// <summary>
-	/// A virtual symbol, defined in the original grammar
-	/// </summary>
-	Virtual = 3
+  /// <summary>
+  /// A terminal symbol, defined in the original grammar
+  /// </summary>
+  Terminal = 1,
+  /// <summary>
+  /// A variable symbol, defined in the original grammar
+  /// </summary>
+  Variable = 2,
+  /// <summary>
+  /// A virtual symbol, defined in the original grammar
+  /// </summary>
+  Virtual = 3,
 }
-

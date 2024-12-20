@@ -14,40 +14,40 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-import { TableElemRef } from "../TableElemRef"
-
+import { int } from '../BaseTypes'
+import { TableElemRef } from '../TableElemRef'
 
 /// <summary>
 /// Represents a node in a Shared-Packed Parse Forest
 /// </summary>
 export abstract class SPPFNode {
-	/// <summary>
-	/// The identifier of this node
-	/// </summary>
-	protected readonly identifier: int
+  /// <summary>
+  /// The identifier of this node
+  /// </summary>
+  protected readonly identifier: int
 
-	/// <summary>
-	/// Gets the identifier of this node
-	/// </summary>
-	get Identifier(): int { return this.identifier }
+  /// <summary>
+  /// Gets the identifier of this node
+  /// </summary>
+  get Identifier(): int {
+    return this.identifier
+  }
 
+  /// <summary>
+  /// Gets whether this node must be replaced by its children
+  /// </summary>
+  abstract IsReplaceable: boolean
 
-	/// <summary>
-	/// Gets whether this node must be replaced by its children
-	/// </summary>
-	abstract IsReplaceable: boolean
+  /// <summary>
+  /// Gets the original symbol for this node
+  /// </summary>
+  abstract OriginalSymbol: TableElemRef
 
-	/// <summary>
-	/// Gets the original symbol for this node
-	/// </summary>
-	abstract OriginalSymbol: TableElemRef
-
-	/// <summary>
-	/// Initializes this node
-	/// </summary>
-	/// <param name="identifier">The identifier of this node</param>
-	constructor(identifier: int) {
-		this.identifier = identifier
-	}
+  /// <summary>
+  /// Initializes this node
+  /// </summary>
+  /// <param name="identifier">The identifier of this node</param>
+  constructor(identifier: int) {
+    this.identifier = identifier
+  }
 }

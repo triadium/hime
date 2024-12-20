@@ -1,7 +1,14 @@
 import { readFile } from 'fs/promises'
-import { Automaton, ContextFreeLexer, IContextProvider } from '../src/Lexer'
-import { BinaryReader, GSymbol, int } from '../src'
-import { UnexpectedCharError } from '../src'
+import {
+  Automaton,
+  BinaryReader,
+  ContextFreeLexer,
+  GSymbol,
+  IContextProvider,
+  int,
+  UnexpectedCharError
+} from '../src'
+
 
 class DefaultContextProvider implements IContextProvider {
   GetContextPriority(context: int, _: int): int {

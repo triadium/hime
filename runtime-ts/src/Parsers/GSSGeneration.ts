@@ -14,8 +14,7 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-
+import { int } from '../BaseTypes'
 
 /// <summary>
 /// Represents a generation in a Graph-Structured Stack
@@ -25,37 +24,38 @@ import { int } from "../BaseTypes"
 /// a generation basically describes a span in a buffer of GSS nodes or edges
 /// </remarks>
 export class GSSGeneration {
-	/// <summary>
-	/// The start index of this generation in the list of nodes
-	/// </summary>
-	private readonly start: int
-	/// <summary>
-	/// The number of nodes in this generation
-	/// </summary>
-	private count: int
+  /// <summary>
+  /// The start index of this generation in the list of nodes
+  /// </summary>
+  private readonly start: int
+  /// <summary>
+  /// The number of nodes in this generation
+  /// </summary>
+  private count: int
 
-	/// <summary>
-	/// Gets the start index of this generation in the list of nodes
-	/// </summary>
-	get Start(): int { return this.start }
+  /// <summary>
+  /// Gets the start index of this generation in the list of nodes
+  /// </summary>
+  get Start(): int {
+    return this.start
+  }
 
-	/// <summary>
-	/// Gets or sets the number of nodes in this generation
-	/// </summary>
-	get Count() {
-		return this.count
-	}
-	set Count(value: int) {
-		this.count = value
-	}
+  /// <summary>
+  /// Gets or sets the number of nodes in this generation
+  /// </summary>
+  get Count() {
+    return this.count
+  }
+  set Count(value: int) {
+    this.count = value
+  }
 
-
-	/// <summary>
-	/// Initializes this generation
-	/// </summary>
-	/// <param name="start">The start index of this generation in the list of nodes</param>
-	constructor(start: int) {
-		this.start = start
-		this.count = 0
-	}
+  /// <summary>
+  /// Initializes this generation
+  /// </summary>
+  /// <param name="start">The start index of this generation in the list of nodes</param>
+  constructor(start: int) {
+    this.start = start
+    this.count = 0
+  }
 }

@@ -15,25 +15,24 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-
 /// <summary>
 /// Represents a type of table
 /// </summary>
 export enum TableType /*: byte*/ {
-	/// <summary>
-	/// Marks as other (used for SPPF nodes)
-	/// </summary>
-	None = 0,
-	/// <summary>
-	/// Table of tokens
-	/// </summary>
-	Token = 1,
-	/// <summary>
-	/// Table of variables
-	/// </summary>
-	Variable = 2,
-	/// <summary>
-	/// Tables of virtuals
-	/// </summary>
-	Virtual = 3
+  /// <summary>
+  /// Marks as other (used for SPPF nodes)
+  /// </summary>
+  None = 0,
+  /// <summary>
+  /// Table of tokens
+  /// </summary>
+  Token = 1,
+  /// <summary>
+  /// Table of variables
+  /// </summary>
+  Variable = 2,
+  /// <summary>
+  /// Tables of virtuals
+  /// </summary>
+  Virtual = 3,
 }

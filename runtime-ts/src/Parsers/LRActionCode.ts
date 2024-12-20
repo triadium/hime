@@ -19,20 +19,20 @@
 /// Represents an action in a LR parser
 /// </summary>
 export enum LRActionCode {
-	/// <summary>
-	/// No possible action => Error
-	/// </summary>
-	None = 0,
-	/// <summary>
-	/// Apply a reduction
-	/// </summary>
-	Reduce = 1,
-	/// <summary>
-	/// Shift to another state
-	/// </summary>
-	Shift = 2,
-	/// <summary>
-	/// Accept the input
-	/// </summary>
-	Accept = 3
+  /// <summary>
+  /// No possible action => Error
+  /// </summary>
+  None = 0,
+  /// <summary>
+  /// Apply a reduction
+  /// </summary>
+  Reduce = 1,
+  /// <summary>
+  /// Shift to another state
+  /// </summary>
+  Shift = 2,
+  /// <summary>
+  /// Accept the input
+  /// </summary>
+  Accept = 3,
 }

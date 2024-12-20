@@ -1,2 +1,2 @@
-export { RNGLRAutomaton } from "./RNGLRAutomaton"
-export { RNGLRParser } from "./RNGLRParser"
+export { RNGLRAutomaton } from './RNGLRAutomaton'
+export { RNGLRParser } from './RNGLRParser'

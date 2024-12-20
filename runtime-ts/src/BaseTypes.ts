@@ -27,17 +27,25 @@ export type long = bigint
 export type char = ushort
 
 export class UInt {
-	static from(x: number): uint { return x >>> 0 }
+  static from(x: number): uint {
+    return x >>> 0
+  }
 }
 
 export class Int {
-	static from(x: number): int { return x >> 0 }
+  static from(x: number): int {
+    return x >> 0
+  }
 }
 
 export class UShort {
-	static from(x: number): ushort { return (x >> 0) & 0xFFFF }
+  static from(x: number): ushort {
+    return (x >> 0) & 0xffff
+  }
 }
 
 export class Short {
-	static from(x: number): short { return x << 16 >> 16 }
+  static from(x: number): short {
+    return (x << 16) >> 16
+  }
 }

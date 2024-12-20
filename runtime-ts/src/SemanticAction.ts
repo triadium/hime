@@ -14,9 +14,8 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { GSymbol } from "./GSymbol"
-import { SemanticBody } from "./SemanticBody"
-
+import { GSymbol } from './GSymbol'
+import { SemanticBody } from './SemanticBody'
 
 /// <summary>
 /// Delegate for a user-defined semantic action
@@ -24,6 +23,5 @@ import { SemanticBody } from "./SemanticBody"
 /// <param name="head">The grammar variable representing the head of the reduced rule</param>
 /// <param name="body">The current body at the time of the action</param>
 export interface SemanticAction {
-	(head: GSymbol, body: SemanticBody): void
+  (head: GSymbol, body: SemanticBody): void
 }
-

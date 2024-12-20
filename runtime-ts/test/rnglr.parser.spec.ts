@@ -1,11 +1,22 @@
 import { readFile } from 'fs/promises'
-import { Automaton, BaseLexer, ContextSensitiveLexer, IContextProvider } from '../src/Lexer'
-import { BinaryReader, GSymbol, int, SemanticAction, UnexpectedCharError, UnexpectedTokenError } from '../src'
-import { RNGLRAutomaton, RNGLRParser } from '../src/Parsers'
-import { SemanticBody } from '../src/SemanticBody'
-import { ASTNode } from '../src/ASTNode'
-import { ParseResult } from '../src/ParseResult'
-import { ArrayCopy } from '../src/Utils'
+import {
+  ArrayCopy,
+  ASTNode,
+  Automaton,
+  BaseLexer,
+  BinaryReader,
+  ContextSensitiveLexer,
+  GSymbol,
+  IContextProvider,
+  int,
+  ParseResult,
+  RNGLRAutomaton,
+  RNGLRParser,
+  SemanticAction,
+  SemanticBody,
+  UnexpectedCharError,
+  UnexpectedTokenError
+} from '../src/'
 
 export class CSTestLexer extends ContextSensitiveLexer {
 

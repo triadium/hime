@@ -14,35 +14,35 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-import { Pool } from "../Utils"
-import { Factory } from "../Utils/Factory"
-import { SubTree } from "./SubTree"
+import { int } from '../BaseTypes'
+import { Pool } from '../Utils'
+import { Factory } from '../Utils/Factory'
 
+import { SubTree } from './SubTree'
 
 /// <summary>
 /// Represents of factory of sub-trees that have a specified capacity
 /// </summary>
 export class SubTreeFactory implements Factory<SubTree> {
-	/// <summary>
-	/// The capacity of the SubTrees produced by this factory
-	/// </summary>
-	private readonly capacity: int
+  /// <summary>
+  /// The capacity of the SubTrees produced by this factory
+  /// </summary>
+  private readonly capacity: int
 
-	/// <summary>
-	/// Initializes this SubTree factory
-	/// </summary>
-	/// <param name="capacity">The capacity of the produced SubTrees</param>
-	constructor(capacity: int) {
-		this.capacity = capacity
-	}
+  /// <summary>
+  /// Initializes this SubTree factory
+  /// </summary>
+  /// <param name="capacity">The capacity of the produced SubTrees</param>
+  constructor(capacity: int) {
+    this.capacity = capacity
+  }
 
-	/// <summary>
-	///  Creates a new object
-	/// </summary>
-	/// <param name="pool">The enclosing pool</param>
-	/// <returns>The created object</returns>
-	public CreateNew(pool: Pool<SubTree>): SubTree {
-		return new SubTree(pool, this.capacity)
-	}
+  /// <summary>
+  ///  Creates a new object
+  /// </summary>
+  /// <param name="pool">The enclosing pool</param>
+  /// <returns>The created object</returns>
+  public CreateNew(pool: Pool<SubTree>): SubTree {
+    return new SubTree(pool, this.capacity)
+  }
 }

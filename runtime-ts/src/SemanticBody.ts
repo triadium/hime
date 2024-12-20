@@ -14,23 +14,22 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "./BaseTypes"
-import { SemanticElement } from "./SemanticElement"
-
+import { int } from './BaseTypes'
+import { SemanticElement } from './SemanticElement'
 
 /// <summary>
 /// Represents the semantic body of a rule being reduced
 /// </summary>
 export interface SemanticBody {
-	/// <summary>
-	/// Gets the element at the i-th index
-	/// </summary>
-	/// <param name="index">Index of the element</param>
-	/// <returns>The element at the given index</returns>
-	[index: int]: SemanticElement
+  /// <summary>
+  /// Gets the element at the i-th index
+  /// </summary>
+  /// <param name="index">Index of the element</param>
+  /// <returns>The element at the given index</returns>
+  [index: int]: SemanticElement
 
-	/// <summary>
-	/// Gets the length of this body
-	/// </summary>
-	Length: int
+  /// <summary>
+  /// Gets the length of this body
+  /// </summary>
+  Length: int
 }

@@ -15,30 +15,28 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-
 /// <summary>
 /// Specifies the type of error
 /// </summary>
 export enum ParseErrorType {
-	/// <summary>
-	/// Lexical error occurring when the end of input has been encountered while more characters were expected
-	/// </summary>
-	UnexpectedEndOfInput,
-	/// <summary>
-	/// Lexical error occurring when an unexpected character is encountered in the input preventing to match tokens
-	/// </summary>
-	UnexpectedChar,
-	/// <summary>
-	/// Syntactic error occurring when an unexpected token is encountered by the parser
-	/// </summary>
-	UnexpectedToken,
-	/// <summary>
-	/// Lexical error occurring when the low surrogate encoding point is missing in a UTF-16 encoding sequence with an expected high and low surrogate pair
-	/// </summary>
-	IncorrectUTF16NoLowSurrogate,
-	/// <summary>
-	/// Lexical error occurring when the high surrogate encoding point is missing in a UTF-16 encoding sequence with an expected high and low surrogate pair
-	/// </summary>
-	IncorrectUTF16NoHighSurrogate
+  /// <summary>
+  /// Lexical error occurring when the end of input has been encountered while more characters were expected
+  /// </summary>
+  UnexpectedEndOfInput,
+  /// <summary>
+  /// Lexical error occurring when an unexpected character is encountered in the input preventing to match tokens
+  /// </summary>
+  UnexpectedChar,
+  /// <summary>
+  /// Syntactic error occurring when an unexpected token is encountered by the parser
+  /// </summary>
+  UnexpectedToken,
+  /// <summary>
+  /// Lexical error occurring when the low surrogate encoding point is missing in a UTF-16 encoding sequence with an expected high and low surrogate pair
+  /// </summary>
+  IncorrectUTF16NoLowSurrogate,
+  /// <summary>
+  /// Lexical error occurring when the high surrogate encoding point is missing in a UTF-16 encoding sequence with an expected high and low surrogate pair
+  /// </summary>
+  IncorrectUTF16NoHighSurrogate,
 }
-

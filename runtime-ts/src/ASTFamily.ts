@@ -14,60 +14,58 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { AST } from "./AST"
-import { ASTNode } from "./ASTNode"
-import { int } from "./BaseTypes"
-
+import { AST } from './AST'
+import { ASTNode } from './ASTNode'
+import { int } from './BaseTypes'
 
 /// <summary>
 /// Represents a family of children for an ASTNode
 /// </summary>
 export class ASTFamily implements Iterable<ASTNode> {
-	/// <summary>
-	/// The original parse tree
-	/// </summary>
-	private readonly tree: AST
-	/// <summary>
-	/// The index of the parent node in the parse tree
-	/// </summary>
-	private readonly parent: int
+  /// <summary>
+  /// The original parse tree
+  /// </summary>
+  private readonly tree: AST
+  /// <summary>
+  /// The index of the parent node in the parse tree
+  /// </summary>
+  private readonly parent: int
 
-	/// <summary>
-	/// Gets the number of children
-	/// </summary>
-	get Count(): int { return this.tree.GetChildrenCount(this.parent) }
+  /// <summary>
+  /// Gets the number of children
+  /// </summary>
+  get Count(): int {
+    return this.tree.GetChildrenCount(this.parent)
+  }
 
-	/// <summary>
-	/// Gets the i-th child
-	/// </summary>
-	/// <param name="index">The index of the child</param>
-	/// <returns>The child at the given index</returns>
-	[index: int]: ASTNode
+  /// <summary>
+  /// Gets the i-th child
+  /// </summary>
+  /// <param name="index">The index of the child</param>
+  /// <returns>The child at the given index</returns>
+  [index: int]: ASTNode
 
-	/// <summary>
-	/// Initializes this family
-	/// </summary>
-	/// <param name="tree">The parent parse tree</param>
-	/// <param name="parent">The index of the parent node in the parse tree</param>
-	constructor(tree: AST, parent: int) {
-		const self = this
+  /// <summary>
+  /// Initializes this family
+  /// </summary>
+  /// <param name="tree">The parent parse tree</param>
+  /// <param name="parent">The index of the parent node in the parse tree</param>
+  constructor(tree: AST, parent: int) {
+    this.tree = tree
+    this.parent = parent
 
-		this.tree = tree
-		this.parent = parent
+    return new Proxy(this, {
+      get: (target, prop) => {
+        const index = typeof prop === 'string' ? parseInt(prop, 10) : Number.NaN
+        if (typeof index === 'number' && !isNaN(index)) {
+          return this.tree.GetChild(this.parent, index)
+        }
+        return (target as unknown as any)[prop]
+      },
+    })
+  }
 
-		return new Proxy(this, {
-			get(target, prop) {
-				const index = typeof prop === 'string' ? parseInt(prop, 10) : Number.NaN
-				if (typeof index === 'number' && !isNaN(index)) {
-					return self.tree.GetChild(self.parent, index)
-				}
-				return (target as unknown as any)[prop]
-			}
-		})
-	}
-
-	[Symbol.iterator]() {
-		return this.tree.GetChildren(this.parent)[Symbol.iterator]()
-	}
+  [Symbol.iterator]() {
+    return this.tree.GetChildren(this.parent)[Symbol.iterator]()
+  }
 }
-

@@ -14,19 +14,17 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { Pool } from "./Pool"
-
+import { Pool } from './Pool'
 
 /// <summary>
 /// Represents a factory of objects for a pool
 /// </summary>
 /// <typeparam name="T">The type of the pooled objects</typeparam>
 export interface Factory<T> {
-	/// <summary>
-	/// Creates a new object
-	/// </summary>
-	/// <param name="pool">The enclosing pool</param>
-	/// <returns>The created object</returns>
-	CreateNew(pool: Pool<T>): T
+  /// <summary>
+  /// Creates a new object
+  /// </summary>
+  /// <param name="pool">The enclosing pool</param>
+  /// <returns>The created object</returns>
+  CreateNew(pool: Pool<T>): T
 }
-

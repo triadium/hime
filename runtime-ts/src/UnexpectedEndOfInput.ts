@@ -14,36 +14,41 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "./BaseTypes"
-import { ParseError } from "./ParseError"
-import { ParseErrorType } from "./ParseErrorType"
-import { TextPosition } from "./TextPosition"
-
+import { int } from './BaseTypes'
+import { ParseError } from './ParseError'
+import { ParseErrorType } from './ParseErrorType'
+import { TextPosition } from './TextPosition'
 
 /// <summary>
 /// Represents the unexpected of the input text while more characters were expected
 /// </summary>
 export class UnexpectedEndOfInput extends ParseError {
-	/// <summary>
-	/// Gets the error's type
-	/// </summary>
-	get Type(): ParseErrorType { return ParseErrorType.UnexpectedEndOfInput }
+  /// <summary>
+  /// Gets the error's type
+  /// </summary>
+  get Type(): ParseErrorType {
+    return ParseErrorType.UnexpectedEndOfInput
+  }
 
-	/// <summary>
-	/// Gets the error's length in the input (in number of characters)
-	/// </summary>
-	get Length(): int { return 0 }
+  /// <summary>
+  /// Gets the error's length in the input (in number of characters)
+  /// </summary>
+  get Length(): int {
+    return 0
+  }
 
-	/// <summary>
-	/// Gets the error's message
-	/// </summary>
-	get Message(): string { return "Unexpected end of input" }
+  /// <summary>
+  /// Gets the error's message
+  /// </summary>
+  get Message(): string {
+    return 'Unexpected end of input'
+  }
 
-	/// <summary>
-	/// Initializes this error
-	/// </summary>
-	/// <param name="position">Error's position in the input</param>
-	constructor(position: TextPosition) {
-		super(position)
-	}
+  /// <summary>
+  /// Initializes this error
+  /// </summary>
+  /// <param name="position">Error's position in the input</param>
+  constructor(position: TextPosition) {
+    super(position)
+  }
 }

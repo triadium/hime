@@ -14,39 +14,42 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-
+import { int } from '../BaseTypes'
 
 /// <summary>
 /// Represents a reference to a Shared-Packed Parse Forest node in a specific version
 /// </summary>
 export class SPPFNodeRef {
-	/// <summary>
-	/// The identifier of the node
-	/// </summary>
-	private readonly nodeId: int
-	/// <summary>
-	/// The version to refer to
-	/// </summary>
-	private readonly version: int
+  /// <summary>
+  /// The identifier of the node
+  /// </summary>
+  private readonly nodeId: int
+  /// <summary>
+  /// The version to refer to
+  /// </summary>
+  private readonly version: int
 
-	/// <summary>
-	/// Gets the identifier of the node referred to
-	/// </summary>
-	get NodeId(): int { return this.nodeId }
+  /// <summary>
+  /// Gets the identifier of the node referred to
+  /// </summary>
+  get NodeId(): int {
+    return this.nodeId
+  }
 
-	/// <summary>
-	/// Gets the version of the node referred to
-	/// </summary>
-	get Version(): int { return this.version }
+  /// <summary>
+  /// Gets the version of the node referred to
+  /// </summary>
+  get Version(): int {
+    return this.version
+  }
 
-	/// <summary>
-	/// Initializes this reference
-	/// </summary>
-	/// <param name="nodeId">The identifier of the node to refer to</param>
-	/// <param name="version">The version of the node to refer to</param>
-	constructor(nodeId: int, version: int) {
-		this.nodeId = nodeId
-		this.version = version
-	}
+  /// <summary>
+  /// Initializes this reference
+  /// </summary>
+  /// <param name="nodeId">The identifier of the node to refer to</param>
+  /// <param name="version">The version of the node to refer to</param>
+  constructor(nodeId: int, version: int) {
+    this.nodeId = nodeId
+    this.version = version
+  }
 }

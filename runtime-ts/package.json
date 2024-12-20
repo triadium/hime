@@ -15,6 +15,12 @@
     "glr",
     "rnglr"
   ],
+  "files": [
+    "./lib"
+  ],
+  "publishConfig": {
+    "directory": "./lib"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "lint": "eslint src/**/*.ts",

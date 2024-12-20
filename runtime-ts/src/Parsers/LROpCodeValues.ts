@@ -14,67 +14,67 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { TreeAction } from "../TreeAction"
-import { LROpCodeBase } from "./LROpCodeBase"
+import { TreeAction } from '../TreeAction'
 
+import { LROpCodeBase } from './LROpCodeBase'
 
 /// <summary>
 /// Enumeration of the LR op codes
 /// </summary>
 export enum LROpCodeValues {
-	/// <summary>
-	/// Pop an AST from the stack without applying any tree action
-	/// </summary>
-	PopStackNoAction = LROpCodeBase.PopStack + TreeAction.None,
-	/// <summary>
-	/// Pop an AST from the stack and apply the drop tree action
-	/// </summary>
-	PopStackDrop = LROpCodeBase.PopStack + TreeAction.Drop,
-	/// <summary>
-	/// Pop an AST from the stack and apply the promote tree action
-	/// </summary>
-	PopStackPromote = LROpCodeBase.PopStack + TreeAction.Promote,
+  /// <summary>
+  /// Pop an AST from the stack without applying any tree action
+  /// </summary>
+  PopStackNoAction = LROpCodeBase.PopStack + TreeAction.None,
+  /// <summary>
+  /// Pop an AST from the stack and apply the drop tree action
+  /// </summary>
+  PopStackDrop = LROpCodeBase.PopStack + TreeAction.Drop,
+  /// <summary>
+  /// Pop an AST from the stack and apply the promote tree action
+  /// </summary>
+  PopStackPromote = LROpCodeBase.PopStack + TreeAction.Promote,
 
-	/// <summary>
-	/// Add a virtual symbol without tree action
-	/// </summary>
-	AddVirtualNoAction = LROpCodeBase.AddVirtual + TreeAction.None,
-	/// <summary>
-	/// Add a virtual symbol and apply the drop tree action
-	/// </summary>
-	/// <remarks>
-	/// This doesn't make any sense, but it is possible!
-	/// </remarks>
-	AddVirtualDrop = LROpCodeBase.AddVirtual + TreeAction.Drop,
-	/// <summary>
-	/// Add a virtual symbol and apply the promote tree action
-	/// </summary>
-	AddVirtualPromote = LROpCodeBase.AddVirtual + TreeAction.Promote,
+  /// <summary>
+  /// Add a virtual symbol without tree action
+  /// </summary>
+  AddVirtualNoAction = LROpCodeBase.AddVirtual + TreeAction.None,
+  /// <summary>
+  /// Add a virtual symbol and apply the drop tree action
+  /// </summary>
+  /// <remarks>
+  /// This doesn't make any sense, but it is possible!
+  /// </remarks>
+  AddVirtualDrop = LROpCodeBase.AddVirtual + TreeAction.Drop,
+  /// <summary>
+  /// Add a virtual symbol and apply the promote tree action
+  /// </summary>
+  AddVirtualPromote = LROpCodeBase.AddVirtual + TreeAction.Promote,
 
-	/// <summary>
-	/// Execute a semantic action
-	/// </summary>
-	SemanticAction = LROpCodeBase.SemanticAction,
+  /// <summary>
+  /// Execute a semantic action
+  /// </summary>
+  SemanticAction = LROpCodeBase.SemanticAction,
 
-	/// <summary>
-	/// Add a null variable without any tree action
-	/// </summary>
-	/// <remarks>
-	/// This can be found only in RNGLR productions
-	/// </remarks>
-	AddNullVariableNoAction = LROpCodeBase.AddNullVariable + TreeAction.None,
-	/// <summary>
-	/// Add a null variable and apply the drop tree action
-	/// </summary>
-	/// <remarks>
-	/// This can be found only in RNGLR productions
-	/// </remarks>
-	AddNullVariableDrop = LROpCodeBase.AddNullVariable + TreeAction.Drop,
-	/// <summary>
-	/// Add a null variable and apply the promote action
-	/// </summary>
-	/// <remarks>
-	/// This can be found only in RNGLR productions
-	/// </remarks>
-	AddNullVariablePromote = LROpCodeBase.AddNullVariable + TreeAction.Promote
+  /// <summary>
+  /// Add a null variable without any tree action
+  /// </summary>
+  /// <remarks>
+  /// This can be found only in RNGLR productions
+  /// </remarks>
+  AddNullVariableNoAction = LROpCodeBase.AddNullVariable + TreeAction.None,
+  /// <summary>
+  /// Add a null variable and apply the drop tree action
+  /// </summary>
+  /// <remarks>
+  /// This can be found only in RNGLR productions
+  /// </remarks>
+  AddNullVariableDrop = LROpCodeBase.AddNullVariable + TreeAction.Drop,
+  /// <summary>
+  /// Add a null variable and apply the promote action
+  /// </summary>
+  /// <remarks>
+  /// This can be found only in RNGLR productions
+  /// </remarks>
+  AddNullVariablePromote = LROpCodeBase.AddNullVariable + TreeAction.Promote,
 }

@@ -14,45 +14,43 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { GSymbol } from "./GSymbol"
-import { GSymbolType } from "./GSymbolType"
-import { TextContext } from "./TextContext"
-import { TextPosition } from "./TextPosition"
-import { TextSpan } from "./TextSpan"
-
+import { GSymbol } from './GSymbol'
+import { GSymbolType } from './GSymbolType'
+import { TextContext } from './TextContext'
+import { TextPosition } from './TextPosition'
+import { TextSpan } from './TextSpan'
 
 /// <summary>
 /// Represents an element of parsing data
 /// </summary>
 export interface SemanticElement {
-	/// <summary>
-	/// Gets the type of symbol this element represents
-	/// </summary>
-	readonly SymbolType: GSymbolType
+  /// <summary>
+  /// Gets the context of this element in the input
+  /// </summary>
+  readonly Context: TextContext
 
-	/// <summary>
-	/// Gets the position in the input text of this element
-	/// </summary>
-	readonly Position: TextPosition
+  /// <summary>
+  /// Gets the position in the input text of this element
+  /// </summary>
+  readonly Position: TextPosition
 
-	/// <summary>
-	/// Gets the span in the input text of this element
-	/// </summary>
-	readonly Span: TextSpan
+  /// <summary>
+  /// Gets the span in the input text of this element
+  /// </summary>
+  readonly Span: TextSpan
 
-	/// <summary>
-	/// Gets the context of this element in the input
-	/// </summary>
-	readonly Context: TextContext
+  /// <summary>
+  /// Gets the grammar symbol associated to this element
+  /// </summary>
+  readonly Symbol: GSymbol
 
-	/// <summary>
-	/// Gets the grammar symbol associated to this element
-	/// </summary>
-	readonly Symbol: GSymbol
+  /// <summary>
+  /// Gets the type of symbol this element represents
+  /// </summary>
+  readonly SymbolType: GSymbolType
 
-	/// <summary>
-	/// Gets the value of this element, if any
-	/// </summary>
-	readonly Value: string
+  /// <summary>
+  /// Gets the value of this element, if any
+  /// </summary>
+  readonly Value: string
 }
-

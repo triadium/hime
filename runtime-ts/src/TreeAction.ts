@@ -15,30 +15,28 @@
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-
 /// <summary>
 /// Represents a tree action for an AST node
 /// </summary>
-export enum TreeAction // byte
-{
-	/// <summary>
-	/// Keep the node as is
-	/// </summary>
-	None = 0,
-	/// <summary>
-	/// Replace the node by its children
-	/// </summary>
-	ReplaceByChildren = 1,
-	/// <summary>
-	/// Drop the node and all its descendants
-	/// </summary>
-	Drop = 2,
-	/// <summary>
-	/// Promote the node, i.e. replace its parent with it and insert its children where it was
-	/// </summary>
-	Promote = 3,
-	/// <summary>
-	/// Replace the node by epsilon
-	/// </summary>
-	ReplaceByEpsilon = 4
+export enum TreeAction { // byte
+  /// <summary>
+  /// Keep the node as is
+  /// </summary>
+  None = 0,
+  /// <summary>
+  /// Replace the node by its children
+  /// </summary>
+  ReplaceByChildren = 1,
+  /// <summary>
+  /// Drop the node and all its descendants
+  /// </summary>
+  Drop = 2,
+  /// <summary>
+  /// Promote the node, i.e. replace its parent with it and insert its children where it was
+  /// </summary>
+  Promote = 3,
+  /// <summary>
+  /// Replace the node by epsilon
+  /// </summary>
+  ReplaceByEpsilon = 4,
 }

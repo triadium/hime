@@ -14,51 +14,52 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-
+import { int } from '../BaseTypes'
 
 export class Queue<T> implements Iterable<T> {
-    /// <summary>
-    /// The items of queue
-    /// </summary>
-    private items: T[]
+  /// <summary>
+  /// The items of queue
+  /// </summary>
+  private items: T[]
 
-    /// <summary>
-    /// Initializes new queue
-    /// </summary>
-    constructor() {
-        this.items = new Array<T>()
-    }
-    /// <summary>
-    /// Returns count of items in the queue
-    /// </summary>
-    get Count(): int { return this.items.length }
-    /// <summary>
-    /// Returns true if the specified item contains in the queue
-    /// </summary>
-    Contains(item: T) {
-        return this.items.includes(item)
-    }
-    /// <summary>
-    /// Push new item to end of the queue
-    /// </summary>
-    Enqueue(item: T) {
-        this.items.push(item)
-    }
-    /// <summary>
-    /// Take item from front of the queue
-    /// </summary>
-    Dequeue() {
-        return this.items.shift()
-    }
-    /// <summary>
-    /// Get item of front of the queue without changing
-    /// </summary>
-    Peek() {
-        return this.items[0]
-    }
+  /// <summary>
+  /// Initializes new queue
+  /// </summary>
+  constructor() {
+    this.items = new Array<T>()
+  }
+  /// <summary>
+  /// Returns count of items in the queue
+  /// </summary>
+  get Count(): int {
+    return this.items.length
+  }
+  /// <summary>
+  /// Returns true if the specified item contains in the queue
+  /// </summary>
+  Contains(item: T) {
+    return this.items.includes(item)
+  }
+  /// <summary>
+  /// Push new item to end of the queue
+  /// </summary>
+  Enqueue(item: T) {
+    this.items.push(item)
+  }
+  /// <summary>
+  /// Take item from front of the queue
+  /// </summary>
+  Dequeue() {
+    return this.items.shift()
+  }
+  /// <summary>
+  /// Get item of front of the queue without changing
+  /// </summary>
+  Peek() {
+    return this.items[0]
+  }
 
-    [Symbol.iterator](): Iterator<T> {
-        return this.items[Symbol.iterator]()
-    }
+  [Symbol.iterator](): Iterator<T> {
+    return this.items[Symbol.iterator]()
+  }
 }

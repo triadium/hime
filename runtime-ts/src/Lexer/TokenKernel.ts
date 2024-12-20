@@ -14,40 +14,42 @@
  * Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-import { int } from "../BaseTypes"
-
+import { int } from '../BaseTypes'
 
 /// <summary>
 /// Represents the kernel of a token, i.e. the identifying information of a token
 /// </summary>
 export class TokenKernel {
-	/// <summary>
-	/// The identifier of the matched terminal
-	/// </summary>
-	private readonly terminalID: int
-	/// <summary>
-	/// The token's index in its repository
-	/// </summary>
-	private readonly index: int
+  /// <summary>
+  /// The identifier of the matched terminal
+  /// </summary>
+  private readonly terminalID: int
+  /// <summary>
+  /// The token's index in its repository
+  /// </summary>
+  private readonly index: int
 
-	/// <summary>
-	/// Gets the identifier of the matched terminal
-	/// </summary>
-	get TerminalID(): int { return this.terminalID }
+  /// <summary>
+  /// Gets the identifier of the matched terminal
+  /// </summary>
+  get TerminalID(): int {
+    return this.terminalID
+  }
 
-	/// <summary>
-	/// Gets the token's index in its repository
-	/// </summary>
-	get Index(): int { return this.index }
+  /// <summary>
+  /// Gets the token's index in its repository
+  /// </summary>
+  get Index(): int {
+    return this.index
+  }
 
-	/// <summary>
-	/// Initializes this kernel
-	/// </summary>
-	/// <param name="id">The identifier of the matched terminal</param>
-	/// <param name="index">The token's index in its repository</param>
-	constructor(id: int, index: int) {
-		this.terminalID = id
-		this.index = index
-	}
+  /// <summary>
+  /// Initializes this kernel
+  /// </summary>
+  /// <param name="id">The identifier of the matched terminal</param>
+  /// <param name="index">The token's index in its repository</param>
+  constructor(id: int, index: int) {
+    this.terminalID = id
+    this.index = index
+  }
 }
-
