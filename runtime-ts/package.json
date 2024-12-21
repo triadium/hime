@@ -1,6 +1,6 @@
 {
-  "name": "runtime-ts",
-  "version": "1.0.0",
+  "name": "hime-redist-ts",
+  "version": "4.4.0",
   "author": {
     "name": "Aleksey Khachaturov",
     "url": "https://github.com/triadium"

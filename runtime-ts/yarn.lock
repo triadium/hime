@@ -3003,6 +3003,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hime-redist-ts@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "hime-redist-ts@workspace:."
+  dependencies:
+    "@types/jest": "npm:^29.5.14"
+    "@typescript-eslint/eslint-plugin": "npm:7.16.1"
+    "@typescript-eslint/parser": "npm:7.16.1"
+    eslint: "npm:8.57.1"
+    eslint-config-prettier: "npm:^9.1.0"
+    eslint-plugin-import: "npm:^2.29"
+    eslint-plugin-json: "npm:^3.1.0"
+    eslint-plugin-prettier: "npm:^5.1.3"
+    eslint-plugin-simple-import-sort: "npm:^12.1.1"
+    eslint-plugin-sort-destructure-keys: "npm:^2.0.0"
+    eslint-plugin-sort-keys-fix: "npm:^1.1.2"
+    eslint-plugin-typescript-sort-keys: "npm:^3.2.0"
+    eslint-plugin-unicorn: "npm:^54.0.0"
+    jest: "npm:^29.7.0"
+    prettier: "npm:^3.3.3"
+    ts-jest: "npm:^29.2.5"
+    typescript: "npm:^5.6.3"
+  languageName: unknown
+  linkType: soft
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -5007,30 +5031,6 @@ __metadata:
   checksum: 10c0/200b5ab25b5b8b7113f9901bfe3afc347e19bb7475b267d55ad0eb86a62a46d77510cb0f232507c9e5d497ebda569a08a9867d0d14f57a82ad5564d991588b39
   languageName: node
   linkType: hard
-
-"runtime-ts@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "runtime-ts@workspace:."
-  dependencies:
-    "@types/jest": "npm:^29.5.14"
-    "@typescript-eslint/eslint-plugin": "npm:7.16.1"
-    "@typescript-eslint/parser": "npm:7.16.1"
-    eslint: "npm:8.57.1"
-    eslint-config-prettier: "npm:^9.1.0"
-    eslint-plugin-import: "npm:^2.29"
-    eslint-plugin-json: "npm:^3.1.0"
-    eslint-plugin-prettier: "npm:^5.1.3"
-    eslint-plugin-simple-import-sort: "npm:^12.1.1"
-    eslint-plugin-sort-destructure-keys: "npm:^2.0.0"
-    eslint-plugin-sort-keys-fix: "npm:^1.1.2"
-    eslint-plugin-typescript-sort-keys: "npm:^3.2.0"
-    eslint-plugin-unicorn: "npm:^54.0.0"
-    jest: "npm:^29.7.0"
-    prettier: "npm:^3.3.3"
-    ts-jest: "npm:^29.2.5"
-    typescript: "npm:^5.6.3"
-  languageName: unknown
-  linkType: soft
 
 "safe-array-concat@npm:^1.1.2":
   version: 1.1.2

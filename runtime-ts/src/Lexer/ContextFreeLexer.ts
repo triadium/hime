@@ -61,7 +61,7 @@ export class ContextFreeLexer extends BaseLexer {
   /// </summary>
   /// <param name="contexts">The current applicable contexts</param>
   /// <returns>The next token in the input</returns>
-  GetNextTokenWithContext(_: IContextProvider): TokenKernel {
+  override GetNextTokenWithContext(_: IContextProvider): TokenKernel {
     if (this.tokens.Size === 0) {
       // this is the first call to this method, prefetch the tokens
       this.FindTokens()

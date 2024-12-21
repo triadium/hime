@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -30,12 +30,12 @@ export abstract class Text {
   /// <summary>
   /// Gets the number of lines
   /// </summary>
-  abstract readonly LineCount: int
+  abstract get LineCount(): int
 
   /// <summary>
   /// Gets the size in number of characters
   /// </summary>
-  abstract readonly Size: int
+  abstract get Size(): int
 
   /// <summary>
   /// Gets the substring beginning at the given index with the given length

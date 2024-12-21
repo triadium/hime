@@ -547,7 +547,7 @@ export class RNGLRParser extends BaseLRParser implements IContextProvider {
   /// Parses the input and returns the produced AST
   /// </summary>
   /// <returns>AST produced by the parser representing the input, or null if unrecoverable errors were encountered</returns>
-  Parse(): ParseResult {
+  override Parse(): ParseResult {
     this.reductions = new Queue<RNGLRParser.Reduction>()
     this.shifts = new Queue<RNGLRParser.Shift>()
     let Ui = this.gss.CreateGeneration()

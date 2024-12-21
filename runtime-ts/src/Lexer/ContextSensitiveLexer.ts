@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -66,7 +66,7 @@ export class ContextSensitiveLexer extends BaseLexer {
   /// </summary>
   /// <param name="contexts">The current applicable contexts</param>
   /// <returns>The next token in the input</returns>
-  GetNextTokenWithContext(contexts: IContextProvider): TokenKernel {
+  override GetNextTokenWithContext(contexts: IContextProvider): TokenKernel {
     if (this.isDollarEmitted) {
       return new TokenKernel(GSymbol.SID_EPSILON, -1)
     }

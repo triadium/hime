@@ -45,7 +45,7 @@ export class PrefetchedText extends BaseText {
   /// </summary>
   /// <param name="index">Index from the start</param>
   /// <returns>The character at the specified index</returns>
-  GetChar(index: int): char {
+  override GetChar(index: int): char {
     return this.content.charCodeAt(index)!
   }
 
@@ -54,14 +54,14 @@ export class PrefetchedText extends BaseText {
   /// </summary>
   /// <param name="index">Index from the start</param>
   /// <returns><c>true</c> if the index is after the end of the text</returns>
-  IsEnd(index: int): boolean {
+  override IsEnd(index: int): boolean {
     return index >= this.content.length
   }
 
   /// <summary>
   /// Finds all the lines in this content
   /// </summary>
-  protected FindLines(): void {
+  protected override FindLines(): void {
     this.lines = new Array(BaseText.INIT_LINE_COUNT_CACHE_SIZE)
     this.lines[0] = 0
     this.line = 1
@@ -95,7 +95,7 @@ export class PrefetchedText extends BaseText {
   /// <param name="index">Index of the substring from the start</param>
   /// <param name="length">Length of the substring</param>
   /// <returns>The substring</returns>
-  GetValue(index: int, length: int): string {
+  override GetValue(index: int, length: int): string {
     return length === 0 ? '' : this.content.substring(index, index + length)
   }
 
@@ -105,7 +105,7 @@ export class PrefetchedText extends BaseText {
   /// <param name="line">The line number</param>
   /// <returns>The length of the line</returns>
   /// <remarks>The line numbering is 1-based</remarks>
-  GetLineLength(line: int): int {
+  override GetLineLength(line: int): int {
     if (this.lines == null) {
       this.FindLines()
     }

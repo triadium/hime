@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -117,7 +117,7 @@ export abstract class BaseText extends Text {
   /// <summary>
   /// Gets the number of lines
   /// </summary>
-  get LineCount(): int {
+  override get LineCount(): int {
     if (this.lines == null) {
       this.FindLines()
     }
@@ -136,7 +136,7 @@ export abstract class BaseText extends Text {
   /// </summary>
   /// <param name="span">A span in this text</param>
   /// <returns>The substring</returns>
-  GetValueOfSpan(span: TextSpan): string {
+  override GetValueOfSpan(span: TextSpan): string {
     return this.GetValue(span.Index, span.Length)
   }
 
@@ -146,7 +146,7 @@ export abstract class BaseText extends Text {
   /// <param name="line">The line number</param>
   /// <returns>The starting index of the line</returns>
   /// <remarks>The line numbering is 1-based</remarks>
-  GetLineIndex(line: int): int {
+  override GetLineIndex(line: int): int {
     if (this.lines == null) {
       this.FindLines()
     }
@@ -159,7 +159,7 @@ export abstract class BaseText extends Text {
   /// <param name="line">The line number</param>
   /// <returns>The string content of the line</returns>
   /// <remarks>The line numbering is 1-based</remarks>
-  GetLineContent(line: int): string {
+  override GetLineContent(line: int): string {
     return this.GetValue(this.GetLineIndex(line), this.GetLineLength(line))
   }
 
@@ -168,7 +168,7 @@ export abstract class BaseText extends Text {
   /// </summary>
   /// <param name="index">Index from the start</param>
   /// <returns>The position (line and column) at the index</returns>
-  GetPositionAt(index: int): TextPosition {
+  override GetPositionAt(index: int): TextPosition {
     const l = this.FindLineAt(index)
     return new TextPosition(l + 1, index - this.lines[l]! + 1)
   }
@@ -178,7 +178,7 @@ export abstract class BaseText extends Text {
   /// </summary>
   /// <param name="position">The position in this text</param>
   /// <returns>The context description</returns>
-  GetContext(position: TextPosition): TextContext {
+  override GetContext(position: TextPosition): TextContext {
     return this.GetContextOfElement(position, 1)
   }
 
@@ -188,7 +188,7 @@ export abstract class BaseText extends Text {
   /// <param name="position">The position in this text</param>
   /// <param name="length">The length of the element to contextualize</param>
   /// <returns>The context description</returns>
-  GetContextOfElement(position: TextPosition, length: int): TextContext {
+  override GetContextOfElement(position: TextPosition, length: int): TextContext {
     const content = this.GetLineContent(position.Line)
     if (content.length === 0) {
       return new TextContext('', '^')
@@ -238,7 +238,7 @@ export abstract class BaseText extends Text {
   /// </summary>
   /// <param name="span">The span of text to contextualize</param>
   /// <returns>The context description</returns>
-  GetContextOfSpan(span: TextSpan): TextContext {
+  override GetContextOfSpan(span: TextSpan): TextContext {
     const position = this.GetPositionAt(span.Index)
     return this.GetContextOfElement(position, span.Length)
   }

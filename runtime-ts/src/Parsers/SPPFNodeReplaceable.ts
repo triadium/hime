@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -42,14 +42,14 @@ export class SPPFNodeReplaceable extends SPPFNode {
   /// <summary>
   /// Gets whether this node must be replaced by its children
   /// </summary>
-  get IsReplaceable(): boolean {
+  override get IsReplaceable(): boolean {
     return true
   }
 
   /// <summary>
   /// Gets the original symbol for this node
   /// </summary>
-  get OriginalSymbol(): TableElemRef {
+  override get OriginalSymbol(): TableElemRef {
     return this.label
   }
 

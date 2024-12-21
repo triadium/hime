@@ -29,7 +29,7 @@ import { ROList } from './Utils'
 export class ParseResult {
   private errors: ROList<ParseError>
   private text: Text
-  private ast?: AST
+  private ast?: AST | undefined
 
   /// <summary>
   /// Initializes this result as a success with the given AST
@@ -37,7 +37,7 @@ export class ParseResult {
   /// <param name="errors">The list of errors</param>
   /// <param name="text">The parsed text</param>
   /// <param name="ast">The produced AST</param>
-  constructor(errors: ROList<ParseError>, text: Text, ast?: AST) {
+  constructor(errors: ROList<ParseError>, text: Text, ast?: AST | undefined) {
     this.errors = errors
     this.text = text
     this.ast = ast

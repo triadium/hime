@@ -224,7 +224,7 @@ export abstract class LRkParser extends BaseLRParser implements IContextProvider
   /// Parses the input and returns the result
   /// </summary>
   /// <returns>A ParseResult object containing the data about the result</returns>
-  Parse(): ParseResult {
+  override Parse(): ParseResult {
     let nextKernel = this.lexer.GetNextTokenWithContext(this)
     while (true) {
       const action = this.ParseOnToken(nextKernel)
