@@ -45,7 +45,7 @@ export class FCTestLexer extends ContextFreeLexer {
   }
 
   static async fromString(input: string) {
-    const buffer = await readFile('./test/data/MathExpLexer.bin')
+    const buffer = await readFile('./test/data/MathExpLexer.glalr.bin')
     const automaton = new Automaton(BinaryReader.Create(buffer))
     return new FCTestLexer(automaton, this.terminals, 0x0004, input)
   }

@@ -20,7 +20,7 @@ grammar MathExp
     rules
     {
         exp_atom    -> NUMBER^ @OnNumber
-                    |  #accessors { GET^ @OnNumber }
+                    |  #accessors { GET^ @GetOnNumber }
                     | '('! exp^ ')'! ;
         exp_factor  -> exp_atom^
                     |  exp_factor '*'^ exp_atom @OnMult

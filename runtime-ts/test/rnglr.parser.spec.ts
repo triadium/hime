@@ -27,12 +27,12 @@ export class CSTestLexer extends ContextSensitiveLexer {
     new GSymbol(0x0007, "NUMBER"),
     new GSymbol(0x0008, "SYMBOL"),
     new GSymbol(0x0009, "GET"),
-    new GSymbol(0x0010, "("),
-    new GSymbol(0x0011, ")"),
-    new GSymbol(0x0012, "*"),
-    new GSymbol(0x0014, "/"),
-    new GSymbol(0x0016, "+"),
-    new GSymbol(0x0018, "-"),
+    new GSymbol(0x0011, "("),
+    new GSymbol(0x0012, ")"),
+    new GSymbol(0x0013, "*"),
+    new GSymbol(0x0015, "/"),
+    new GSymbol(0x0017, "+"),
+    new GSymbol(0x0019, "-"),
   ]
 
   collectTerminals(context: IContextProvider): int[] {
@@ -47,7 +47,7 @@ export class CSTestLexer extends ContextSensitiveLexer {
   }
 
   static async fromString(input: string) {
-    const buffer = await readFile('./test/data/MathExpLexer.bin')
+    const buffer = await readFile('./test/data/MathExpLexer.glalr.bin')
     const automaton = new Automaton(BinaryReader.Create(buffer))
     return new CSTestLexer(automaton, this.terminals, 0x0004, input)
   }
@@ -101,9 +101,10 @@ export class RNGLRTestParser extends RNGLRParser {
     new GSymbol(0x000B, "exp_factor"),
     new GSymbol(0x000C, "exp_term"),
     new GSymbol(0x000D, "exp"),
-    new GSymbol(0x000F, "__V15"),
-    new GSymbol(0x001A, "__VAxiom")
+    new GSymbol(0x0010, "__V16"),
+    new GSymbol(0x001B, "__VAxiom")
   ]
+
   /// <summary>
   /// The collection of virtuals matched by this parser
   /// </summary>
@@ -120,10 +121,11 @@ export class RNGLRTestParser extends RNGLRParser {
   private static GetUserActions(input: RNGLRTestParser.Actions): SemanticAction[] {
     const result = new Array<SemanticAction>(5)
     result[0] = input.OnNumber
-    result[1] = input.OnMult
-    result[2] = input.OnDiv
-    result[3] = input.OnPlus
-    result[4] = input.OnMinus
+    result[1] = input.GetOnNumber
+    result[2] = input.OnMult
+    result[3] = input.OnDiv
+    result[4] = input.OnPlus
+    result[5] = input.OnMinus
     return result;
   }
   /// <summary>
@@ -134,10 +136,11 @@ export class RNGLRTestParser extends RNGLRParser {
   private static GetUserActionsFromMap(input: Record<string, SemanticAction>): SemanticAction[] {
     const result = new Array<SemanticAction>(5)
     result[0] = input["OnNumber"]!
-    result[1] = input["OnMult"]!
-    result[2] = input["OnDiv"]!
-    result[3] = input["OnPlus"]!
-    result[4] = input["OnMinus"]!
+    result[1] = input["GetOnNumber"]!
+    result[2] = input["OnMult"]!
+    result[3] = input["OnDiv"]!
+    result[4] = input["OnPlus"]!
+    result[5] = input["OnMinus"]!
     return result
   }
 
@@ -177,20 +180,20 @@ export class RNGLRTestParser extends RNGLRParser {
 
   static async fromString(input: string) {
     const lexer = await CSTestLexer.fromString(input)
-    const buffer = await readFile('./test/data/MathExpParser.bin')
+    const buffer = await readFile('./test/data/MathExpParser.glalr.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
     // Represents a set of empty semantic actions (do nothing)    
     return new RNGLRTestParser(automaton, this.GetUserActions(new RNGLRTestParser.Actions()), lexer)
   }
   static async fromStringWithActions(input: string, actions: RNGLRTestParser.Actions) {
     const lexer = await CSTestLexer.fromString(input)
-    const buffer = await readFile('./test/data/MathExpParser.bin')
+    const buffer = await readFile('./test/data/MathExpParser.glalr.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
     return new RNGLRTestParser(automaton, this.GetUserActions(actions), lexer)
   }
   static async fromStringWithActionMap(input: string, actions: Record<string, SemanticAction>) {
     const lexer = await CSTestLexer.fromString(input)
-    const buffer = await readFile('./test/data/MathExpParser.bin')
+    const buffer = await readFile('./test/data/MathExpParser.glalr.bin')
     const automaton = new RNGLRAutomaton(BinaryReader.Create(buffer))
     return new RNGLRTestParser(automaton, this.GetUserActionsFromMap(actions), lexer)
   }
@@ -259,6 +262,10 @@ export namespace RNGLRTestParser {
     /// The OnNumber semantic action
     /// </summary>
     OnNumber(_: GSymbol, __: SemanticBody): void { }
+    /// <summary>
+    /// The GetOnNumber semantic action
+    /// </summary>
+    GetOnNumber(_: GSymbol, __: SemanticBody): void { }
     /// <summary>
     /// The OnMult semantic action
     /// </summary>
