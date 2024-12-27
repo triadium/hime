@@ -67,7 +67,8 @@ pub fn main() -> miette::Result<()> {
                     "net",
                     "u3d",
                     "java",
-                    "rust"
+                    "rust",
+                    "ts"
                 ])
         )
         .arg(
@@ -191,6 +192,7 @@ pub fn main() -> miette::Result<()> {
         Some("u3d") => task.output_target = Some(Runtime::Unity3d),
         Some("java") => task.output_target = Some(Runtime::Java),
         Some("rust") => task.output_target = Some(Runtime::Rust),
+        Some("ts") => task.output_target = Some(Runtime::TypeScript),
         _ => {}
     }
     task.output_target_runtime_path = matches

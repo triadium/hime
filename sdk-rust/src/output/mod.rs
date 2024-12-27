@@ -20,17 +20,20 @@
 mod assembly_java;
 mod assembly_net;
 mod assembly_rust;
+mod assembly_typescript;
 mod assembly_u3d;
 pub mod helper;
 mod lexer_data;
 mod lexer_java;
 mod lexer_net;
 mod lexer_rust;
+mod lexer_typescript;
 mod lexer_u3d;
 mod parser_data;
 mod parser_java;
 mod parser_net;
 mod parser_rust;
+mod parser_typescript;
 mod parser_u3d;
 
 use std::env;
@@ -80,6 +83,7 @@ pub fn output_grammar_artifacts(
         Runtime::Unity3d => helper::get_namespace_u3d(&nmspace),
         Runtime::Java => helper::get_namespace_java(&nmspace),
         Runtime::Rust => helper::get_namespace_rust(&nmspace),
+        Runtime::TypeScript => helper::get_namespace_typescript(&nmspace),
     };
     let modifier = match task.get_output_modifier_for(grammar, grammar_index) {
         Ok(modifier) => modifier,
@@ -220,6 +224,30 @@ pub fn output_grammar_artifacts(
                 return Err(vec![error]);
             }
         }
+        Runtime::TypeScript => {
+            if let Err(error) = lexer_typescript::write(
+                output_path.as_ref(),
+                format!("{}.lexer.ts", helper::to_lower_dash_case(&grammar.name)),
+                grammar,
+                &data.expected,
+                data.separator,
+                &nmspace,
+                modifier,
+            ) {
+                return Err(vec![error]);
+            }
+            if let Err(error) = parser_typescript::write(
+                output_path.as_ref(),
+                format!("{}.parser.ts", helper::to_lower_dash_case(&grammar.name)),
+                grammar,
+                &data.expected,
+                data.method,
+                &nmspace,
+                modifier,
+            ) {
+                return Err(vec![error]);
+            }
+        }
     }
     Ok(())
 }
@@ -340,6 +368,18 @@ pub fn get_sources(task: &CompilationTask, grammar: &Grammar, grammar_index: usi
             build_file(output_path.as_ref(), get_lexer_bin_name_rust(grammar)),
             build_file(output_path.as_ref(), get_parser_bin_name_rust(grammar)),
         ],
+        Runtime::TypeScript => vec![
+            build_file(
+                output_path.as_ref(),
+                format!("{}.lexer.ts", helper::to_lower_dash_case(&grammar.name)),
+            ),
+            build_file(
+                output_path.as_ref(),
+                format!("{}.parser.ts", helper::to_lower_dash_case(&grammar.name)),
+            ),
+            build_file(output_path.as_ref(), get_lexer_bin_name_typescript(grammar)),
+            build_file(output_path.as_ref(), get_parser_bin_name_typescript(grammar)),
+        ],
     })
 }
 
@@ -365,6 +405,7 @@ pub fn build_assembly(task: &CompilationTask, units: &[(usize, &Grammar)], runti
         Runtime::Unity3d => assembly_u3d::build(task, units),
         Runtime::Java => assembly_java::build(task, units),
         Runtime::Rust => assembly_rust::build(task, units),
+        Runtime::TypeScript => assembly_typescript::build(task, units),
     }
 }
 
@@ -375,6 +416,7 @@ fn get_lexer_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
         Runtime::Unity3d => get_lexer_bin_name_u3d(grammar),
         Runtime::Java => get_lexer_bin_name_java(grammar),
         Runtime::Rust => get_lexer_bin_name_rust(grammar),
+        Runtime::TypeScript => get_lexer_bin_name_typescript(grammar),
     }
 }
 
@@ -403,6 +445,11 @@ fn get_lexer_bin_name_rust(grammar: &Grammar) -> String {
     format!("{}_lexer.bin", helper::to_snake_case(&grammar.name))
 }
 
+/// Gets the name of the file for the lexer automaton in TypeScript
+fn get_lexer_bin_name_typescript(grammar: &Grammar) -> String {
+    format!("{}.lexer.bin", helper::to_lower_dash_case(&grammar.name))
+}
+
 /// Gets the name of the file for the parser automaton
 fn get_parser_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
     match runtime {
@@ -410,6 +457,7 @@ fn get_parser_bin_name(grammar: &Grammar, runtime: Runtime) -> String {
         Runtime::Unity3d => get_parser_bin_name_u3d(grammar),
         Runtime::Java => get_parser_bin_name_java(grammar),
         Runtime::Rust => get_parser_bin_name_rust(grammar),
+        Runtime::TypeScript => get_parser_bin_name_typescript(grammar),
     }
 }
 
@@ -436,6 +484,11 @@ fn get_parser_bin_name_java(grammar: &Grammar) -> String {
 /// Gets the name of the file for the parser automaton in Rust
 fn get_parser_bin_name_rust(grammar: &Grammar) -> String {
     format!("{}_parser.bin", helper::to_snake_case(&grammar.name))
+}
+
+/// Gets the name of the file for the parser automaton in TypeScript
+fn get_parser_bin_name_typescript(grammar: &Grammar) -> String {
+    format!("{}.parser.bin", helper::to_lower_dash_case(&grammar.name))
 }
 
 /// Creates a temp folder

@@ -26,7 +26,49 @@ const LOWER_Z: u8 = 0x7A;
 const DIGIT0: u8 = 0x30;
 const DIGIT9: u8 = 0x39;
 const UNDERSCORE: u8 = 0x5F;
+const DASH: u8 = 0x2D;
 const TO_LOWER: u8 = LOWER_A - UPPER_A;
+
+/// Converts a name to lower dash case
+#[must_use]
+pub fn to_lower_dash_case(name: &str) -> String {
+    let mut result = Vec::<u8>::new();
+    for (i, c) in name.bytes().enumerate() {
+        if i == 0 {
+            if (UPPER_A..=UPPER_Z).contains(&c) {
+                result.push(c + TO_LOWER);
+            } else if (LOWER_A..=LOWER_Z).contains(&c) || (DIGIT0..=DIGIT9).contains(&c) {
+                result.push(c);
+            } else {
+                result.push(DASH);
+            }
+        } else if (UPPER_A..=UPPER_Z).contains(&c) {
+            let x = (&name as &dyn AsRef<[u8]>).as_ref()[i - 1];
+            if (LOWER_A..=LOWER_Z).contains(&x) || (DIGIT0..=DIGIT9).contains(&x) {
+                // preceded by a lower-case character or a number, this is a new word
+                result.push(DASH);
+            }
+            result.push(c + TO_LOWER);
+        } else if ((LOWER_A..=LOWER_Z).contains(&c)) || ((DIGIT0..=DIGIT9).contains(&c)) {
+            result.push(c);
+        } else {
+            result.push(DASH);
+        }
+    }
+    String::from_utf8(result).ok().unwrap_or_default()
+}
+
+#[test]
+fn test_lower_dash_case() {
+    assert_eq!("", to_lower_dash_case(""));
+    assert_eq!("lower-dash-case", to_lower_dash_case("lower_dash_case"));
+    assert_eq!("lower-dash-case", to_lower_dash_case("lower_DASH_CASE"));
+    assert_eq!("lower1dash-case", to_lower_dash_case("lower1dash_case"));
+    assert_eq!("lower2d-ash-case", to_lower_dash_case("lower2dASH_CASE"));
+    assert_eq!("lower-dash-case", to_lower_dash_case("LowerDashCase"));
+    assert_eq!("lower-dash-case", to_lower_dash_case("lowerDashCase"));
+    assert_eq!("lower-dash-case", to_lower_dash_case("Lower Dash Case"));
+}
 
 /// Converts a name to upper camel case
 #[must_use]
@@ -291,6 +333,27 @@ pub fn get_namespace_rust(input: &str) -> String {
             .join("::")
     } else {
         to_snake_case(input)
+    }
+}
+
+/// Gets the TypeScript compatible name for the specified namespace
+pub fn get_namespace_typescript(input: &str) -> String {
+    if input.contains("::") {
+        input
+            .split("::")
+            .filter(|part| !part.is_empty())
+            .map(to_upper_camel_case)
+            .collect::<Vec<String>>()
+            .join(".")
+    } else if input.contains('.') {
+        input
+            .split('.')
+            .filter(|part| !part.is_empty())
+            .map(to_upper_camel_case)
+            .collect::<Vec<String>>()
+            .join(".")
+    } else {
+        to_upper_camel_case(input)
     }
 }
 

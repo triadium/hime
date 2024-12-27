@@ -398,6 +398,8 @@ pub enum Runtime {
     Java,
     /// The Rust language
     Rust,
+    /// The TypeScript language
+    TypeScript,
 }
 
 /// Represents the access modifiers for the generated code
@@ -472,8 +474,6 @@ impl<'a> CompilationTask<'a> {
 
     /// Gets the target runtime for the grammar
     ///
-    /// Valid values for the runtime are: `net`, `java` and `rust`.
-    ///
     /// # Errors
     ///
     /// Return an error when the value for the runtime is not an expected ones
@@ -486,6 +486,7 @@ impl<'a> CompilationTask<'a> {
                     "u3d" => Ok(Runtime::Unity3d),
                     "java" => Ok(Runtime::Java),
                     "rust" => Ok(Runtime::Rust),
+                    "ts" => Ok(Runtime::TypeScript),
                     _ => Err(Error::InvalidOption(
                         grammar_index,
                         OPTION_RUNTIME.to_string(),
@@ -494,6 +495,7 @@ impl<'a> CompilationTask<'a> {
                             String::from("u3d"),
                             String::from("java"),
                             String::from("rust"),
+                            String::from("ts"),
                         ],
                     )),
                 },
@@ -607,6 +609,7 @@ impl<'a> CompilationTask<'a> {
         self.execute_output_assembly(&data.grammars, Runtime::Unity3d, &mut errors);
         self.execute_output_assembly(&data.grammars, Runtime::Java, &mut errors);
         self.execute_output_assembly(&data.grammars, Runtime::Rust, &mut errors);
+        self.execute_output_assembly(&data.grammars, Runtime::TypeScript, &mut errors);
         if errors.is_empty() {
             Ok(data)
         } else {
