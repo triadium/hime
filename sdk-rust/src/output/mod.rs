@@ -39,7 +39,7 @@ mod parser_u3d;
 use std::env;
 use std::fs::File;
 use std::io::{self, Write};
-use std::path::{Path, PathBuf};
+use std::path::{Path, PathBuf, MAIN_SEPARATOR};
 
 use hime_redist::lexers::automaton::Automaton;
 use hime_redist::parsers::lrk::LRkAutomaton;
@@ -504,10 +504,36 @@ pub fn temporary_folder() -> PathBuf {
     result
 }
 
-/// Export a resource a target file
+fn str_to_pathbuf(s: &str, sep: char) -> PathBuf {
+    let s = s
+        .chars()
+        .map(|c| if c == sep { MAIN_SEPARATOR } else { c })
+        .collect::<String>();
+    PathBuf::from(s)
+}
+
+#[cfg(not(target_os = "windows"))]
+pub fn from_slashed_path(p: &Path) -> PathBuf {
+    PathBuf::from(p.as_ref())
+}
+
+#[cfg(target_os = "windows")]
+pub fn from_slashed_path(p: &Path) -> PathBuf {
+    str_to_pathbuf(&p.to_string_lossy(), '/')
+}
+
+/// Export a resource target file
 fn export_resource(folder: &Path, file_name: &str, content: &[u8]) -> Result<(), Error> {
     let mut target = folder.to_path_buf();
     target.push(file_name);
+    let file = File::create(target)?;
+    let mut writer = io::BufWriter::new(file);
+    writer.write_all(content)?;
+    Ok(())
+}
+
+/// Export a resource target file
+fn export_resource_target(target: &Path, content: &[u8]) -> Result<(), Error> {
     let file = File::create(target)?;
     let mut writer = io::BufWriter::new(file);
     writer.write_all(content)?;
