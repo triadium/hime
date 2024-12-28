@@ -101,10 +101,6 @@ pub fn write(
     writeln!(writer, "}}")?;
 
     writeln!(writer)?;
-    writeln!(writer, "/**")?;
-    writeln!(writer, " * Namespace of parser")?;
-    writeln!(writer, " * @{}", modifier)?;
-    writeln!(writer, " */")?;
     writeln!(writer, "export namespace {}Parser {{", &name)?;
 
     write_code_symbols(&mut writer, grammar)?;

@@ -124,10 +124,6 @@ pub fn write(
     writeln!(writer, "}}")?;
     writeln!(writer)?;
 
-    writeln!(writer, "/**")?;
-    writeln!(writer, " * Namespace of lexer")?;
-    writeln!(writer, " * @{}", modifier)?;
-    writeln!(writer, " */")?;
     writeln!(writer, "export namespace {}Lexer {{", &name)?;
 
     writeln!(writer, "  /**")?;
