@@ -35,5 +35,11 @@
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "hime-redist-ts": "file:./packs/hime-redist-ts-4.4.0.tgz"
+  },
+  "peerDependencies": {
+    "hime-redist-ts": "4.4.0"
   }
 }

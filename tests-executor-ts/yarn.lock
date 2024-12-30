@@ -3003,6 +3003,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hime-redist-ts@file:./packs/hime-redist-ts-4.4.0.tgz::locator=tests-executor-ts%40workspace%3A.":
+  version: 4.4.0
+  resolution: "hime-redist-ts@file:./packs/hime-redist-ts-4.4.0.tgz#./packs/hime-redist-ts-4.4.0.tgz::hash=f4ebfc&locator=tests-executor-ts%40workspace%3A."
+  checksum: 10c0/564687ce981c3d43fe8866d391b10b1c48276e4ed0e7557255d3b5b8bb5715e7a87f880f5f94fe0cf2fd53f963462296d0e4709e5233c69a86c4a14eeec163b0
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -5456,10 +5463,13 @@ __metadata:
     eslint-plugin-sort-keys-fix: "npm:^1.1.2"
     eslint-plugin-typescript-sort-keys: "npm:^3.2.0"
     eslint-plugin-unicorn: "npm:^54.0.0"
+    hime-redist-ts: "file:./packs/hime-redist-ts-4.4.0.tgz"
     jest: "npm:^29.7.0"
     prettier: "npm:^3.3.3"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:^5.6.3"
+  peerDependencies:
+    hime-redist-ts: 4.4.0
   languageName: unknown
   linkType: soft
 

@@ -193,7 +193,7 @@ fn write_code_virtuals(writer: &mut dyn Write, grammar: &Grammar) -> Result<(), 
     writeln!(writer, "   */")?;
     writeln!(writer, "  private static readonly virtuals: GSymbol[] = [")?;
     for symbol_ref in grammar.virtuals.iter() {
-        writeln!(writer, "    new GSymbol(0x{:04X}, '{}')", symbol_ref.id, &symbol_ref.name)?;
+        writeln!(writer, "    new GSymbol(0x{:04X}, '{}'),", symbol_ref.id, &symbol_ref.name)?;
     }
     writeln!(writer, "  ]")?;
     Ok(())
