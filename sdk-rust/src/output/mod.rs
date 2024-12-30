@@ -322,7 +322,7 @@ pub fn build_in_memory_grammar<'a>(grammar: &'a Grammar, data: &BuildData) -> Re
 ///
 /// # Errors
 ///
-/// Returns an error when resolving the target (net, java, rust) fails.
+/// Returns an error when resolving the target fails.
 pub fn get_sources(task: &CompilationTask, grammar: &Grammar, grammar_index: usize) -> Result<Vec<PathBuf>, Error> {
     let runtime = task.get_output_target_for(grammar, grammar_index)?;
     let output_path = task.get_output_path_for(grammar);

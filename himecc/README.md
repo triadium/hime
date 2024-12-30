@@ -1,6 +1,6 @@
 # himecc #
 
-The command-line tool to generate LR and GLR parsers for .Net, Java and Rust.
+The command-line tool to generate LR and GLR parsers for .Net, Java, TypeScript and Rust.
 For more information about how to generate parsers using Hime, head to [Hime](https://cenotelie.fr/projects/hime).
 The code for this library is available on [GitHub](https://github.com/cenotelie/hime).
 This software is developed by the [Assocation Cénotélie](https://cenotelie.fr/), France.

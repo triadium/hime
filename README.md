@@ -3,7 +3,7 @@
 [![Build Status](https://dev.azure.com/cenotelie/cenotelie/_apis/build/status%2Fcenotelie.hime?branchName=master)](https://dev.azure.com/cenotelie/cenotelie/_build/latest?definitionId=6&branchName=master)
 [![Crates.io](https://img.shields.io/crates/v/hime_redist.svg)](https://crates.io/crates/hime_redist)
 
-Hime is a parser generator that targets .Net, Java and Rust.
+Hime is a parser generator that targets .Net, Java, TypeScript and Rust.
 Hime relies on the [LR](https://en.wikipedia.org/wiki/LR_parser)
 family of parsing techniques, including the state of the art
 [RNGLR algorithm]((http://portal.acm.org/citation.cfm?id=1146809.1146810&coll=DL&dl=GUIDE&CFID=9339017&CFTOKEN=49072692)) for generalized LR parsing used for
