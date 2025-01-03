@@ -37,7 +37,8 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "hime-redist-ts": "file:./packs/hime-redist-ts-4.4.0.tgz"
+    "hime-redist-ts": "file:./packs/hime-redist-ts-4.4.0.tgz",
+    "parsers-ts": "file:./packs/parsers-ts-1.0.0.tgz"
   },
   "peerDependencies": {
     "hime-redist-ts": "4.4.0"

@@ -3005,8 +3005,8 @@ __metadata:
 
 "hime-redist-ts@file:./packs/hime-redist-ts-4.4.0.tgz::locator=tests-executor-ts%40workspace%3A.":
   version: 4.4.0
-  resolution: "hime-redist-ts@file:./packs/hime-redist-ts-4.4.0.tgz#./packs/hime-redist-ts-4.4.0.tgz::hash=f4ebfc&locator=tests-executor-ts%40workspace%3A."
-  checksum: 10c0/564687ce981c3d43fe8866d391b10b1c48276e4ed0e7557255d3b5b8bb5715e7a87f880f5f94fe0cf2fd53f963462296d0e4709e5233c69a86c4a14eeec163b0
+  resolution: "hime-redist-ts@file:./packs/hime-redist-ts-4.4.0.tgz#./packs/hime-redist-ts-4.4.0.tgz::hash=3587ee&locator=tests-executor-ts%40workspace%3A."
+  checksum: 10c0/c2bd4acfdbf1dd4f1f3db63196a63cbcfd0f694e5938f3d9ed09653c629782f2d18181f734a168c4f4fb43031dfee3c9ae2875b9379fd268057cf848fb094106
   languageName: node
   linkType: hard
 
@@ -4661,6 +4661,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parsers-ts@file:./packs/parsers-ts-1.0.0.tgz::locator=tests-executor-ts%40workspace%3A.":
+  version: 1.0.0
+  resolution: "parsers-ts@file:./packs/parsers-ts-1.0.0.tgz#./packs/parsers-ts-1.0.0.tgz::hash=03c289&locator=tests-executor-ts%40workspace%3A."
+  peerDependencies:
+    hime-redist-ts: 4.4.0
+  checksum: 10c0/661366800a823bb92c392d9c7529ddc32f9258fae5ef8ecdd07f4f2938277df786f5e11486cc4f75ba112acf0af54ce347e09af13eb9d33a2f5c86cadb9604d5
+  languageName: node
+  linkType: hard
+
 "path-exists@npm:^4.0.0":
   version: 4.0.0
   resolution: "path-exists@npm:4.0.0"
@@ -5465,6 +5474,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^54.0.0"
     hime-redist-ts: "file:./packs/hime-redist-ts-4.4.0.tgz"
     jest: "npm:^29.7.0"
+    parsers-ts: "file:./packs/parsers-ts-1.0.0.tgz"
     prettier: "npm:^3.3.3"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:^5.6.3"
