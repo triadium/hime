@@ -184,6 +184,8 @@ pub struct TestResult {
     pub java: Option<TestResultOnRuntime>,
     /// The result of the test on the Rust runtime
     pub rust: Option<TestResultOnRuntime>,
+    /// The result of the test on the TypeScript runtime
+    pub typescript: Option<TestResultOnRuntime>,
 }
 
 impl TestResult {
@@ -192,6 +194,11 @@ impl TestResult {
         self.dot_net.as_ref().map(TestResultOnRuntime::get_stats).unwrap_or_default()
             + self.java.as_ref().map(TestResultOnRuntime::get_stats).unwrap_or_default()
             + self.rust.as_ref().map(TestResultOnRuntime::get_stats).unwrap_or_default()
+            + self
+                .typescript
+                .as_ref()
+                .map(TestResultOnRuntime::get_stats)
+                .unwrap_or_default()
     }
 
     /// Writes the test result as XML
