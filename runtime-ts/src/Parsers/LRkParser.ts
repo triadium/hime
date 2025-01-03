@@ -79,8 +79,8 @@ export abstract class LRkParser extends BaseLRParser implements IContextProvider
     super(variables, virtuals, actions, lexer)
 
     this.automaton = automaton
-    this.stack = new Array<int>(LRkParser.INIT_STACK_SIZE)
-    this.stackIDs = new Array<int>(LRkParser.INIT_STACK_SIZE)
+    this.stack = new Array<int>(LRkParser.INIT_STACK_SIZE).fill(0)
+    this.stackIDs = new Array<int>(LRkParser.INIT_STACK_SIZE).fill(0)
     this.head = 0
     this.builder = new LRkASTBuilder(lexer.tokens, this.symVariables, this.symVirtuals)
   }
@@ -147,6 +147,7 @@ export abstract class LRkParser extends BaseLRParser implements IContextProvider
       myHead++
       if (myHead === myStack.length) {
         myStack.length = myStack.length + LRkParser.INIT_STACK_SIZE
+        myStack.fill(0, myHead + 1)
       }
       myStack[myHead] = action.Data
       // now, get the new action for the terminal
@@ -210,6 +211,7 @@ export abstract class LRkParser extends BaseLRParser implements IContextProvider
         myHead++
         if (myHead === myStack.length) {
           myStack.length = myStack.length + LRkParser.INIT_STACK_SIZE
+          myStack.fill(0, myHead + 1)
         }
         myStack[myHead] = action.Data
         // now, get the new action for the terminal

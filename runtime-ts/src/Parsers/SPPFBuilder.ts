@@ -129,7 +129,7 @@ export class SPPFBuilder implements SemanticBody {
     this.history = new Array<SPPFBuilder.HistoryPart>(SPPFBuilder.INIT_HISTORY_SIZE)
     this.sppf = new SPPF()
     this.cacheChildren = new Array<SPPFNodeRef>(SPPFBuilder.INIT_HANDLE_SIZE)
-    this.handleIndices = new Array<int>(SPPFBuilder.INIT_HANDLE_SIZE)
+    this.handleIndices = new Array<int>(SPPFBuilder.INIT_HANDLE_SIZE).fill(0)
     this.handleActions = new Array<TreeAction>(SPPFBuilder.INIT_HANDLE_SIZE)
     this.stack = new Array<int>(SPPFBuilder.INIT_HANDLE_SIZE)
     this.result = new AST(tokens, variables, virtuals)
@@ -504,7 +504,7 @@ export namespace SPPFBuilder {
     /// </summary>
     constructor() {
       this.generation = 0
-      this.data = new Array<int>(SPPFBuilder.INIT_HISTORY_PART_SIZE)
+      this.data = new Array<int>(SPPFBuilder.INIT_HISTORY_PART_SIZE).fill(0)
       this.next = 0
     }
   }

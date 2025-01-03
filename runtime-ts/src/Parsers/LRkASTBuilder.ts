@@ -109,7 +109,7 @@ export class LRkASTBuilder implements SemanticBody {
     this.pool1024 = new Pool<SubTree>(new SubTreeFactory(1024), 16)
     this.stack = new Array<SubTree>(LRkParser.INIT_STACK_SIZE)
     this.stackNext = 0
-    this.handle = new Array<int>(LRkASTBuilder.INIT_HANDLE_SIZE)
+    this.handle = new Array<int>(LRkASTBuilder.INIT_HANDLE_SIZE).fill(0)
     this.result = new AST(tokens, variables, virtuals)
 
     this.cacheNext = 0

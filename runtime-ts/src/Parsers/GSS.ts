@@ -70,7 +70,7 @@ export class GSS {
   /// Initializes the GSS
   /// </summary>
   constructor() {
-    this.nodeLabels = new BigList<int>()
+    this.nodeLabels = new BigList<int>(0)
     this.nodeGenerations = new BigList<GSSGeneration>()
     this.edges = new BigList<GSSEdge>()
     this.edgeGenerations = new BigList<GSSGeneration>()

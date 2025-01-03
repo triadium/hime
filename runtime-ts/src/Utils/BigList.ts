@@ -56,7 +56,9 @@ export class BigList<T> {
   /// <summary>
   /// The index of the next available cell within the current chunk
   /// </summary>
-  private cellIndex: int;
+  private cellIndex: int
+
+  private defaultValue: T | undefined;
 
   /// <summary>
   /// Gets or sets the value of the item at the given index
@@ -68,9 +70,16 @@ export class BigList<T> {
   /// <summary>
   /// Initializes this list
   /// </summary>
-  constructor() {
+  constructor(defaultValue?: T) {
+    this.defaultValue = defaultValue
+
     this.chunks = new Array<T[]>(BigList.INIT_CHUNK_COUNT)
     this.chunks[0] = new Array<T>(BigList.CHUNKS_SIZE)
+
+    if (defaultValue !== undefined) {
+      this.chunks[0].fill(defaultValue)
+    }
+
     this.chunkIndex = 0
     this.cellIndex = 0
 
@@ -225,6 +234,10 @@ export class BigList<T> {
     if (chunk == null) {
       chunk = new Array<T>(BigList.CHUNKS_SIZE)
       this.chunks[this.chunkIndex] = chunk
+
+      if (this.defaultValue !== undefined) {
+        chunk.fill(this.defaultValue)
+      }
     }
     this.cellIndex = 0
   }

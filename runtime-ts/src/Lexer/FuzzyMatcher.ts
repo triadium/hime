@@ -114,7 +114,7 @@ export class FuzzyMatcher {
   /// <returns>The solution</returns>
   Run(): TokenMatch {
     this.heads = new Array<FuzzyMatcherNested.Head>()
-    this.insertions = new Array(16)
+    this.insertions = new Array(16).fill(0)
     this.insertionsCount = 0
     this.matchHead = FuzzyMatcherNested.Head.FromZeroDistance(0)
     this.matchLength = 0

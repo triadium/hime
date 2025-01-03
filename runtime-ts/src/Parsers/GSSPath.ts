@@ -55,7 +55,9 @@ export class GSSPath {
   constructor(length?: int) {
     this.Last = 0
     this.Generation = 0
-    this.labels = length ? new Array<int>(length < GSSPath.INIT_BUFFER_SIZE ? GSSPath.INIT_BUFFER_SIZE : length) : null
+    this.labels = length
+      ? new Array<int>(length < GSSPath.INIT_BUFFER_SIZE ? GSSPath.INIT_BUFFER_SIZE : length).fill(0)
+      : null
 
     return new Proxy(this, {
       /// <summary>
@@ -86,7 +88,7 @@ export class GSSPath {
   /// <param name="length">The required length</param>
   Ensure(length: int): void {
     if (length > this.labels!.length) {
-      this.labels = new Array<int>(length)
+      this.labels = new Array<int>(length).fill(0)
     }
   }
 

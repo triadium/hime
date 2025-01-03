@@ -40,8 +40,7 @@ export class ColumnMap {
   /// Initializes the structure
   /// </summary>
   constructor() {
-    this.cache1 = new Array(256)
-    this.cache1.fill(0)
+    this.cache1 = new Array(256).fill(0)
 
     return new Proxy(this, {
       /// <summary>
