@@ -44,6 +44,18 @@ pub fn build(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(), 
     execute_yarn_command(&project_folder, "workspaces", &["focus"])?;
     execute_yarn_command(&project_folder, "build", &[])?;
 
+    // copy binaries to lib
+    let src_folder = project_folder.join("src");
+    let lib_folder = project_folder.join("lib");
+    for entry in fs::read_dir(&src_folder)? {
+        let path = entry?.path();
+        let src_file_name = path.file_name().unwrap();
+
+        if src_file_name.to_string_lossy().ends_with(".bin") {
+            fs::copy(&path, &lib_folder.join(&src_file_name))?;
+        }
+    }
+
     // create the package
     execute_yarn_command(&project_folder, "pack", &["-o", "./dist/%s-%v.tgz"])?;
 
@@ -97,6 +109,7 @@ fn copy_dir(src_dir: &Dir<'_>, dst_folder: &Path) -> Result<(), Error> {
 /// Builds the typescript project
 fn build_typescript_project(task: &CompilationTask, units: &[(usize, &Grammar)]) -> Result<(PathBuf, String), Error> {
     let project_folder = output::temporary_folder();
+    // println!("{:?}", &project_folder);
 
     copy_dir(&PACKAGE, &project_folder)?;
 
@@ -136,9 +149,11 @@ fn build_typescript_project(task: &CompilationTask, units: &[(usize, &Grammar)])
 }
 
 /// Execute a yarn command
-fn execute_yarn_command(project_folder: &Path, verb: &str, args: &[&str]) -> Result<(), Error> {
+pub fn execute_yarn_command(project_folder: &Path, verb: &str, args: &[&str]) -> Result<(), Error> {
     let mut command = Command::new("node");
     command.current_dir(project_folder).arg(YARN_PATH).arg(verb).args(args);
+
+    // println!("{:?}", &command);
 
     let output = command.output()?;
     let stdout = String::from_utf8(output.stdout).unwrap();
