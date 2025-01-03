@@ -36,6 +36,8 @@ mod parser_rust;
 mod parser_typescript;
 mod parser_u3d;
 
+pub use assembly_typescript::execute_yarn_command;
+
 use std::env;
 use std::fs::File;
 use std::io::{self, Write};
