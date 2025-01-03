@@ -32,7 +32,7 @@ export class TableElemRef {
   // 	/// <param name="type">The element's type</param>
   // 	/// <param name="index">The element's index in its table</param>
   constructor(type: TableType, index: int) {
-    this.data = (UInt.from(type) << 30) | UInt.from(index)
+    this.data = ((UInt.from(type) << 30) | UInt.from(index)) >>> 0
   }
 
   /// <summary>
@@ -49,7 +49,7 @@ export class TableElemRef {
   /// Gets the element's type
   /// </summary>
   get Type(): TableType {
-    return this.data >> 30
+    return this.data >>> 30
   }
 
   /// <summary>

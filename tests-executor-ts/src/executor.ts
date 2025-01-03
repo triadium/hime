@@ -127,6 +127,7 @@ export class Executor {
   /// <returns>The test result</returns>
   private static async TestMatches(parser: BaseLRParser): Promise<int> {
     const expected = await this.GetExpectedAST()
+    console.log(`??|${expected}|`)
 
     if (expected == null) {
       console.log('Failed to parse the expected AST')
@@ -166,6 +167,8 @@ export class Executor {
   /// <returns>The test result</returns>
   private static async TestNoMatches(parser: BaseLRParser): Promise<int> {
     const expected = await this.GetExpectedAST()
+    console.log(`??|${expected}|`)
+
     if (!expected) {
       console.log('Failed to parse the expected AST')
       return this.RESULT_FAILURE_PARSING
