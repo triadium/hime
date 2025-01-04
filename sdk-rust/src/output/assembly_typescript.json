@@ -1,0 +1,26 @@
+{
+  "name": "${TypeScriptAssemblyName}",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "./lib"
+  ],
+  "publishConfig": {
+    "directory": "./lib"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "license": "Apache-2.0",
+  "private": true,
+  "packageManager": "yarn@4.5.1",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "hime-redist-ts": "file:./dist/hime-redist-ts-4.4.0.tgz",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "hime-redist-ts": "4.4.0"
+  }
+}

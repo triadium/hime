@@ -485,7 +485,7 @@ impl DFAInverse {
 
 impl<'a> DFAStateGroup<'a> {
     /// Initializes this group with a representative state
-    fn new(state: &'a DFAState) -> DFAStateGroup {
+    fn new(state: &'a DFAState) -> DFAStateGroup<'a> {
         DFAStateGroup { states: vec![state] }
     }
 }

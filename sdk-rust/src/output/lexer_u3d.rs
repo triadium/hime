@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 Association Cénotélie (cenotelie.fr)
+ * Copyright (c) 2024 Triadium (triadium.ru)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3
@@ -35,7 +35,7 @@ pub fn write(
     grammar: &Grammar,
     expected: &TerminalSet,
     separator: Option<TerminalRef>,
-    nmespace: &str,
+    namespace: &str,
     modifier: Modifier,
 ) -> Result<(), Error> {
     let mut final_path = PathBuf::new();
@@ -74,7 +74,7 @@ pub fn write(
     writeln!(writer, "using Hime.Redist.Lexer;")?;
     writeln!(writer, "using UnityEngine;")?;
     writeln!(writer)?;
-    writeln!(writer, "namespace {nmespace}")?;
+    writeln!(writer, "namespace {namespace}")?;
     writeln!(writer, "{{")?;
 
     writeln!(writer, "\t/// <summary>")?;

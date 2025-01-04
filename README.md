@@ -3,7 +3,7 @@
 [![Build Status](https://dev.azure.com/cenotelie/cenotelie/_apis/build/status%2Fcenotelie.hime?branchName=master)](https://dev.azure.com/cenotelie/cenotelie/_build/latest?definitionId=6&branchName=master)
 [![Crates.io](https://img.shields.io/crates/v/hime_redist.svg)](https://crates.io/crates/hime_redist)
 
-Hime is a parser generator that targets .Net, Java and Rust.
+Hime is a parser generator that targets .Net, Java, TypeScript and Rust.
 Hime relies on the [LR](https://en.wikipedia.org/wiki/LR_parser)
 family of parsing techniques, including the state of the art
 [RNGLR algorithm]((http://portal.acm.org/citation.cfm?id=1146809.1146810&coll=DL&dl=GUIDE&CFID=9339017&CFTOKEN=49072692)) for generalized LR parsing used for
@@ -21,6 +21,7 @@ The generated parsers require a runtime, available for the following platforms:
 * [.Net framework](https://www.nuget.org/packages/Hime.Redist/)
 * [JVM](https://central.sonatype.com/artifact/fr.cenotelie.hime/hime-redist)
 * [Rust](https://crates.io/crates/hime_redist)
+* [TypeScript](https://www.npmjs.com/package/hime-redist-ts-4.4.0.tgz)
 
 ## Parser generator ##
 
@@ -53,6 +54,7 @@ All software is available under the terms of the [Apache License 2.0](https://ww
   * `runtime-net`: .Net implementation of the runtime.
   * `runtime-java`: Java implementation of the runtime.
   * `runtime-rust`: Rust implementation of the runtime.
+  * `runtime-ts`: TypeScript implementation of the runtime.
 * SDK
   * `sdk-rust`: Rust implementation of the SDK for parser generation.
   * `sdk-debugger`: CLI tool to inspect and debug generated binary automata.
@@ -66,6 +68,7 @@ All software is available under the terms of the [Apache License 2.0](https://ww
   * `tests-executor-net`: Sources of the test executor for the .Net runtime implementation.
   * `tests-executor-java`: Sources of the test executor for the Java runtime implementation.
   * `tests-executor-rust`: Sources of the test executor for the Rust runtime implementation.
+  * `tests-executor-ts`: Sources of the test executor for the TypeScript runtime implementation.
 * Others
   * `.assets`: Contains some extra products, e.g. standard grammars.
   * `.releng`: Contains the release engineering artifacts.
@@ -91,3 +94,7 @@ The simplest way to contribute is to:
 Patches can also be submitted by email, or through the [issue management system](https://github.com/cenotelie/hime/issues).
 
 The [isse tracker](https://github.com/cenotelie/hime/issues) contains tickets that are accessible to newcomers. Look for tickets with `[beginner]` in the title. These tickets are good ways to become more familiar with the project and the codebase.
+
+## How build test grammar
+
+`cargo run -- -o=sources -t=ts -m=lalr1 ..\sdk-rust\src\loaders\HimeGrammar.gram..\tests-driver\src\loaders\Fixture.gram -g ExpectedTree`

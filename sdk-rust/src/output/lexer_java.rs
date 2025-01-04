@@ -35,7 +35,7 @@ pub fn write(
     grammar: &Grammar,
     expected: &TerminalSet,
     separator: Option<TerminalRef>,
-    nmespace: &str,
+    namespace: &str,
     modifier: Modifier,
 ) -> Result<(), Error> {
     let mut final_path = PathBuf::new();
@@ -67,7 +67,7 @@ pub fn write(
     writeln!(writer, " * Hime Parser Generator {CRATE_VERSION}")?;
     writeln!(writer, " */")?;
     writeln!(writer)?;
-    writeln!(writer, "package {nmespace};")?;
+    writeln!(writer, "package {namespace};")?;
     writeln!(writer)?;
     writeln!(writer, "import fr.cenotelie.hime.redist.Symbol;")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.lexer.Automaton;")?;

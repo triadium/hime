@@ -35,7 +35,7 @@ pub fn write(
     grammar: &Grammar,
     expected: &TerminalSet,
     separator: Option<TerminalRef>,
-    nmespace: &str,
+    namespace: &str,
     modifier: Modifier,
 ) -> Result<(), Error> {
     let mut final_path = PathBuf::new();
@@ -73,7 +73,7 @@ pub fn write(
     writeln!(writer, "using Hime.Redist;")?;
     writeln!(writer, "using Hime.Redist.Lexer;")?;
     writeln!(writer)?;
-    writeln!(writer, "namespace {nmespace}")?;
+    writeln!(writer, "namespace {namespace}")?;
     writeln!(writer, "{{")?;
 
     writeln!(writer, "\t/// <summary>")?;
