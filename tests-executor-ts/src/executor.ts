@@ -228,6 +228,16 @@ export class Executor {
   /// <returns>The test result</returns>
   private static async TestOutputs(parser: BaseLRParser): Promise<number> {
     const output = await this.GetExpectedOutput()
+    // Trim last empty lines
+    let outputLength = output.length
+    for (let i = output.length - 1; i >= 0; --i) {
+      if (output[i].length === 0) {
+        outputLength--
+      } else {
+        break
+      }
+    }
+    output.length = outputLength
     console.log(`??|${output}|`)
 
     const result = parser.Parse()

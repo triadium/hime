@@ -230,7 +230,7 @@ export abstract class BaseText extends Text {
       builder.push('^')
     }
 
-    return new TextContext(content.substring(start, end - start + 1), builder.join(''))
+    return new TextContext(content.substring(start, end + 1), builder.join(''))
   }
 
   /// <summary>
