@@ -72,6 +72,7 @@ pub fn write(
     writeln!(writer, "import fr.cenotelie.hime.redist.Symbol;")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.parsers.{automaton_type};")?;
     writeln!(writer, "import fr.cenotelie.hime.redist.parsers.{parser_type};")?;
+    writeln!(writer, "import fr.cenotelie.hime.redist.parsers.InitializationException;")?;
     writeln!(writer)?;
     writeln!(writer, "import java.util.Map;")?;
     writeln!(writer)?;
