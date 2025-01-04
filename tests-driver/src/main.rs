@@ -36,7 +36,7 @@ pub const GIT_HASH: &str = env!("GIT_HASH");
 pub const GIT_TAG: &str = env!("GIT_TAG");
 
 const FIXTURES: [FixtureDef; 8] = [
-    // FixtureDef("Demo", include_bytes!("fixtures/TwoFailures.suite")),
+    // FixtureDef("Demo", include_bytes!("fixtures/Demo.suite")),
     FixtureDef("ContextSensitive", include_bytes!("fixtures/ContextSensitive.suite")),
     FixtureDef("Errors", include_bytes!("fixtures/Errors.suite")),
     FixtureDef("GrammarOptions", include_bytes!("fixtures/GrammarOptions.suite")),

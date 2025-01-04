@@ -22,6 +22,9 @@ test Test_Context_Tab_No_Leading:
 	parser LALR1
 	on "x\n\n\txxyx\nx"
 	outputs
+		"@(3, 4)"
+		"xxyx"
+		"  ^"
 
 test Test_Grammar_PlusOperator_MatchMoreThanOne_LR:
 	grammar Test_Grammar_PlusOperator_MatchMoreThanOne_LR { options {Axiom="e";} terminals {A->'a';} rules { e->A+; } }
