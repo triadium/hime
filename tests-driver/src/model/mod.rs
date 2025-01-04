@@ -66,6 +66,7 @@ impl Fixtures {
         }
 
         if errors.is_empty() {
+            Self::build_typescript(&grammars, &grammars_data, &mut errors);
             Self::build_net(&grammars, &grammars_data, &mut errors);
             Self::build_java(&grammars, &grammars_data, &mut errors);
             Self::build_rust(&grammars, &grammars_data, &mut errors);
@@ -75,6 +76,61 @@ impl Fixtures {
         } else {
             Err(self.build_errors(grammars, errors))
         }
+    }
+
+    /// Build the Typescript parsers for the fixtures
+    fn build_typescript(grammars: &[Grammar], grammars_data: &[BuildData], errors: &mut Vec<Error>) {
+        println!("Building Typescript test parsers");
+        if let Err(e) = Self::build_typescript_inner(grammars, grammars_data, errors) {
+            errors.push(e);
+        }
+    }
+
+    /// Build the Typescript parsers for the fixtures
+    fn build_typescript_inner(grammars: &[Grammar], grammars_data: &[BuildData], errors: &mut Vec<Error>) -> Result<(), Error> {
+        let temp_dir = hime_sdk::output::temporary_folder();
+        fs::create_dir_all(&temp_dir)?;
+        let mut runtime_path = get_repo_root();
+        runtime_path.push("runtime-ts");
+
+        let task = CompilationTask {
+            mode: Some(Mode::SourcesAndAssembly),
+            output_target: Some(Runtime::TypeScript),
+            output_path: Some(temp_dir.to_str().unwrap().to_string()),
+            output_target_runtime_path: runtime_path.to_str().map(ToString::to_string),
+            ..CompilationTask::default()
+        };
+
+        // Build all parser data
+        for (index, (grammar, data)) in grammars.iter().zip(grammars_data.iter()).enumerate() {
+            if let Err(mut errs) = hime_sdk::output::output_grammar_artifacts(&task, grammar, index, data) {
+                errors.append(&mut errs);
+            }
+        }
+
+        let units: Vec<(usize, &Grammar)> = grammars.iter().enumerate().collect();
+        hime_sdk::output::build_assembly(&task, &units, Runtime::TypeScript)?;
+
+        // export the result to the local dir
+        let mut path_result = temp_dir.clone();
+        path_result.push("parsers-ts-1.0.0.tgz");
+
+        // println!("{:?}", &path_result);
+
+        let mut path_target = get_local_dir();
+        // TODO: in debug mode?!
+        path_target.push("executor-ts");
+
+        // println!("{:?}", &path_target.join("parsers-ts-1.0.0.tgz"));
+
+        std::fs::copy(&path_result, &path_target.join("packs").join("parsers-ts-1.0.0.tgz"))?;
+
+        // cleanup
+        std::fs::remove_dir_all(temp_dir)?;
+
+        hime_sdk::output::execute_yarn_command(&path_target, "workspaces", &["focus", "--production"])?;
+
+        Ok(())
     }
 
     /// Build the Rust parsers for the fixtures
@@ -260,7 +316,7 @@ impl Fixtures {
 pub struct Fixture {
     /// The fixture's name
     pub name: String,
-    /// The inner content for this ficture
+    /// The inner content for this fixture
     content: ParseResultAst,
     /// The tests in the fixture
     pub tests: Vec<Test>,
@@ -403,15 +459,29 @@ impl OutputTest {
             }
             expected_file.flush()?;
         }
+
+        let result_typescript = self.execute_typescript()?;
         let result_net = self.execute_net()?;
         let result_java = self.execute_java()?;
         let result_rust = self.execute_rust()?;
+
         Ok(TestResult {
             name: self.name.clone(),
             dot_net: Some(result_net),
             java: Some(result_java),
             rust: Some(result_rust),
+            typescript: Some(result_typescript),
         })
+    }
+
+    fn execute_typescript(&self) -> Result<TestResultOnRuntime, Error> {
+        let name = format!("{}Parser", to_upper_camel_case(&self.name));
+        let executor = get_typescript_executor_path();
+        execute_command(
+            Runtime::TypeScript,
+            executor.to_str().unwrap(),
+            &["executor-ts/dist/app.js", &name, "outputs"],
+        )
     }
 
     /// Execute this test on the .Net runtime
@@ -563,15 +633,28 @@ impl ParsingTest {
             write!(expected_file, "{}", &self.tree)?;
             expected_file.flush()?;
         }
+        let result_typescript = self.execute_typescript()?;
         let result_net = self.execute_net()?;
         let result_java = self.execute_java()?;
         let result_rust = self.execute_rust()?;
+
         Ok(TestResult {
             name: self.name.clone(),
             dot_net: Some(result_net),
             java: Some(result_java),
             rust: Some(result_rust),
+            typescript: Some(result_typescript),
         })
+    }
+
+    fn execute_typescript(&self) -> Result<TestResultOnRuntime, Error> {
+        let name = format!("{}Parser", to_upper_camel_case(&self.name));
+        let executor = get_typescript_executor_path();
+        execute_command(
+            Runtime::TypeScript,
+            executor.to_str().unwrap(),
+            &["executor-ts/dist/app.js", &name, self.verb.as_str()],
+        )
     }
 
     /// Execute this test on the .Net runtime
@@ -622,17 +705,22 @@ impl ParsingTest {
     }
 }
 
-/// Execute s a command
+/// Executes a command
 fn execute_command(runtime: Runtime, program: &str, args: &[&str]) -> Result<TestResultOnRuntime, Error> {
     let mut command = Command::new(program);
     command.args(args);
+
     println!("{:?}", command);
+
     let start_time = Instant::now();
     let output = command.output()?;
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     let end_time = Instant::now();
     let spent_time = end_time - start_time;
+
+    println!("{} ::: {}", stdout, stderr);
+
     let status = match output.status.code() {
         Some(0) => TestResultStatus::Success,
         Some(1) => TestResultStatus::Failure,
@@ -748,4 +836,8 @@ fn get_java_executor_path() -> PathBuf {
         return PathBuf::from("hime-test-executor-4.4.0-SNAPSHOT.jar");
     }
     PathBuf::from("")
+}
+
+fn get_typescript_executor_path() -> PathBuf {
+    PathBuf::from("node")
 }

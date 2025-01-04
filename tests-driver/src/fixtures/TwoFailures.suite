@@ -1,13 +1,27 @@
 fixture Errors
 
-test Test_NoError_EmptyInput:
-	grammar Test_NoError_EmptyInput { options {Axiom="e";} rules { e->; } }
+test Test_Context_Whitespace_No_Leading:
+	grammar Test_Context_Whitespace_No_Leading {
+		options { Axiom="e"; Separator = "SEPARATOR"; }
+		terminals { SEPARATOR -> (U+000A | U+000B | U+000C | U+000D | U+0085 | U+2028 | U+2029 | U+0020)+; X->'x'; }
+		rules { e->X*; }
+	}
 	parser LALR1
-	on ""
+	on "x\n\n  xxyx\nx"
 	outputs
+		"@(3, 5)"
+		"xxyx"
+		"  ^"
 
-test Test_NoError_SomeInput:
-	grammar Test_NoError_SomeInput { options {Axiom="e";} terminals { X->'x'; } rules { e->X; } }
+test Test_Context_Tab_No_Leading:
+	grammar Test_Context_Tab_No_Leading {
+		options { Axiom="e"; Separator = "SEPARATOR"; }
+		terminals { SEPARATOR -> (U+000A | U+000B | U+000C | U+000D | U+0085 | U+2028 | U+2029 | U+0020 | U+0009)+; X->'x'; }
+		rules { e->X*; }
+	}
 	parser LALR1
-	on "x"
+	on "x\n\n\txxyx\nx"
 	outputs
+		"@(3, 4)"
+		"xxyx"
+		"  ^"
