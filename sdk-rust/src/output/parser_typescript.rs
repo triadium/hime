@@ -231,7 +231,7 @@ fn write_code_get_actions(writer: &mut dyn Write, grammar: &Grammar) -> Result<(
         &grammar.actions.len()
     )?;
     for (index, action) in grammar.actions.iter().enumerate() {
-        writeln!(writer, "    result[{}] = input.{}", index, to_lower_camel_case(&action.name))?;
+        writeln!(writer, "    result[{}] = input.{}.bind(input)", index, to_lower_camel_case(&action.name))?;
     }
     writeln!(writer, "    return result")?;
     writeln!(writer, "  }}")?;
@@ -567,7 +567,10 @@ fn write_code_utils(writer: &mut dyn Write) -> Result<(), Error> {
     writeln!(writer, "    }}")?;
     writeln!(writer, "    else {{")?;
     writeln!(writer, "      for (const err of result.Errors) {{")?;
-    writeln!(writer, "        console.log(err)")?;
+    writeln!(writer, "        console.log(err.toString())")?;
+    writeln!(writer, "        const context = result.Input.GetContext(err.Position)")?;
+    writeln!(writer, "        console.log(context.Content)")?;
+    writeln!(writer, "        console.log(context.Pointer)")?;
     writeln!(writer, "      }}")?;
     writeln!(writer, "    }}")?;
     writeln!(writer, "  }}")?;
