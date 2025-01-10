@@ -104,7 +104,7 @@ export class Executor {
     const expectedParser = await ExpectedTreeParser.fromString(expectedText)
     const result = expectedParser.Parse()
     for (const error of result.Errors) {
-      console.log(error)
+      console.log(error.toString())
       const context = result.Input.GetContext(error.Position)
       console.log(context.Content)
       console.log(context.Pointer)
@@ -136,7 +136,7 @@ export class Executor {
 
     const result = parser.Parse()
     for (const error of result.Errors) {
-      console.log(error)
+      console.log(error.toString())
       const context = result.Input.GetContext(error.Position)
       console.log(context.Content)
       console.log(context.Pointer)
@@ -176,7 +176,7 @@ export class Executor {
 
     const result = parser.Parse()
     for (const error of result.Errors) {
-      console.log(error)
+      console.log(error.toString())
       const context = result.Input.GetContext(error.Position)
       console.log(context.Content)
       console.log(context.Pointer)
@@ -248,7 +248,7 @@ export class Executor {
       }
 
       for (const error of result.Errors) {
-        console.log(error)
+        console.log(error.toString())
         const context = result.Input.GetContext(error.Position)
         console.log(context.Content)
         console.log(context.Pointer)
